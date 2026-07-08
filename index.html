@@ -29,14 +29,27 @@
 
 <body>
 
+  <!-- Header -->
+
   <header class="header" role="banner" id="top">
     <div class="row">
       <nav class="nav" role="navigation">
         <ul class="nav__items">
-          <li class="nav__item"><a href="#work" class="nav__link">Projects</a></li>
-          <li class="nav__item"><a href="#skills" class="nav__link">Skills</a></li>
-          <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
-          <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
+          <li class="nav__item">
+            <a href="#work" class="nav__link">Projects</a>
+          </li>
+
+          <li class="nav__item">
+            <a href="#skills" class="nav__link">Skills</a>
+          </li>
+
+          <li class="nav__item">
+            <a href="#about" class="nav__link">About</a>
+          </li>
+
+          <li class="nav__item">
+            <a href="#contact" class="nav__link">Contact</a>
+          </li>
         </ul>
       </nav>
     </div>
@@ -48,8 +61,8 @@
         </h1>
 
         <p>
-          Bioinformatics student exploring biomarkers, longevity science,
-          molecular biology, genetics, and biological data.
+          Bioinformatics student building at the intersection of molecular biology,
+          biomarkers, longevity science, and biological data.
         </p>
 
         <a href="#contact" class="btn btn--pink">Get in touch</a>
@@ -58,6 +71,8 @@
   </header>
 
   <main role="main">
+
+    <!-- Projects -->
 
     <section class="work" id="work">
       <div class="row">
@@ -166,6 +181,8 @@
       </div>
     </section>
 
+    <!-- Skills -->
+
     <section class="client" id="skills">
       <div class="row">
         <h2>Skills & Interests</h2>
@@ -178,43 +195,70 @@
           <p class="client__logo">Biomarkers</p>
           <p class="client__logo">Genetics</p>
           <p class="client__logo">Longevity Science</p>
+          <p class="client__logo">Biological Data</p>
           <p class="client__logo">Data Analysis</p>
+          <p class="client__logo">Data Visualization</p>
         </div>
       </div>
     </section>
+
+    <!-- About -->
 
     <section class="about" id="about">
       <div class="row">
         <h2>About Me</h2>
 
         <div class="about__content">
+
+          <div class="about__visual">
+            <div class="bio-card">
+              <p class="bio-card__label">Current focus</p>
+
+              <h3>Bioinformatics</h3>
+
+              <ul>
+                <li>Biomarkers</li>
+                <li>Molecular Biology</li>
+                <li>Genetics</li>
+                <li>Longevity Science</li>
+                <li>Biological Data</li>
+              </ul>
+
+              <div class="sequence">
+                ATCG · GCTA · TTAG · CGAT · ACGT
+              </div>
+            </div>
+          </div>
+
           <div class="about__text">
             <p>
-              I am a bioinformatics and biology student interested in the
-              intersection between biology, programming, and human health.
-              My main interests include molecular biology, biomarkers, genetics,
-              longevity science, and biological data interpretation.
+              I am a bioinformatics and biology student interested in the intersection
+              between biology, programming, and human health.
             </p>
 
             <p>
-              I enjoy building projects that make complex biological information
-              easier to organize, visualize, and understand. My long-term goal is
-              to continue developing my skills in bioinformatics and contribute to
-              future research or technology related to aging, biomarkers, and
-              personalized health.
+              My main interests include molecular biology, biomarkers, genetics,
+              longevity science, and biological data interpretation. I enjoy building
+              projects that make complex biological information easier to organize,
+              visualize, and understand.
             </p>
 
-            <a href="#" class="btn">My Resume</a>
+            <p>
+              My long-term goal is to continue developing my skills in bioinformatics
+              and contribute to future research or technology related to aging,
+              biomarkers, and personalized health.
+            </p>
+
+            <a href="#contact" class="btn">Contact Me</a>
           </div>
 
-          <div class="about__photo-container">
-            <img class="about__photo" src="./images/syed-ali-hussnain.jpg" alt="Portrait photo" />
-          </div>
         </div>
       </div>
     </section>
 
   </main>
+
+  <!-- Contact -->
 
   <section class="contact" id="contact">
     <div class="row">
@@ -232,6 +276,8 @@
       </div>
     </div>
   </section>
+
+  <!-- Footer -->
 
   <footer role="contentinfo" class="footer">
     <div class="row">

@@ -353,7 +353,7 @@ body:not(.user-is-tabbing) a:focus {
     justify-content: flex-end;
     padding: var(--gutter-normal) 0;
     position: relative;
-    z-index: 10;
+    z-index: 30;
 }
 
 .nav__items {
@@ -419,6 +419,7 @@ body:not(.user-is-tabbing) a:focus {
 .header {
     position: relative;
     min-height: 100vh;
+    height: 100vh;
     background:
         linear-gradient(rgba(3, 7, 18, .88), rgba(3, 7, 18, .92)),
         url('./images/header.jpg');
@@ -439,7 +440,7 @@ body:not(.user-is-tabbing) a:focus {
     background-size: 60px 60px;
     opacity: 0.32;
     pointer-events: none;
-    z-index: 1;
+    z-index: 2;
 }
 
 .header::after {
@@ -448,45 +449,57 @@ body:not(.user-is-tabbing) a:focus {
     bottom: 4rem;
     right: 8rem;
     max-width: 40rem;
-    color: rgba(56, 189, 248, 0.16);
+    color: rgba(56, 189, 248, 0.14);
     font-family: monospace;
     font-size: 2.3rem;
     line-height: 1.5;
     letter-spacing: 0.25rem;
     pointer-events: none;
-    z-index: 3;
+    z-index: 6;
 }
 
-/* DNA background layer */
+/* ----- Blended DNA Background ----- */
 
 .header__dna-bg {
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 64%;
+    inset: 0 0 0 auto;
+    width: 66%;
     height: 100%;
-    z-index: 2;
+    z-index: 1;
     pointer-events: none;
     overflow: hidden;
 }
 
+/* Dark veil over DNA so it melts into the background */
 .header__dna-bg::before {
     content: "";
     position: absolute;
     inset: 0;
-    background:
-        radial-gradient(circle at 66% 46%, rgba(56, 189, 248, 0.34), transparent 32%),
-        radial-gradient(circle at 72% 52%, rgba(139, 92, 246, 0.16), transparent 44%),
-        linear-gradient(90deg, rgba(3, 7, 18, 1) 0%, rgba(3, 7, 18, 0.55) 30%, rgba(3, 7, 18, 0.08) 60%, rgba(3, 7, 18, 0.55) 100%);
     z-index: 3;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(3, 7, 18, 1) 0%,
+            rgba(3, 7, 18, 0.95) 17%,
+            rgba(3, 7, 18, 0.62) 34%,
+            rgba(3, 7, 18, 0.22) 56%,
+            rgba(3, 7, 18, 0.45) 82%,
+            rgba(3, 7, 18, 0.88) 100%
+        ),
+        radial-gradient(
+            circle at 64% 50%,
+            rgba(56, 189, 248, 0.22),
+            transparent 46%
+        );
 }
 
+/* Faint bioinformatics data behind/around DNA */
 .header__dna-bg::after {
     content: "ACGT  TGCA  GCTA  TTAG  CGAT  ACGT";
     position: absolute;
     top: 36%;
     right: 4rem;
-    width: 55rem;
+    width: 56rem;
     color: rgba(56, 189, 248, 0.12);
     font-family: monospace;
     font-size: 2rem;
@@ -499,35 +512,53 @@ body:not(.user-is-tabbing) a:focus {
 .header__dna {
     position: absolute;
     top: 50%;
-    right: -2rem;
-    width: 62rem;
+    right: 3%;
+    width: 56rem;
     max-width: none;
+    height: auto;
     transform: translateY(-50%);
-    opacity: 0.72;
+    opacity: 0.58;
+    border-radius: 0;
     mix-blend-mode: screen;
+
     filter:
-        saturate(1.25)
-        contrast(1.08)
-        brightness(0.82)
-        drop-shadow(0 0 18px rgba(56, 189, 248, 0.34))
-        drop-shadow(0 0 42px rgba(56, 189, 248, 0.20));
+        saturate(1.2)
+        contrast(1.05)
+        brightness(0.72)
+        drop-shadow(0 0 16px rgba(56, 189, 248, 0.24))
+        drop-shadow(0 0 42px rgba(56, 189, 248, 0.16));
 
     -webkit-mask-image:
-        radial-gradient(circle at 55% 50%, black 0%, black 42%, transparent 74%),
-        linear-gradient(90deg, transparent 0%, black 20%, black 78%, transparent 100%);
+        radial-gradient(ellipse at 50% 50%, black 0%, black 40%, transparent 74%);
     mask-image:
-        radial-gradient(circle at 55% 50%, black 0%, black 42%, transparent 74%),
-        linear-gradient(90deg, transparent 0%, black 20%, black 78%, transparent 100%);
+        radial-gradient(ellipse at 50% 50%, black 0%, black 40%, transparent 74%);
 
-    animation:
-        dnaBlendFloat 7s ease-in-out infinite,
-        dnaBlendPulse 6s ease-in-out infinite;
+    animation: dnaSoftFloat 7s ease-in-out infinite;
 }
 
+@keyframes dnaSoftFloat {
+    0% {
+        transform: translateY(-50%) translateX(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-52%) translateX(-1rem) scale(1.02);
+    }
+
+    100% {
+        transform: translateY(-50%) translateX(0) scale(1);
+    }
+}
+
+/* ----- Header Text ----- */
+
 .header__content {
-    position: relative;
-    z-index: 5;
-    min-height: calc(100vh - 10rem);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
     display: flex;
     align-items: center;
 }
@@ -535,6 +566,7 @@ body:not(.user-is-tabbing) a:focus {
 .header__text {
     max-width: 72rem;
     position: relative;
+    z-index: 10;
 }
 
 .header__text::before {
@@ -556,32 +588,10 @@ body:not(.user-is-tabbing) a:focus {
     color: #e2e8f0;
 }
 
-@keyframes dnaBlendFloat {
-    0% {
-        transform: translateY(-50%) translateX(0) scale(1);
-    }
-
-    50% {
-        transform: translateY(-52%) translateX(-1.2rem) scale(1.025);
-    }
-
-    100% {
-        transform: translateY(-50%) translateX(0) scale(1);
-    }
-}
-
-@keyframes dnaBlendPulse {
-    0% {
-        opacity: 0.62;
-    }
-
-    50% {
-        opacity: 0.82;
-    }
-
-    100% {
-        opacity: 0.62;
-    }
+/* Remove old DNA/card layouts if they still exist */
+.header__dna-wrap,
+.header__visual {
+    display: none !important;
 }
 
 /* --------------------------------------- */
@@ -804,7 +814,7 @@ body:not(.user-is-tabbing) a:focus {
 @media(max-width: 950px) {
     .header__dna-bg {
         width: 100%;
-        opacity: 0.35;
+        opacity: 0.28;
     }
 
     .header__dna {
@@ -814,9 +824,9 @@ body:not(.user-is-tabbing) a:focus {
     }
 
     .header__content {
-        text-align: center;
         justify-content: center;
-        min-height: calc(100vh - 9rem);
+        text-align: center;
+        padding: 0 var(--gutter-medium);
     }
 
     .header__text {
@@ -844,6 +854,10 @@ body:not(.user-is-tabbing) a:focus {
 
     .header {
         text-align: center;
+    }
+
+    .header__content {
+        padding: 0 var(--gutter-small);
     }
 
     .header__text p {

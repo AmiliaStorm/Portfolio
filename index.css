@@ -484,42 +484,6 @@ body:not(.user-is-tabbing) a:focus {
     color: #e2e8f0;
 }
 
-.header__visual {
-    flex: 0 0 38rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 50rem;
-    perspective: 1200px;
-    position: relative;
-    z-index: 2;
-}
-
-.header__visual::before {
-    content: "";
-    position: absolute;
-    width: 38rem;
-    height: 38rem;
-    border-radius: 50%;
-    background:
-        radial-gradient(circle, rgba(56, 189, 248, 0.16), transparent 62%),
-        radial-gradient(circle, rgba(139, 92, 246, 0.14), transparent 70%);
-    filter: blur(6px);
-    animation: pulse-glow 4s ease-in-out infinite;
-}
-
-.header__visual::after {
-    content: "";
-    position: absolute;
-    bottom: 3rem;
-    width: 26rem;
-    height: 3.5rem;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(56, 189, 248, 0.28), transparent 70%);
-    filter: blur(5px);
-    opacity: 0.8;
-}
-
 /* --------------------------------------- */
 /* ----- Realistic 3D DNA Helix ----- */
 /* --------------------------------------- */
@@ -570,7 +534,6 @@ body:not(.user-is-tabbing) a:focus {
     filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.22));
 }
 
-/* the two outer helix strands */
 .dna::before,
 .dna::after {
     content: "";
@@ -606,7 +569,6 @@ body:not(.user-is-tabbing) a:focus {
     transform: rotateZ(-10deg);
 }
 
-/* each rung in the helix */
 .dna__pair {
     --spacing: 2.7rem;
     position: absolute;
@@ -616,8 +578,7 @@ body:not(.user-is-tabbing) a:focus {
     height: 0.5rem;
     transform:
         translateX(-50%)
-        rotateY(calc(var(--i) * 24deg))
-        rotateZ(calc(sin(var(--i)) * 1deg));
+        rotateY(calc(var(--i) * 24deg));
     transform-style: preserve-3d;
     border-radius: 999px;
     background:
@@ -636,7 +597,6 @@ body:not(.user-is-tabbing) a:focus {
     opacity: 0.96;
 }
 
-/* glowing nucleotides / endpoints */
 .dna__pair::before,
 .dna__pair::after {
     content: "";
@@ -679,7 +639,6 @@ body:not(.user-is-tabbing) a:focus {
         0 0 30px rgba(56,189,248,0.18);
 }
 
-/* soft mist / blur depth */
 .dna__pair:nth-child(3n) {
     opacity: 0.82;
     filter: blur(0.15px);
@@ -693,11 +652,11 @@ body:not(.user-is-tabbing) a:focus {
     opacity: 0.9;
 }
 
-/* animation */
 @keyframes dna-rotate-realistic {
     from {
         transform: rotateX(12deg) rotateY(0deg);
     }
+
     to {
         transform: rotateX(12deg) rotateY(360deg);
     }
@@ -705,13 +664,15 @@ body:not(.user-is-tabbing) a:focus {
 
 @keyframes dna-float-realistic {
     0% {
-        transform: translateY(0) rotateX(12deg) rotateY(0deg);
+        translate: 0 0;
     }
+
     50% {
-        transform: translateY(-10px) rotateX(12deg) rotateY(180deg);
+        translate: 0 -10px;
     }
+
     100% {
-        transform: translateY(0) rotateX(12deg) rotateY(360deg);
+        translate: 0 0;
     }
 }
 
@@ -720,56 +681,15 @@ body:not(.user-is-tabbing) a:focus {
         opacity: 0.45;
         transform: scale(0.96);
     }
+
     50% {
         opacity: 0.9;
         transform: scale(1.05);
     }
+
     100% {
         opacity: 0.45;
         transform: scale(0.96);
-    }
-}
-
-/* mobile */
-@media (max-width: 950px) {
-    .header__visual {
-        flex: 0 0 auto;
-        min-height: 38rem;
-    }
-
-    .dna {
-        width: 18rem;
-        height: 36rem;
-    }
-
-    .dna::before,
-    .dna::after {
-        height: 34rem;
-    }
-
-    .dna::before {
-        left: 4.2rem;
-    }
-
-    .dna::after {
-        right: 4.2rem;
-    }
-
-    .dna__pair {
-        width: 13rem;
-        --spacing: 2.1rem;
-    }
-
-    .dna__pair::before,
-    .dna__pair::after {
-        width: 1.5rem;
-        height: 1.5rem;
-    }
-}
-
-@media (max-width: 700px) {
-    .header__visual {
-        display: none;
     }
 }
 
@@ -1002,19 +922,38 @@ body:not(.user-is-tabbing) a:focus {
     }
 
     .header__visual {
-        align-self: center;
-        min-height: 38rem;
         flex: 0 0 auto;
+        min-height: 38rem;
+        align-self: center;
     }
 
     .dna {
-        width: 17rem;
+        width: 18rem;
         height: 36rem;
     }
 
+    .dna::before,
+    .dna::after {
+        height: 34rem;
+    }
+
+    .dna::before {
+        left: 4.2rem;
+    }
+
+    .dna::after {
+        right: 4.2rem;
+    }
+
     .dna__pair {
-        width: 12rem;
-        --spacing: 2.45rem;
+        width: 13rem;
+        --spacing: 2.1rem;
+    }
+
+    .dna__pair::before,
+    .dna__pair::after {
+        width: 1.5rem;
+        height: 1.5rem;
     }
 }
 

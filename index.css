@@ -521,143 +521,255 @@ body:not(.user-is-tabbing) a:focus {
 }
 
 /* --------------------------------------- */
-/* ----- 3D DNA Helix ----- */
+/* ----- Realistic 3D DNA Helix ----- */
 /* --------------------------------------- */
+
+.header__visual {
+    flex: 0 0 42rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 52rem;
+    perspective: 1400px;
+    position: relative;
+    z-index: 2;
+}
+
+.header__visual::before {
+    content: "";
+    position: absolute;
+    width: 42rem;
+    height: 42rem;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle, rgba(56, 189, 248, 0.16), transparent 58%),
+        radial-gradient(circle, rgba(139, 92, 246, 0.10), transparent 68%);
+    filter: blur(20px);
+    animation: pulse-glow 5s ease-in-out infinite;
+}
+
+.header__visual::after {
+    content: "";
+    position: absolute;
+    width: 24rem;
+    height: 24rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 65%);
+    filter: blur(18px);
+    opacity: 0.7;
+}
 
 .dna {
     position: relative;
-    width: 22rem;
-    height: 46rem;
+    width: 24rem;
+    height: 48rem;
     transform-style: preserve-3d;
     animation:
-        dna-rotate 9s linear infinite,
-        dna-float 5s ease-in-out infinite;
+        dna-rotate-realistic 10s linear infinite,
+        dna-float-realistic 5s ease-in-out infinite;
+    filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.22));
 }
 
+/* the two outer helix strands */
+.dna::before,
+.dna::after {
+    content: "";
+    position: absolute;
+    top: 1rem;
+    width: 0.9rem;
+    height: 46rem;
+    border-radius: 999px;
+    opacity: 0.9;
+    filter: blur(0.3px);
+    background:
+        linear-gradient(
+            180deg,
+            rgba(210, 250, 255, 0.95) 0%,
+            rgba(133, 223, 255, 0.95) 18%,
+            rgba(72, 187, 255, 0.88) 45%,
+            rgba(41, 125, 214, 0.9) 70%,
+            rgba(185, 245, 255, 0.92) 100%
+        );
+    box-shadow:
+        0 0 10px rgba(135, 229, 255, 0.38),
+        0 0 25px rgba(56, 189, 248, 0.18),
+        inset 0 0 5px rgba(255, 255, 255, 0.35);
+}
+
+.dna::before {
+    left: 5.2rem;
+    transform: rotateZ(10deg);
+}
+
+.dna::after {
+    right: 5.2rem;
+    transform: rotateZ(-10deg);
+}
+
+/* each rung in the helix */
 .dna__pair {
-    --spacing: 3.1rem;
+    --spacing: 2.7rem;
     position: absolute;
     left: 50%;
     top: calc(var(--i) * var(--spacing));
-    width: 16rem;
-    height: 0.35rem;
+    width: 17rem;
+    height: 0.5rem;
     transform:
         translateX(-50%)
-        rotateY(calc(var(--i) * 36deg))
-        translateZ(0);
+        rotateY(calc(var(--i) * 24deg))
+        rotateZ(calc(sin(var(--i)) * 1deg));
     transform-style: preserve-3d;
     border-radius: 999px;
-    background: linear-gradient(
-        90deg,
-        rgba(139, 92, 246, 0.15),
-        rgba(56, 189, 248, 0.9),
-        rgba(139, 92, 246, 0.15)
-    );
+    background:
+        linear-gradient(
+            90deg,
+            rgba(170, 240, 255, 0.15) 0%,
+            rgba(200, 248, 255, 0.95) 15%,
+            rgba(125, 220, 255, 1) 50%,
+            rgba(200, 248, 255, 0.95) 85%,
+            rgba(170, 240, 255, 0.15) 100%
+        );
     box-shadow:
-        0 0 12px rgba(56, 189, 248, 0.35),
-        inset 0 0 6px rgba(255, 255, 255, 0.25);
+        0 0 10px rgba(125, 220, 255, 0.35),
+        0 0 22px rgba(56, 189, 248, 0.18),
+        inset 0 0 4px rgba(255,255,255,0.5);
+    opacity: 0.96;
 }
 
+/* glowing nucleotides / endpoints */
 .dna__pair::before,
 .dna__pair::after {
     content: "";
     position: absolute;
     top: 50%;
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 1.9rem;
+    height: 1.9rem;
     border-radius: 50%;
     transform: translateY(-50%);
+    filter: blur(0.15px);
 }
 
 .dna__pair::before {
-    left: -0.6rem;
+    left: -0.45rem;
     background:
-        radial-gradient(circle at 30% 30%, #ffffff, #c4b5fd 22%, #8b5cf6 58%, #3b0764);
+        radial-gradient(circle at 30% 30%,
+            rgba(255,255,255,1) 0%,
+            rgba(210,248,255,1) 18%,
+            rgba(120,221,255,0.95) 48%,
+            rgba(42,124,205,0.95) 72%,
+            rgba(10,45,90,1) 100%);
     box-shadow:
-        0 0 10px rgba(196, 181, 253, 0.9),
-        0 0 25px rgba(139, 92, 246, 0.6),
-        0 0 45px rgba(139, 92, 246, 0.25);
+        0 0 8px rgba(210,248,255,0.95),
+        0 0 18px rgba(56,189,248,0.45),
+        0 0 30px rgba(56,189,248,0.18);
 }
 
 .dna__pair::after {
-    right: -0.6rem;
+    right: -0.45rem;
     background:
-        radial-gradient(circle at 30% 30%, #ffffff, #a5f3fc 22%, #38bdf8 58%, #075985);
+        radial-gradient(circle at 30% 30%,
+            rgba(255,255,255,1) 0%,
+            rgba(214,250,255,1) 18%,
+            rgba(140,230,255,0.95) 48%,
+            rgba(52,152,219,0.95) 72%,
+            rgba(9,52,99,1) 100%);
     box-shadow:
-        0 0 10px rgba(165, 243, 252, 0.9),
-        0 0 25px rgba(56, 189, 248, 0.6),
-        0 0 45px rgba(56, 189, 248, 0.25);
+        0 0 8px rgba(214,250,255,0.95),
+        0 0 18px rgba(56,189,248,0.45),
+        0 0 30px rgba(56,189,248,0.18);
 }
 
-.dna::before,
-.dna::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    width: 0.35rem;
-    height: 100%;
-    border-radius: 999px;
-    background: linear-gradient(
-        180deg,
-        transparent,
-        rgba(56, 189, 248, 0.85),
-        rgba(139, 92, 246, 0.85),
-        transparent
-    );
-    box-shadow:
-        0 0 16px rgba(56, 189, 248, 0.45),
-        0 0 28px rgba(139, 92, 246, 0.3);
-    opacity: 0.75;
+/* soft mist / blur depth */
+.dna__pair:nth-child(3n) {
+    opacity: 0.82;
+    filter: blur(0.15px);
 }
 
-.dna::before {
-    left: 2.4rem;
-    transform: rotateZ(8deg);
+.dna__pair:nth-child(4n) {
+    opacity: 0.72;
 }
 
-.dna::after {
-    right: 2.4rem;
-    transform: rotateZ(-8deg);
+.dna__pair:nth-child(5n) {
+    opacity: 0.9;
 }
 
-@keyframes dna-rotate {
+/* animation */
+@keyframes dna-rotate-realistic {
     from {
-        transform: rotateX(8deg) rotateY(0deg);
+        transform: rotateX(12deg) rotateY(0deg);
     }
-
     to {
-        transform: rotateX(8deg) rotateY(360deg);
+        transform: rotateX(12deg) rotateY(360deg);
     }
 }
 
-@keyframes dna-float {
+@keyframes dna-float-realistic {
     0% {
-        translate: 0 0;
+        transform: translateY(0) rotateX(12deg) rotateY(0deg);
     }
-
     50% {
-        translate: 0 -1.2rem;
+        transform: translateY(-10px) rotateX(12deg) rotateY(180deg);
     }
-
     100% {
-        translate: 0 0;
+        transform: translateY(0) rotateX(12deg) rotateY(360deg);
     }
 }
 
 @keyframes pulse-glow {
     0% {
         opacity: 0.45;
-        transform: scale(0.95);
+        transform: scale(0.96);
     }
-
     50% {
         opacity: 0.9;
         transform: scale(1.05);
     }
-
     100% {
         opacity: 0.45;
-        transform: scale(0.95);
+        transform: scale(0.96);
+    }
+}
+
+/* mobile */
+@media (max-width: 950px) {
+    .header__visual {
+        flex: 0 0 auto;
+        min-height: 38rem;
+    }
+
+    .dna {
+        width: 18rem;
+        height: 36rem;
+    }
+
+    .dna::before,
+    .dna::after {
+        height: 34rem;
+    }
+
+    .dna::before {
+        left: 4.2rem;
+    }
+
+    .dna::after {
+        right: 4.2rem;
+    }
+
+    .dna__pair {
+        width: 13rem;
+        --spacing: 2.1rem;
+    }
+
+    .dna__pair::before,
+    .dna__pair::after {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+
+@media (max-width: 700px) {
+    .header__visual {
+        display: none;
     }
 }
 

@@ -269,6 +269,10 @@ body:not(.user-is-tabbing) a:focus {
     box-shadow: 0 0 45px rgba(56, 189, 248, 0.35);
 }
 
+.btn--pink span {
+    margin-left: 1rem;
+}
+
 .link__text {
     position: relative;
     display: inline-block;
@@ -349,7 +353,7 @@ body:not(.user-is-tabbing) a:focus {
     justify-content: flex-end;
     padding: var(--gutter-normal) 0;
     position: relative;
-    z-index: 5;
+    z-index: 10;
 }
 
 .nav__items {
@@ -414,29 +418,15 @@ body:not(.user-is-tabbing) a:focus {
 
 .header {
     position: relative;
+    min-height: 100vh;
     background:
         linear-gradient(rgba(3, 7, 18, .88), rgba(3, 7, 18, .92)),
         url('./images/header.jpg');
-    min-height: 100vh;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     font-size: var(--font-size-normal);
     overflow: hidden;
-}
-
-.header::after {
-    content: "ATCG  GCTA  TTAG  CGAT  ACGT  TGCA";
-    position: absolute;
-    bottom: 5rem;
-    right: 7rem;
-    max-width: 36rem;
-    color: rgba(56, 189, 248, 0.18);
-    font-family: monospace;
-    font-size: 2.4rem;
-    line-height: 1.5;
-    letter-spacing: 0.25rem;
-    pointer-events: none;
 }
 
 .header::before {
@@ -447,22 +437,115 @@ body:not(.user-is-tabbing) a:focus {
         linear-gradient(rgba(139, 92, 246, 0.08) 1px, transparent 1px),
         linear-gradient(90deg, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
     background-size: 60px 60px;
-    opacity: 0.35;
+    opacity: 0.32;
     pointer-events: none;
+    z-index: 1;
+}
+
+.header::after {
+    content: "ATCG  GCTA  TTAG  CGAT  ACGT  TGCA";
+    position: absolute;
+    bottom: 4rem;
+    right: 8rem;
+    max-width: 40rem;
+    color: rgba(56, 189, 248, 0.16);
+    font-family: monospace;
+    font-size: 2.3rem;
+    line-height: 1.5;
+    letter-spacing: 0.25rem;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* DNA background layer */
+
+.header__dna-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 64%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.header__dna-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 66% 46%, rgba(56, 189, 248, 0.34), transparent 32%),
+        radial-gradient(circle at 72% 52%, rgba(139, 92, 246, 0.16), transparent 44%),
+        linear-gradient(90deg, rgba(3, 7, 18, 1) 0%, rgba(3, 7, 18, 0.55) 30%, rgba(3, 7, 18, 0.08) 60%, rgba(3, 7, 18, 0.55) 100%);
+    z-index: 3;
+}
+
+.header__dna-bg::after {
+    content: "ACGT  TGCA  GCTA  TTAG  CGAT  ACGT";
+    position: absolute;
+    top: 36%;
+    right: 4rem;
+    width: 55rem;
+    color: rgba(56, 189, 248, 0.12);
+    font-family: monospace;
+    font-size: 2rem;
+    line-height: 2.3;
+    letter-spacing: 0.32rem;
+    transform: rotate(-8deg);
+    z-index: 4;
+}
+
+.header__dna {
+    position: absolute;
+    top: 50%;
+    right: -2rem;
+    width: 62rem;
+    max-width: none;
+    transform: translateY(-50%);
+    opacity: 0.72;
+    mix-blend-mode: screen;
+    filter:
+        saturate(1.25)
+        contrast(1.08)
+        brightness(0.82)
+        drop-shadow(0 0 18px rgba(56, 189, 248, 0.34))
+        drop-shadow(0 0 42px rgba(56, 189, 248, 0.20));
+
+    -webkit-mask-image:
+        radial-gradient(circle at 55% 50%, black 0%, black 42%, transparent 74%),
+        linear-gradient(90deg, transparent 0%, black 20%, black 78%, transparent 100%);
+    mask-image:
+        radial-gradient(circle at 55% 50%, black 0%, black 42%, transparent 74%),
+        linear-gradient(90deg, transparent 0%, black 20%, black 78%, transparent 100%);
+
+    animation:
+        dnaBlendFloat 7s ease-in-out infinite,
+        dnaBlendPulse 6s ease-in-out infinite;
 }
 
 .header__content {
     position: relative;
-    z-index: 2;
+    z-index: 5;
     min-height: calc(100vh - 10rem);
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
+    display: flex;
     align-items: center;
-    gap: 6rem;
 }
 
 .header__text {
     max-width: 72rem;
+    position: relative;
+}
+
+.header__text::before {
+    content: "";
+    position: absolute;
+    left: -2.4rem;
+    top: 9.5rem;
+    width: 2px;
+    height: 10rem;
+    background: linear-gradient(180deg, var(--bio-purple), var(--bio-blue));
+    opacity: 0.45;
 }
 
 .header__text p {
@@ -473,83 +556,31 @@ body:not(.user-is-tabbing) a:focus {
     color: #e2e8f0;
 }
 
-.header__dna-wrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    perspective: 1200px;
-    position: relative;
-}
-
-.header__dna-wrap::before {
-    content: "";
-    position: absolute;
-    width: 42rem;
-    height: 42rem;
-    border-radius: 50%;
-    background:
-        radial-gradient(circle, rgba(56, 189, 248, 0.18), transparent 58%),
-        radial-gradient(circle, rgba(139, 92, 246, 0.12), transparent 70%);
-    filter: blur(24px);
-    animation: dnaGlow 5s ease-in-out infinite;
-}
-
-.header__dna {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    max-width: 36rem;
-    height: auto;
-    display: block;
-    border-radius: 2rem;
-    mix-blend-mode: screen;
-    filter:
-        drop-shadow(0 0 14px rgba(92, 196, 255, 0.5))
-        drop-shadow(0 0 36px rgba(92, 196, 255, 0.25));
-    transform-style: preserve-3d;
-    animation:
-        dnaSpinSoft 8s ease-in-out infinite,
-        dnaFloat 4s ease-in-out infinite;
-}
-
-@keyframes dnaSpinSoft {
+@keyframes dnaBlendFloat {
     0% {
-        transform: perspective(1200px) rotateY(-18deg) rotateZ(-1deg);
+        transform: translateY(-50%) translateX(0) scale(1);
     }
 
     50% {
-        transform: perspective(1200px) rotateY(18deg) rotateZ(1deg);
+        transform: translateY(-52%) translateX(-1.2rem) scale(1.025);
     }
 
     100% {
-        transform: perspective(1200px) rotateY(-18deg) rotateZ(-1deg);
+        transform: translateY(-50%) translateX(0) scale(1);
     }
 }
 
-@keyframes dnaFloat {
-    0%, 100% {
-        translate: 0 0;
-    }
-
-    50% {
-        translate: 0 -1.2rem;
-    }
-}
-
-@keyframes dnaGlow {
+@keyframes dnaBlendPulse {
     0% {
-        opacity: 0.45;
-        transform: scale(0.96);
+        opacity: 0.62;
     }
 
     50% {
-        opacity: 0.9;
-        transform: scale(1.05);
+        opacity: 0.82;
     }
 
     100% {
-        opacity: 0.45;
-        transform: scale(0.96);
+        opacity: 0.62;
     }
 }
 
@@ -771,35 +802,39 @@ body:not(.user-is-tabbing) a:focus {
 /* --------------------------------------- */
 
 @media(max-width: 950px) {
+    .header__dna-bg {
+        width: 100%;
+        opacity: 0.35;
+    }
+
+    .header__dna {
+        right: 50%;
+        width: 42rem;
+        transform: translate(50%, -50%);
+    }
+
     .header__content {
-        grid-template-columns: 1fr;
         text-align: center;
-        gap: 3rem;
-        padding-top: 5rem;
-        padding-bottom: 5rem;
+        justify-content: center;
+        min-height: calc(100vh - 9rem);
     }
 
     .header__text {
         margin: 0 auto;
     }
 
+    .header__text::before {
+        display: none;
+    }
+
     .header__text p {
         margin-left: auto;
         margin-right: auto;
     }
-
-    .header__dna {
-        max-width: 26rem;
-    }
-
-    .header__dna-wrap::before {
-        width: 30rem;
-        height: 30rem;
-    }
 }
 
 @media(max-width: 700px) {
-    .header__dna-wrap {
+    .header__dna-bg {
         display: none;
     }
 
@@ -809,10 +844,6 @@ body:not(.user-is-tabbing) a:focus {
 
     .header {
         text-align: center;
-    }
-
-    .header__content {
-        min-height: calc(100vh - 8rem);
     }
 
     .header__text p {

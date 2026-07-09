@@ -692,3 +692,220 @@ body:not(.user-is-tabbing) a:focus {
         padding: var(--gutter-medium) 0;
     } 
 }
+
+/* ===== 3D Hologram DNA Hero Visual ===== */
+
+.header__hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6rem;
+    width: 100%;
+}
+
+.header__text {
+    flex: 1;
+    max-width: 72rem;
+}
+
+.header__visual {
+    flex: 0 0 38rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50rem;
+    perspective: 1200px;
+    position: relative;
+}
+
+.header__visual::before {
+    content: "";
+    position: absolute;
+    width: 38rem;
+    height: 38rem;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle, rgba(56, 189, 248, 0.16), transparent 62%),
+        radial-gradient(circle, rgba(139, 92, 246, 0.14), transparent 70%);
+    filter: blur(6px);
+    animation: pulse-glow 4s ease-in-out infinite;
+}
+
+.header__visual::after {
+    content: "";
+    position: absolute;
+    bottom: 3rem;
+    width: 26rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.28), transparent 70%);
+    filter: blur(5px);
+    opacity: 0.8;
+}
+
+.dna {
+    position: relative;
+    width: 22rem;
+    height: 46rem;
+    transform-style: preserve-3d;
+    animation:
+        dna-rotate 9s linear infinite,
+        dna-float 5s ease-in-out infinite;
+}
+
+.dna__pair {
+    --spacing: 3.1rem;
+    position: absolute;
+    left: 50%;
+    top: calc(var(--i) * var(--spacing));
+    width: 16rem;
+    height: 0.35rem;
+    transform:
+        translateX(-50%)
+        rotateY(calc(var(--i) * 36deg))
+        translateZ(0);
+    transform-style: preserve-3d;
+    border-radius: 999px;
+    background: linear-gradient(
+        90deg,
+        rgba(139, 92, 246, 0.15),
+        rgba(56, 189, 248, 0.9),
+        rgba(139, 92, 246, 0.15)
+    );
+    box-shadow:
+        0 0 12px rgba(56, 189, 248, 0.35),
+        inset 0 0 6px rgba(255, 255, 255, 0.25);
+}
+
+.dna__pair::before,
+.dna__pair::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.dna__pair::before {
+    left: -0.6rem;
+    background:
+        radial-gradient(circle at 30% 30%, #ffffff, #c4b5fd 22%, #8b5cf6 58%, #3b0764);
+    box-shadow:
+        0 0 10px rgba(196, 181, 253, 0.9),
+        0 0 25px rgba(139, 92, 246, 0.6),
+        0 0 45px rgba(139, 92, 246, 0.25);
+}
+
+.dna__pair::after {
+    right: -0.6rem;
+    background:
+        radial-gradient(circle at 30% 30%, #ffffff, #a5f3fc 22%, #38bdf8 58%, #075985);
+    box-shadow:
+        0 0 10px rgba(165, 243, 252, 0.9),
+        0 0 25px rgba(56, 189, 248, 0.6),
+        0 0 45px rgba(56, 189, 248, 0.25);
+}
+
+.dna::before,
+.dna::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 0.35rem;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(
+        180deg,
+        transparent,
+        rgba(56, 189, 248, 0.85),
+        rgba(139, 92, 246, 0.85),
+        transparent
+    );
+    box-shadow:
+        0 0 16px rgba(56, 189, 248, 0.45),
+        0 0 28px rgba(139, 92, 246, 0.3);
+    opacity: 0.75;
+}
+
+.dna::before {
+    left: 2.4rem;
+    transform: rotateZ(8deg);
+}
+
+.dna::after {
+    right: 2.4rem;
+    transform: rotateZ(-8deg);
+}
+
+@keyframes dna-rotate {
+    from {
+        transform: rotateX(8deg) rotateY(0deg);
+    }
+
+    to {
+        transform: rotateX(8deg) rotateY(360deg);
+    }
+}
+
+@keyframes dna-float {
+    0% {
+        translate: 0 0;
+    }
+
+    50% {
+        translate: 0 -1.2rem;
+    }
+
+    100% {
+        translate: 0 0;
+    }
+}
+
+@keyframes pulse-glow {
+    0% {
+        opacity: 0.45;
+        transform: scale(0.95);
+    }
+
+    50% {
+        opacity: 0.9;
+        transform: scale(1.05);
+    }
+
+    100% {
+        opacity: 0.45;
+        transform: scale(0.95);
+    }
+}
+
+@media (max-width: 950px) {
+    .header__hero {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4rem;
+    }
+
+    .header__visual {
+        align-self: center;
+        min-height: 38rem;
+        flex: 0 0 auto;
+    }
+
+    .dna {
+        width: 17rem;
+        height: 36rem;
+    }
+
+    .dna__pair {
+        width: 12rem;
+        --spacing: 2.45rem;
+    }
+}
+
+@media (max-width: 700px) {
+    .header__visual {
+        display: none;
+    }
+}

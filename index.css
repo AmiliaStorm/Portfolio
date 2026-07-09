@@ -417,7 +417,7 @@ body:not(.user-is-tabbing) a:focus {
     background:
         linear-gradient(rgba(3, 7, 18, .88), rgba(3, 7, 18, .92)),
         url('./images/header.jpg');
-    height: 100vh;
+    min-height: 100vh;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -451,29 +451,18 @@ body:not(.user-is-tabbing) a:focus {
     pointer-events: none;
 }
 
-.header__text-box {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
+.header__content {
+    position: relative;
     z-index: 2;
-}
-
-.header__hero {
-    display: flex;
+    min-height: calc(100vh - 10rem);
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
     align-items: center;
-    justify-content: space-between;
     gap: 6rem;
-    width: 100%;
 }
 
 .header__text {
-    position: static;
-    transform: none;
-    flex: 1;
     max-width: 72rem;
-    z-index: 2;
 }
 
 .header__text p {
@@ -484,105 +473,70 @@ body:not(.user-is-tabbing) a:focus {
     color: #e2e8f0;
 }
 
-/* --------------------------------------- */
-/* ----- Realistic SVG DNA Helix ----- */
-/* --------------------------------------- */
-
-.header__visual {
-    flex: 0 0 42rem;
+.header__dna-wrap {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 52rem;
+    perspective: 1200px;
     position: relative;
-    z-index: 2;
 }
 
-.header__visual::before {
+.header__dna-wrap::before {
     content: "";
     position: absolute;
-    width: 44rem;
-    height: 44rem;
+    width: 42rem;
+    height: 42rem;
     border-radius: 50%;
     background:
         radial-gradient(circle, rgba(56, 189, 248, 0.18), transparent 58%),
-        radial-gradient(circle, rgba(139, 92, 246, 0.10), transparent 70%);
-    filter: blur(22px);
-    animation: pulse-glow 5s ease-in-out infinite;
+        radial-gradient(circle, rgba(139, 92, 246, 0.12), transparent 70%);
+    filter: blur(24px);
+    animation: dnaGlow 5s ease-in-out infinite;
 }
 
-.dna-svg {
-    width: 32rem;
-    height: 52rem;
-    overflow: visible;
-    filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.35));
-}
-
-.dna-svg__group {
-    transform-origin: center;
+.header__dna {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 36rem;
+    height: auto;
+    display: block;
+    border-radius: 2rem;
+    mix-blend-mode: screen;
+    filter:
+        drop-shadow(0 0 14px rgba(92, 196, 255, 0.5))
+        drop-shadow(0 0 36px rgba(92, 196, 255, 0.25));
+    transform-style: preserve-3d;
     animation:
-        dna-sway 5s ease-in-out infinite,
-        dna-breathe 7s ease-in-out infinite;
+        dnaSpinSoft 8s ease-in-out infinite,
+        dnaFloat 4s ease-in-out infinite;
 }
 
-.dna-svg__strand {
-    fill: none;
-    stroke: url(#strandGradient);
-    stroke-width: 7;
-    stroke-linecap: round;
-    opacity: 0.9;
-}
-
-.dna-svg__strand--one {
-    opacity: 0.95;
-}
-
-.dna-svg__strand--two {
-    opacity: 0.6;
-}
-
-.dna-svg__rung {
-    stroke: rgba(190, 245, 255, 0.82);
-    stroke-width: 4;
-    stroke-linecap: round;
-    opacity: 0.75;
-}
-
-.dna-svg__node {
-    fill: url(#nodeGradient);
-    opacity: 0.95;
-    filter: drop-shadow(0 0 8px rgba(125, 220, 255, 0.9));
-}
-
-@keyframes dna-sway {
+@keyframes dnaSpinSoft {
     0% {
-        transform: rotateZ(-2deg) scale(1);
+        transform: perspective(1200px) rotateY(-18deg) rotateZ(-1deg);
     }
 
     50% {
-        transform: rotateZ(2deg) scale(1.025);
+        transform: perspective(1200px) rotateY(18deg) rotateZ(1deg);
     }
 
     100% {
-        transform: rotateZ(-2deg) scale(1);
+        transform: perspective(1200px) rotateY(-18deg) rotateZ(-1deg);
     }
 }
 
-@keyframes dna-breathe {
-    0% {
-        opacity: 0.78;
+@keyframes dnaFloat {
+    0%, 100% {
+        translate: 0 0;
     }
 
     50% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0.78;
+        translate: 0 -1.2rem;
     }
 }
 
-@keyframes pulse-glow {
+@keyframes dnaGlow {
     0% {
         opacity: 0.45;
         transform: scale(0.96);
@@ -813,54 +767,55 @@ body:not(.user-is-tabbing) a:focus {
 }
 
 /* --------------------------------------- */
-/* ----- Mobile Header / DNA ----- */
+/* ----- Mobile ----- */
 /* --------------------------------------- */
 
-@media (max-width: 950px) {
-    .header__text-box {
-        top: 55%;
+@media(max-width: 950px) {
+    .header__content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 3rem;
+        padding-top: 5rem;
+        padding-bottom: 5rem;
     }
 
-    .header__hero {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4rem;
+    .header__text {
+        margin: 0 auto;
     }
 
-    .header__visual {
-        flex: 0 0 auto;
-        min-height: 38rem;
-        align-self: center;
+    .header__text p {
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    .dna-svg {
-        width: 24rem;
-        height: 38rem;
+    .header__dna {
+        max-width: 26rem;
+    }
+
+    .header__dna-wrap::before {
+        width: 30rem;
+        height: 30rem;
     }
 }
 
 @media(max-width: 700px) {
-    .header {
-        text-align: center;
-    }
-
-    .header__text-box {
-        top: 50%;
-    }
-
-    .header__hero {
-        align-items: center;
-    }
-
-    .header__visual {
+    .header__dna-wrap {
         display: none;
-    }
-
-    .header__text p {
-        transform: scale(.8);
     }
 
     .header::after {
         display: none;
+    }
+
+    .header {
+        text-align: center;
+    }
+
+    .header__content {
+        min-height: calc(100vh - 8rem);
+    }
+
+    .header__text p {
+        transform: scale(.85);
     }
 }

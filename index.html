@@ -71,26 +71,80 @@
         </div>
 
         <div class="header__visual" aria-hidden="true">
-          <div class="dna">
-            <span class="dna__pair" style="--i:0;"></span>
-            <span class="dna__pair" style="--i:1;"></span>
-            <span class="dna__pair" style="--i:2;"></span>
-            <span class="dna__pair" style="--i:3;"></span>
-            <span class="dna__pair" style="--i:4;"></span>
-            <span class="dna__pair" style="--i:5;"></span>
-            <span class="dna__pair" style="--i:6;"></span>
-            <span class="dna__pair" style="--i:7;"></span>
-            <span class="dna__pair" style="--i:8;"></span>
-            <span class="dna__pair" style="--i:9;"></span>
-            <span class="dna__pair" style="--i:10;"></span>
-            <span class="dna__pair" style="--i:11;"></span>
-            <span class="dna__pair" style="--i:12;"></span>
-            <span class="dna__pair" style="--i:13;"></span>
-            <span class="dna__pair" style="--i:14;"></span>
-            <span class="dna__pair" style="--i:15;"></span>
-            <span class="dna__pair" style="--i:16;"></span>
-            <span class="dna__pair" style="--i:17;"></span>
-          </div>
+          <svg class="dna-svg" viewBox="0 0 320 520" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="dnaGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+
+              <linearGradient id="strandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#dffbff" />
+                <stop offset="35%" stop-color="#7ddcff" />
+                <stop offset="70%" stop-color="#38bdf8" />
+                <stop offset="100%" stop-color="#dffbff" />
+              </linearGradient>
+
+              <radialGradient id="nodeGradient">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="35%" stop-color="#a5f3fc" />
+                <stop offset="75%" stop-color="#38bdf8" />
+                <stop offset="100%" stop-color="#075985" />
+              </radialGradient>
+            </defs>
+
+            <g class="dna-svg__group" filter="url(#dnaGlow)">
+              <path
+                class="dna-svg__strand dna-svg__strand--one"
+                d="M160 20
+                   C70 80, 70 140, 160 200
+                   C250 260, 250 320, 160 380
+                   C70 440, 70 480, 160 510"
+              />
+
+              <path
+                class="dna-svg__strand dna-svg__strand--two"
+                d="M160 20
+                   C250 80, 250 140, 160 200
+                   C70 260, 70 320, 160 380
+                   C250 440, 250 480, 160 510"
+              />
+
+              <line class="dna-svg__rung" x1="142" y1="42" x2="178" y2="42" />
+              <line class="dna-svg__rung" x1="104" y1="82" x2="216" y2="82" />
+              <line class="dna-svg__rung" x1="82" y1="122" x2="238" y2="122" />
+              <line class="dna-svg__rung" x1="98" y1="162" x2="222" y2="162" />
+              <line class="dna-svg__rung" x1="140" y1="202" x2="180" y2="202" />
+              <line class="dna-svg__rung" x1="98" y1="242" x2="222" y2="242" />
+              <line class="dna-svg__rung" x1="82" y1="282" x2="238" y2="282" />
+              <line class="dna-svg__rung" x1="104" y1="322" x2="216" y2="322" />
+              <line class="dna-svg__rung" x1="142" y1="362" x2="178" y2="362" />
+              <line class="dna-svg__rung" x1="104" y1="402" x2="216" y2="402" />
+              <line class="dna-svg__rung" x1="82" y1="442" x2="238" y2="442" />
+              <line class="dna-svg__rung" x1="110" y1="482" x2="210" y2="482" />
+
+              <circle class="dna-svg__node" cx="160" cy="20" r="8" />
+              <circle class="dna-svg__node" cx="116" cy="62" r="8" />
+              <circle class="dna-svg__node" cx="204" cy="62" r="8" />
+              <circle class="dna-svg__node" cx="82" cy="122" r="8" />
+              <circle class="dna-svg__node" cx="238" cy="122" r="8" />
+              <circle class="dna-svg__node" cx="116" cy="182" r="8" />
+              <circle class="dna-svg__node" cx="204" cy="182" r="8" />
+              <circle class="dna-svg__node" cx="160" cy="220" r="8" />
+              <circle class="dna-svg__node" cx="116" cy="262" r="8" />
+              <circle class="dna-svg__node" cx="204" cy="262" r="8" />
+              <circle class="dna-svg__node" cx="82" cy="322" r="8" />
+              <circle class="dna-svg__node" cx="238" cy="322" r="8" />
+              <circle class="dna-svg__node" cx="116" cy="382" r="8" />
+              <circle class="dna-svg__node" cx="204" cy="382" r="8" />
+              <circle class="dna-svg__node" cx="82" cy="442" r="8" />
+              <circle class="dna-svg__node" cx="238" cy="442" r="8" />
+              <circle class="dna-svg__node" cx="160" cy="510" r="8" />
+            </g>
+          </svg>
         </div>
 
       </div>

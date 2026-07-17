@@ -47,4 +47,6 @@ const observer = new IntersectionObserver(
   }
 );
 
-pageSections.forEach((section) => observer.observe(section));
+pageSections.forEach((section) => {
+  observer.observe(section);
+});

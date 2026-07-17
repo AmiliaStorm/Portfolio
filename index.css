@@ -1,7 +1,3 @@
-/* =========================================================
-   ROOT
-========================================================= */
-
 :root {
   --background: #030914;
   --background-soft: #06101d;
@@ -33,9 +29,7 @@
   --header-height: 92px;
 }
 
-/* =========================================================
-   RESET
-========================================================= */
+/* Reset */
 
 *,
 *::before,
@@ -50,6 +44,8 @@ html {
 
 body {
   margin: 0;
+  overflow-x: hidden;
+
   background:
     radial-gradient(
       circle at 75% 0%,
@@ -59,6 +55,7 @@ body {
     var(--background);
 
   color: var(--text);
+
   font-family:
     Inter,
     ui-sans-serif,
@@ -69,7 +66,6 @@ body {
     sans-serif;
 
   line-height: 1.6;
-  overflow-x: hidden;
 }
 
 body::before {
@@ -89,7 +85,6 @@ body::before {
     );
 
   background-size: 70px 70px;
-  mask-image: linear-gradient(to bottom, black, transparent 70%);
   content: "";
   pointer-events: none;
 }
@@ -114,9 +109,7 @@ button {
   color: inherit;
 }
 
-/* =========================================================
-   GENERAL
-========================================================= */
+/* General */
 
 .container {
   width: min(calc(100% - 48px), var(--container));
@@ -174,9 +167,7 @@ button {
   transform: translateX(4px);
 }
 
-/* =========================================================
-   BUTTONS
-========================================================= */
+/* Buttons */
 
 .button {
   display: inline-flex;
@@ -224,9 +215,7 @@ button {
   background: rgba(47, 131, 255, 0.08);
 }
 
-/* =========================================================
-   HEADER
-========================================================= */
+/* Header */
 
 .site-header {
   position: sticky;
@@ -234,8 +223,9 @@ button {
   z-index: 1000;
 
   height: var(--header-height);
+
   border-bottom: 1px solid var(--border);
-  background: rgba(3, 9, 20, 0.82);
+  background: rgba(3, 9, 20, 0.86);
 
   backdrop-filter: blur(18px);
 }
@@ -289,7 +279,6 @@ button {
   position: relative;
   color: var(--text-soft);
   font-size: 0.88rem;
-
   transition: color 180ms ease;
 }
 
@@ -341,6 +330,8 @@ button {
 
 .github-button img {
   width: 17px;
+  height: 17px;
+  object-fit: contain;
   filter: invert(1);
 }
 
@@ -354,9 +345,7 @@ button {
   display: none;
 }
 
-/* =========================================================
-   HERO
-========================================================= */
+/* Hero */
 
 .hero {
   position: relative;
@@ -466,6 +455,7 @@ button {
 .hero__visual::before {
   position: absolute;
   inset: 0 0 0 -150px;
+  z-index: 1;
 
   background:
     linear-gradient(
@@ -476,7 +466,6 @@ button {
     );
 
   content: "";
-  z-index: 1;
   pointer-events: none;
 }
 
@@ -484,10 +473,12 @@ button {
   width: 100%;
   height: 100%;
   min-height: 730px;
+
   object-fit: cover;
   object-position: center;
 
   opacity: 0.93;
+
   filter:
     saturate(1.18)
     contrast(1.08)
@@ -528,9 +519,7 @@ button {
   background: rgba(40, 130, 255, 0.07);
 }
 
-/* =========================================================
-   PROJECTS
-========================================================= */
+/* Projects */
 
 .projects {
   background:
@@ -554,6 +543,7 @@ button {
 
   border: 1px solid var(--border);
   border-radius: var(--radius);
+
   background:
     linear-gradient(
       160deg,
@@ -579,8 +569,10 @@ button {
   position: relative;
   display: block;
   overflow: hidden;
+
   aspect-ratio: 1.72 / 1;
   margin: 14px 14px 0;
+
   border-radius: 11px;
   background: #050b13;
 }
@@ -604,7 +596,6 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
-
   transition: transform 500ms ease;
 }
 
@@ -621,6 +612,7 @@ button {
 
 .project-card__category {
   margin: 0 0 8px;
+
   color: var(--blue-light);
   font-size: 0.68rem;
   font-weight: 700;
@@ -665,6 +657,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   margin-top: auto;
   padding-top: 27px;
 }
@@ -692,12 +685,12 @@ button {
 
 .icon-link img {
   width: 16px;
+  height: 16px;
+  object-fit: contain;
   filter: invert(1);
 }
 
-/* =========================================================
-   SKILLS
-========================================================= */
+/* Skills */
 
 .skills {
   background: rgba(5, 13, 24, 0.4);
@@ -718,6 +711,7 @@ button {
 
   border: 1px solid var(--border);
   border-radius: var(--radius);
+
   background:
     linear-gradient(
       160deg,
@@ -809,6 +803,7 @@ button {
 
   border: 1px solid var(--border);
   border-radius: var(--radius);
+
   background:
     linear-gradient(
       90deg,
@@ -833,9 +828,7 @@ button {
   font-size: 0.82rem;
 }
 
-/* =========================================================
-   ADDITIONAL PROJECTS
-========================================================= */
+/* Additional projects */
 
 .all-projects {
   background:
@@ -854,6 +847,7 @@ button {
 
 .additional-card {
   overflow: hidden;
+
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
@@ -894,9 +888,7 @@ button {
   padding: 23px;
 }
 
-/* =========================================================
-   ABOUT
-========================================================= */
+/* About */
 
 .about {
   background:
@@ -936,7 +928,10 @@ button {
   object-fit: cover;
 
   border-radius: var(--radius-large);
-  filter: saturate(0.85) contrast(1.04);
+
+  filter:
+    saturate(0.85)
+    contrast(1.04);
 }
 
 .about__content h2 {
@@ -959,12 +954,11 @@ button {
   margin-top: 34px;
 }
 
-/* =========================================================
-   FOOTER
-========================================================= */
+/* Footer */
 
 .footer {
   padding: 75px 0 28px;
+
   border-top: 1px solid var(--border);
   background: #020711;
 }
@@ -978,6 +972,7 @@ button {
 .footer__brand > p {
   max-width: 330px;
   margin: 25px 0 0;
+
   color: var(--muted);
   font-size: 0.82rem;
   line-height: 1.75;
@@ -1011,6 +1006,7 @@ button {
 
   border: 1px solid var(--border-bright);
   border-radius: var(--radius);
+
   background: rgba(47, 131, 255, 0.035);
 }
 
@@ -1056,9 +1052,7 @@ button {
   color: var(--blue-light);
 }
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+/* Responsive */
 
 @media (max-width: 1180px) {
   .hero__layout {
@@ -1109,6 +1103,7 @@ button {
 
     border: 0;
     background: transparent;
+
     cursor: pointer;
   }
 

@@ -1,1 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
 
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    AGER Protein Structure Analysis | Amilia Storm
+  </title>
+
+  <meta
+    name="description"
+    content="A bioinformatics case study exploring the AGER protein through biological databases, genetic variation and protein structure prediction."
+  />
+
+  <link
+    rel="shortcut icon"
+    type="image/png"
+    href="./images/favicon.png"
+  />
+
+  <link rel="stylesheet" href="./index.css?v=7" />
+</head>
+
+<body class="project-page">
+
+  <!-- Navigation -->
+
+  <header class="site-header" id="top">
+    <div class="container navbar">
+
+      <a class="brand" href="./index.html" aria-label="Return to homepage">
+        <span class="brand__logo">AS</span>
+
+        <span class="brand__text">
+          <strong>Amilia Storm</strong>
+          <small>Bioinformatics Student & Data Scientist</small>
+        </span>
+      </a>
+
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-label="Open navigation"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav" aria-label="Project navigation">
+        <a class="nav__link" href="./index.html">Home</a>
+        <a class="nav__link active" href="#overview">Overview</a>
+        <a class="nav__link" href="#workflow">Workflow</a>
+        <a class="nav__link" href="#results">Results</a>
+        <a class="nav__link" href="#code">Code</a>
+      </nav>
+
+      <a
+        class="github-button"
+        href="https://github.com/AmiliaStorm"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <img src="./images/github.svg" alt="" />
+        GitHub
+      </a>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Project hero -->
+
+    <section class="case-hero" id="overview">
+      <div class="case-hero__glow"></div>
+
+      <div class="container case-hero__layout">
+
+        <div class="case-hero__content">
+
+          <a class="back-link" href="./index.html#projects">
+            ← Back to projects
+          </a>
+
+          <p class="section-label">
+            Bioinformatics / Protein Structure
+          </p>
+
+          <h1>
+            Protein Structure Analysis:
+            <span>AGER</span>
+          </h1>
+
+          <p class="case-hero__description">
+            A bioinformatics project exploring the AGER protein through
+            sequence information, biological databases, genetic variation,
+            experimentally determined structures and AlphaFold2/ColabFold
+            structure prediction.
+          </p>
+
+          <div class="case-hero__actions">
+
+            <a
+              class="button button--primary"
+              href="#demo"
+            >
+              Watch Demo
+              <span>→</span>
+            </a>
+
+            <a
+              class="button button--secondary"
+              href="https://github.com/AmiliaStorm"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View Code
+            </a>
+
+          </div>
+
+          <div class="case-meta">
+
+            <div class="case-meta__item">
+              <span>Project type</span>
+              <strong>Bioinformatics analysis</strong>
+            </div>
+
+            <div class="case-meta__item">
+              <span>Focus</span>
+              <strong>Protein structure</strong>
+            </div>
+
+            <div class="case-meta__item">
+              <span>Tools</span>
+              <strong>AlphaFold2 · Python</strong>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="case-hero__visual">
+
+          <div class="case-hero__image-frame">
+            <img
+              src="./images/ager-project.jpg"
+              alt="AGER protein structure prediction and confidence plots"
+            />
+          </div>
+
+          <div class="floating-label floating-label--top">
+            AlphaFold2
+          </div>
+
+          <div class="floating-label floating-label--bottom">
+            Structure prediction
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Project summary -->
+
+    <section class="section case-summary">
+      <div class="container case-summary__grid">
+
+        <article class="summary-card">
+          <p class="section-label">The question</p>
+
+          <h2>
+            What biological information can we combine to understand AGER?
+          </h2>
+
+          <p>
+            The project brought together sequence information, gene annotation,
+            genetic variants, experimentally determined protein structures and
+            computational structure prediction.
+          </p>
+        </article>
+
+        <article class="summary-card">
+          <p class="section-label">My role</p>
+
+          <h2>
+            Database research, analysis and scientific interpretation
+          </h2>
+
+          <p>
+            I explored several biological databases, compared available
+            structural information and evaluated predicted protein models and
+            their confidence.
+          </p>
+        </article>
+
+        <article class="summary-card">
+          <p class="section-label">The output</p>
+
+          <h2>
+            A structured analysis of sequence, variants and protein structure
+          </h2>
+
+          <p>
+            The project combined biological interpretation with figures,
+            structure-prediction outputs and documented research findings.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Workflow -->
+
+    <section class="section workflow-section" id="workflow">
+      <div class="container">
+
+        <div class="section-heading">
+          <div>
+            <p class="section-label">Project process</p>
+            <h2>Bioinformatics Workflow</h2>
+          </div>
+
+          <p class="section-heading__description">
+            Each resource contributed a different layer of information about
+            the gene, protein, variants and predicted structure.
+          </p>
+        </div>
+
+        <div class="workflow">
+
+          <article class="workflow-step">
+            <div class="workflow-step__number">01</div>
+
+            <div class="workflow-step__icon">DNA</div>
+
+            <h3>Sequence and protein information</h3>
+
+            <p>
+              Used UniProt to examine protein identity, sequence information,
+              function and available biological annotations.
+            </p>
+
+            <span>UniProt</span>
+          </article>
+
+          <article class="workflow-step">
+            <div class="workflow-step__number">02</div>
+
+            <div class="workflow-step__icon">GENE</div>
+
+            <h3>Gene structure and annotation</h3>
+
+            <p>
+              Used Ensembl to investigate gene location, transcripts, exons and
+              additional genomic information.
+            </p>
+
+            <span>Ensembl</span>
+          </article>
+
+          <article class="workflow-step">
+            <div class="workflow-step__number">03</div>
+
+            <div class="workflow-step__icon">VAR</div>
+
+            <h3>Genetic variation</h3>
+
+            <p>
+              Explored reported variants and their available clinical or
+              biological interpretations.
+            </p>
+
+            <span>ClinVar</span>
+          </article>
+
+          <article class="workflow-step">
+            <div class="workflow-step__number">04</div>
+
+            <div class="workflow-step__icon">3D</div>
+
+            <h3>Known protein structures</h3>
+
+            <p>
+              Investigated experimentally available structural information and
+              compared it with computational predictions.
+            </p>
+
+            <span>PDB</span>
+          </article>
+
+          <article class="workflow-step">
+            <div class="workflow-step__number">05</div>
+
+            <div class="workflow-step__icon">AI</div>
+
+            <h3>Structure prediction</h3>
+
+            <p>
+              Generated or examined predicted protein structures and confidence
+              information using AlphaFold2 and ColabFold.
+            </p>
+
+            <span>AlphaFold2 · ColabFold</span>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Demo -->
+
+    <section class="section demo-section" id="demo">
+      <div class="container">
+
+        <div class="section-heading">
+          <div>
+            <p class="section-label">Project walkthrough</p>
+            <h2>Demo Video</h2>
+          </div>
+
+          <p class="section-heading__description">
+            A short walkthrough can show the research question, databases,
+            analysis process and main results.
+          </p>
+        </div>
+
+        <div class="video-card">
+
+          <!--
+            Replace the section below with a real video later.
+
+            For a local MP4:
+
+            <video controls poster="./images/ager-project.jpg">
+              <source src="./videos/ager-demo.mp4" type="video/mp4" />
+            </video>
+
+            For YouTube:
+
+            <iframe
+              src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+              title="AGER project demonstration"
+              allowfullscreen>
+            </iframe>
+          -->
+
+          <div class="video-placeholder">
+
+            <div class="video-placeholder__play">
+              ▶
+            </div>
+
+            <p>AGER project demo coming soon</p>
+
+            <span>
+              Add a screen recording explaining your workflow and results.
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Results -->
+
+    <section class="section results-section" id="results">
+      <div class="container">
+
+        <div class="section-heading">
+          <div>
+            <p class="section-label">Analysis output</p>
+            <h2>Structure Prediction Results</h2>
+          </div>
+        </div>
+
+        <div class="results-grid">
+
+          <div class="results-image-card">
+            <img
+              src="./images/ager-project.jpg"
+              alt="ColabFold and AlphaFold confidence plots for AGER"
+            />
+
+            <div class="results-image-card__caption">
+              <strong>Predicted structure confidence</strong>
+
+              <span>
+                Model ranking, sequence coverage and predicted confidence.
+              </span>
+            </div>
+          </div>
+
+          <div class="results-content">
+
+            <article class="finding-card">
+              <span class="finding-card__number">01</span>
+
+              <div>
+                <h3>Model confidence varied across the sequence</h3>
+
+                <p>
+                  Confidence plots help identify which regions of a predicted
+                  structure are likely to be modelled reliably and which regions
+                  should be interpreted cautiously.
+                </p>
+              </div>
+            </article>
+
+            <article class="finding-card">
+              <span class="finding-card__number">02</span>
+
+              <div>
+                <h3>Multiple models allowed structural comparison</h3>
+
+                <p>
+                  Comparing ranked models provides insight into whether the
+                  predicted fold remains consistent across different model
+                  outputs.
+                </p>
+              </div>
+            </article>
+
+            <article class="finding-card">
+              <span class="finding-card__number">03</span>
+
+              <div>
+                <h3>Database evidence provided biological context</h3>
+
+                <p>
+                  Structure predictions were interpreted alongside information
+                  from gene, protein, variant and structural databases rather
+                  than being treated as isolated results.
+                </p>
+              </div>
+            </article>
+
+          </div>
+
+        </div>
+
+        <div class="limitations-card">
+
+          <div class="limitations-card__icon">!</div>
+
+          <div>
+            <h3>Important limitation</h3>
+
+            <p>
+              Predicted protein structures are computational models. Confidence
+              scores and available experimental evidence should always be
+              considered before drawing biological or clinical conclusions.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Code -->
+
+    <section class="section code-section" id="code">
+      <div class="container">
+
+        <div class="section-heading">
+          <div>
+            <p class="section-label">Implementation</p>
+            <h2>Code & Notebook</h2>
+          </div>
+
+          <a
+            class="text-link"
+            href="https://github.com/AmiliaStorm"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Open GitHub
+            <span>→</span>
+          </a>
+        </div>
+
+        <div class="code-grid">
+
+          <article class="code-card">
+
+            <div class="code-card__header">
+              <div class="code-card__dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              <p>sequence_analysis.py</p>
+            </div>
+
+            <pre><code><span class="code-keyword">from</span> Bio <span class="code-keyword">import</span> SeqIO
+
+record = SeqIO.read(
+    <span class="code-string">"ager_sequence.fasta"</span>,
+    <span class="code-string">"fasta"</span>
+)
+
+sequence_length = len(record.seq)
+
+<span class="code-keyword">print</span>(
+    <span class="code-string">f"Protein length: {sequence_length}"</span>
+)</code></pre>
+
+            <div class="code-card__explanation">
+              <h3>Sequence processing</h3>
+
+              <p>
+                Example of how a FASTA sequence can be loaded and inspected
+                programmatically with Biopython.
+              </p>
+            </div>
+
+          </article>
+
+          <article class="code-card">
+
+            <div class="code-card__header">
+              <div class="code-card__dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              <p>confidence_plot.py</p>
+            </div>
+
+            <pre><code><span class="code-keyword">import</span> matplotlib.pyplot <span class="code-keyword">as</span> plt
+
+positions = range(
+    <span class="code-number">1</span>,
+    len(plddt_scores) + <span class="code-number">1</span>
+)
+
+plt.plot(positions, plddt_scores)
+plt.xlabel(<span class="code-string">"Residue position"</span>)
+plt.ylabel(<span class="code-string">"pLDDT score"</span>)
+plt.show()</code></pre>
+
+            <div class="code-card__explanation">
+              <h3>Confidence visualisation</h3>
+
+              <p>
+                Predicted confidence values can be plotted by residue to locate
+                high- and low-confidence regions.
+              </p>
+            </div>
+
+          </article>
+
+        </div>
+
+        <div class="notebook-banner">
+
+          <div class="notebook-banner__icon">
+            NB
+          </div>
+
+          <div>
+            <h3>Full Jupyter Notebook</h3>
+
+            <p>
+              Add your cleaned notebook with explanations, figures and
+              reproducible analysis steps.
+            </p>
+          </div>
+
+          <a
+            class="button button--primary"
+            href="https://github.com/AmiliaStorm"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Open Notebook
+            <span>→</span>
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Skills demonstrated -->
+
+    <section class="section demonstrated-section">
+      <div class="container">
+
+        <div class="section-heading">
+          <div>
+            <p class="section-label">Project takeaways</p>
+            <h2>Skills Demonstrated</h2>
+          </div>
+        </div>
+
+        <div class="demonstrated-grid">
+
+          <article>
+            <span>01</span>
+            <h3>Biological database research</h3>
+            <p>
+              Combined information from several specialist scientific resources.
+            </p>
+          </article>
+
+          <article>
+            <span>02</span>
+            <h3>Protein structure analysis</h3>
+            <p>
+              Examined predicted models, confidence scores and available
+              structural evidence.
+            </p>
+          </article>
+
+          <article>
+            <span>03</span>
+            <h3>Scientific programming</h3>
+            <p>
+              Used Python and notebook-based analysis for biological data and
+              visualisation.
+            </p>
+          </article>
+
+          <article>
+            <span>04</span>
+            <h3>Biological interpretation</h3>
+            <p>
+              Connected computational outputs to gene, protein and variant
+              information.
+            </p>
+          </article>
+
+          <article>
+            <span>05</span>
+            <h3>Technical communication</h3>
+            <p>
+              Presented a complex workflow through figures, explanations and
+              structured results.
+            </p>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Next project -->
+
+    <section class="next-project">
+      <div class="container next-project__content">
+
+        <div>
+          <p class="section-label">Continue exploring</p>
+
+          <h2>Next project: Biomarker Analyzer</h2>
+
+          <p>
+            A Java-based tool for organizing and visualising biological
+            laboratory values.
+          </p>
+        </div>
+
+        <a
+          class="button button--primary"
+          href="./index.html#projects"
+        >
+          View More Projects
+          <span>→</span>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+
+  <footer class="footer">
+    <div class="container">
+
+      <div class="footer__main">
+
+        <div class="footer__brand">
+
+          <a class="brand" href="./index.html">
+
+            <span class="brand__logo">AS</span>
+
+            <span class="brand__text">
+              <strong>Amilia Storm</strong>
+              <small>Bioinformatics & Data Science</small>
+            </span>
+
+          </a>
+
+          <p>
+            Building thoughtful tools at the intersection of biology,
+            programming and data.
+          </p>
+
+        </div>
+
+        <div class="footer__column">
+          <h3>Project</h3>
+
+          <a href="#overview">Overview</a>
+          <a href="#workflow">Workflow</a>
+          <a href="#results">Results</a>
+          <a href="#code">Code</a>
+        </div>
+
+        <div class="footer__column">
+          <h3>Connect</h3>
+
+          <a href="mailto:AmiliaSt@hotmail.com">
+            Email
+          </a>
+
+          <a
+            href="https://github.com/AmiliaStorm"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>
+
+          <a href="./index.html">
+            Portfolio
+          </a>
+        </div>
+
+        <div class="footer__contact-card">
+          <p>Interested in working together?</p>
+
+          <a href="mailto:AmiliaSt@hotmail.com">
+            Get in touch
+            <span>→</span>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <p>&copy; <span id="current-year">2026</span> Amilia Storm.</p>
+
+        <a href="#top">
+          Back to top
+          <span>↑</span>
+        </a>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="./index.js?v=7"></script>
+
+</body>
+</html>

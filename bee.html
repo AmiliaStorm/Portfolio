@@ -1,1 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
 
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="description"
+    content="Bee Species Identifier case study by Amilia Storm. A Java Swing application using morphological traits and a branching identification key."
+  />
+
+  <title>Bee Species Identifier | Amilia Storm</title>
+
+  <link rel="stylesheet" href="./bee.css?v=1" />
+</head>
+
+<body>
+  <!-- Navigation -->
+
+  <header class="topbar" id="top">
+    <a class="brand" href="./index.html">
+      <span>AS</span>
+
+      <div>
+        <strong>Amilia Storm</strong>
+        <small>Bioinformatics & Data Science</small>
+      </div>
+    </a>
+
+    <nav>
+      <a href="./index.html">Home</a>
+      <a class="active" href="#top">Project</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#media">Demo</a>
+      <a href="#code">Code</a>
+    </nav>
+
+    <a
+      class="github"
+      href="https://github.com/AmiliaStorm"
+      target="_blank"
+      rel="noreferrer"
+    >
+      GitHub
+    </a>
+  </header>
+
+  <main>
+    <!-- Hero -->
+
+    <section class="hero shell">
+      <div class="hero-copy">
+        <a class="back" href="./index.html#projects">
+          ← Back to projects
+        </a>
+
+        <p class="kicker">
+          Java / Biological Classification
+        </p>
+
+        <h1>
+          Bee Species
+          <br />
+          <span>Identifier</span>
+        </h1>
+
+        <p class="lead">
+          A Java Swing application that guides users through visible
+          morphological traits and returns a probable species with its
+          scientific name, family, description and image.
+        </p>
+
+        <div class="chips">
+          <span>Java</span>
+          <span>Java Swing</span>
+          <span>CardLayout</span>
+          <span>OOP</span>
+          <span>Classification</span>
+          <span>GUI Design</span>
+          <span>Biology</span>
+        </div>
+
+        <div class="actions">
+          <a class="btn primary" href="#video">
+            ▶ Watch demo
+          </a>
+
+          <a class="btn" href="#code">
+            &lt;/&gt; View code
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="application-preview">
+          <div class="preview-window">
+            <div class="window-bar">
+              <span></span>
+              <span></span>
+              <span></span>
+
+              <p>Bee Identifier</p>
+            </div>
+
+            <div class="preview-content">
+              <img
+                src="./images/Species-Identifier.jpg"
+                alt="Bee Species Identifier application interface"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="metric-panel">
+          <h3>Project profile</h3>
+
+          <p>
+            <span>Language</span>
+            <strong>Java</strong>
+          </p>
+
+          <p>
+            <span>Framework</span>
+            <strong>Swing</strong>
+          </p>
+
+          <p>
+            <span>Architecture</span>
+            <strong>OOP</strong>
+          </p>
+
+          <p>
+            <span>Species</span>
+            <strong>6</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Overview -->
+
+    <section class="overview shell card">
+      <div>
+        <p class="kicker">Overview</p>
+
+        <p>
+          The Bee Species Identifier is a desktop application that uses
+          visible morphological traits to guide the user through a branching
+          identification key. The user answers questions about insect group,
+          wing-cell count, pollen baskets, hair colour and abdominal markings
+          before receiving a probable species result.
+        </p>
+      </div>
+
+      <dl>
+        <div>
+          <dt>Interface</dt>
+          <dd>Java Swing</dd>
+        </div>
+
+        <div>
+          <dt>Navigation</dt>
+          <dd>CardLayout</dd>
+        </div>
+
+        <div>
+          <dt>Model</dt>
+          <dd>Species classes</dd>
+        </div>
+
+        <div>
+          <dt>Focus</dt>
+          <dd>Morphology</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- Identification workflow -->
+
+    <section class="shell section" id="workflow">
+      <div class="heading">
+        <p class="kicker">Identification workflow</p>
+
+        <h2>
+          From visible traits to a probable species
+        </h2>
+      </div>
+
+      <div class="workflow">
+        <article>
+          <b>01</b>
+
+          <h3>Select insect group</h3>
+
+          <p>
+            The user first chooses whether the insect resembles a bee,
+            bumblebee, wasp or fly.
+          </p>
+
+          <span>Initial classification</span>
+        </article>
+
+        <article>
+          <b>02</b>
+
+          <h3>Inspect wing cells</h3>
+
+          <p>
+            The key asks whether the insect has two or three submarginal
+            cells in the wing.
+          </p>
+
+          <span>Wing morphology</span>
+        </article>
+
+        <article>
+          <b>03</b>
+
+          <h3>Check pollen basket</h3>
+
+          <p>
+            The presence or absence of a pollen basket helps separate
+            species groups.
+          </p>
+
+          <span>Leg morphology</span>
+        </article>
+
+        <article>
+          <b>04</b>
+
+          <h3>Compare body traits</h3>
+
+          <p>
+            Hair colour, head colour, body size and abdominal bands are
+            used as additional distinguishing features.
+          </p>
+
+          <span>External appearance</span>
+        </article>
+
+        <article>
+          <b>05</b>
+
+          <h3>Display result</h3>
+
+          <p>
+            The application returns the common name, scientific name,
+            family, description and species image.
+          </p>
+
+          <span>Species result</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- Supported species -->
+
+    <section class="shell section">
+      <div class="heading">
+        <p class="kicker">Species model</p>
+
+        <h2>
+          Species currently represented
+        </h2>
+      </div>
+
+      <div class="species-grid">
+        <article>
+          <div class="species-icon">HB</div>
+
+          <h3>Honeybee</h3>
+
+          <em>Apis mellifera</em>
+
+          <p>Family: Apidae</p>
+        </article>
+
+        <article>
+          <div class="species-icon">CB</div>
+
+          <h3>Carder Bee</h3>
+
+          <em>Bombus pascuorum</em>
+
+          <p>Family: Apidae</p>
+        </article>
+
+        <article>
+          <div class="species-icon">FB</div>
+
+          <h3>Furrow Bee</h3>
+
+          <em>Halictus rubicundus</em>
+
+          <p>Family: Halictidae</p>
+        </article>
+
+        <article>
+          <div class="species-icon">MB</div>
+
+          <h3>Red Mason Bee</h3>
+
+          <em>Osmia bicornis</em>
+
+          <p>Family: Megachilidae</p>
+        </article>
+
+        <article>
+          <div class="species-icon">YF</div>
+
+          <h3>Yellow-face Bee</h3>
+
+          <em>Hylaeus confusus</em>
+
+          <p>Family: Colletidae</p>
+        </article>
+
+        <article>
+          <div class="species-icon">WV</div>
+
+          <h3>Common Wasp</h3>
+
+          <em>Vespula vulgaris</em>
+
+          <p>Family: Vespidae</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Demo and screenshots -->
+
+    <section class="shell section media-grid" id="media">
+      <article class="media-card" id="video">
+        <p class="kicker">Project video</p>
+
+        <div class="video-placeholder">
+          <div class="play">▶</div>
+
+          <strong>Bee Identifier walkthrough</strong>
+
+          <span>
+            Add your video as videos/bee-demo.mp4
+          </span>
+        </div>
+
+        <!--
+        Replace the placeholder above with this when your video is ready:
+
+        <video
+          class="project-video"
+          controls
+          poster="./images/Species-Identifier.jpg"
+        >
+          <source
+            src="./videos/bee-demo.mp4"
+            type="video/mp4"
+          />
+
+          Your browser does not support video.
+        </video>
+        -->
+
+        <p>
+          Demonstration of the classification questions, navigation and
+          final species result.
+        </p>
+      </article>
+
+      <article class="media-card">
+        <p class="kicker">Application interface</p>
+
+        <img
+          src="./images/Species-Identifier.jpg"
+          alt="Bee Identifier Java Swing interface"
+        />
+
+        <p>
+          The desktop interface uses Java Swing panels, buttons, images and
+          question screens.
+        </p>
+      </article>
+
+      <article class="media-card">
+        <p class="kicker">Decision system</p>
+
+        <div class="decision-diagram">
+          <div>Insect group</div>
+          <span>↓</span>
+          <div>Wing cells</div>
+          <span>↓</span>
+          <div>Pollen basket</div>
+          <span>↓</span>
+          <div>Colour and hair</div>
+          <span>↓</span>
+          <div>Species result</div>
+        </div>
+
+        <p>
+          Each answer directs the user to a new card in the identification
+          sequence.
+        </p>
+      </article>
+    </section>
+
+    <!-- Architecture -->
+
+    <section class="shell section">
+      <div class="heading">
+        <p class="kicker">Application architecture</p>
+
+        <h2>
+          How the Java project is organised
+        </h2>
+      </div>
+
+      <div class="architecture-grid">
+        <article>
+          <span>01</span>
+
+          <h3>Main application</h3>
+
+          <p>
+            Creates the JFrame, sets the BeeView as the main content panel
+            and launches the desktop application.
+          </p>
+
+          <strong>Main.java</strong>
+        </article>
+
+        <article>
+          <span>02</span>
+
+          <h3>User interface</h3>
+
+          <p>
+            Builds question panels, buttons, images, result panels and
+            CardLayout navigation.
+          </p>
+
+          <strong>BeeView.java</strong>
+        </article>
+
+        <article>
+          <span>03</span>
+
+          <h3>Species parent class</h3>
+
+          <p>
+            Stores the shared fields used by every supported species.
+          </p>
+
+          <strong>BeeSpecies.java</strong>
+        </article>
+
+        <article>
+          <span>04</span>
+
+          <h3>Species subclasses</h3>
+
+          <p>
+            Each subclass provides its common name, scientific name,
+            family, description and image path.
+          </p>
+
+          <strong>HoneyBee.java and others</strong>
+        </article>
+      </div>
+    </section>
+
+    <!-- Code -->
+
+    <section class="shell section code-section" id="code">
+      <div class="heading">
+        <p class="kicker">Demo code</p>
+
+        <h2>
+          Real methods from the application
+        </h2>
+      </div>
+
+      <div class="code-layout">
+        <div class="tabs">
+          <button
+            class="tab active"
+            type="button"
+            data-tab="navigation"
+          >
+            card_navigation.java
+          </button>
+
+          <button
+            class="tab"
+            type="button"
+            data-tab="species"
+          >
+            BeeSpecies.java
+          </button>
+
+          <button
+            class="tab"
+            type="button"
+            data-tab="result"
+          >
+            result_panel.java
+          </button>
+
+          <button
+            class="tab"
+            type="button"
+            data-tab="subclass"
+          >
+            HoneyBee.java
+          </button>
+
+          <button
+            class="tab"
+            type="button"
+            data-tab="main"
+          >
+            Main.java
+          </button>
+        </div>
+
+        <div class="editor">
+          <pre
+            id="navigation"
+            class="snippet active"
+          ><code><span>JButton</span> twoCellsButton =
+    <span>new</span> JButton(<em>"To"</em>);
+
+<span>JButton</span> threeCellsButton =
+    <span>new</span> JButton(<em>"Tre"</em>);
+
+twoCellsButton.addActionListener(
+    event -> cardLayout.show(
+        cards,
+        <em>"beeQuestionTwoCells"</em>
+    )
+);
+
+threeCellsButton.addActionListener(
+    event -> cardLayout.show(
+        cards,
+        <em>"beeQuestion2"</em>
+    )
+);</code></pre>
+
+          <pre
+            id="species"
+            class="snippet"
+          ><code><span>public abstract class</span> BeeSpecies {
+
+    <span>private final</span> String name;
+    <span>private final</span> String scientificName;
+    <span>private final</span> String family;
+
+    <span>protected final</span> String description;
+    <span>protected final</span> String imagePath;
+
+    <span>public</span> BeeSpecies(
+        String name,
+        String scientificName,
+        String family,
+        String description,
+        String imagePath
+    ) {
+        <span>this</span>.name = name;
+        <span>this</span>.scientificName =
+            scientificName;
+        <span>this</span>.family = family;
+        <span>this</span>.description =
+            description;
+        <span>this</span>.imagePath = imagePath;
+    }
+}</code></pre>
+
+          <pre
+            id="result"
+            class="snippet"
+          ><code><span>private</span> JPanel createSpeciesResultPanel(
+    BeeSpecies species
+) {
+    JLabel commonNameLabel =
+        <span>new</span> JLabel(
+            species.getName(),
+            SwingConstants.CENTER
+        );
+
+    JLabel scientificNameLabel =
+        <span>new</span> JLabel(
+            species.getScienceName(),
+            SwingConstants.CENTER
+        );
+
+    JLabel familyLabel =
+        <span>new</span> JLabel(
+            <em>"Family: "</em> +
+            species.getFamily(),
+            SwingConstants.CENTER
+        );
+
+    JTextArea descriptionArea =
+        <span>new</span> JTextArea(
+            species.getDescription()
+        );
+
+    <span>return</span> panel;
+}</code></pre>
+
+          <pre
+            id="subclass"
+            class="snippet"
+          ><code><span>public class</span> HoneyBee
+    <span>extends</span> BeeSpecies {
+
+    <span>public</span> HoneyBee() {
+        <span>super</span>(
+            <em>"Honningbie"</em>,
+            <em>"Apis mellifera"</em>,
+            <em>"Apidae"</em>,
+            <em>"A social bee important for
+pollination and honey production."</em>,
+            <em>"/HonningBie.jpg"</em>
+        );
+    }
+}</code></pre>
+
+          <pre
+            id="main"
+            class="snippet"
+          ><code><span>public class</span> Main {
+
+    <span>public static final</span> String
+        WINDOW_TITLE =
+            <em>"Bee Identifier"</em>;
+
+    <span>public static void</span> main(
+        String[] args
+    ) {
+        BeeView view =
+            <span>new</span> BeeView();
+
+        JFrame frame =
+            <span>new</span> JFrame(
+                WINDOW_TITLE
+            );
+
+        frame.setContentPane(view);
+        frame.setSize(900, 650);
+        frame.setLocationRelativeTo(
+            <span>null</span>
+        );
+
+        frame.setVisible(<span>true</span>);
+    }
+}</code></pre>
+        </div>
+
+        <aside>
+          <h3>What this demonstrates</h3>
+
+          <p>
+            Java Swing GUI development, event-driven programming, lambda
+            expressions, inheritance, encapsulation, polymorphism and
+            biological classification logic.
+          </p>
+
+          <a
+            class="btn"
+            href="https://github.com/AmiliaStorm"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Open GitHub
+          </a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Design decisions -->
+
+    <section class="shell section">
+      <div class="heading">
+        <p class="kicker">Key design decisions</p>
+
+        <h2>
+          What the project demonstrates
+        </h2>
+      </div>
+
+      <div class="insights">
+        <article>
+          <h3>Card-based navigation</h3>
+
+          <p>
+            CardLayout allows the application to switch between question
+            screens without opening a new window for every decision.
+          </p>
+        </article>
+
+        <article>
+          <h3>Object-oriented species model</h3>
+
+          <p>
+            Shared species information is stored in a parent class while
+            individual species inherit and provide their own values.
+          </p>
+        </article>
+
+        <article>
+          <h3>Event-driven interaction</h3>
+
+          <p>
+            Action listeners and lambda expressions connect each user answer
+            to the next stage in the identification key.
+          </p>
+        </article>
+
+        <article>
+          <h3>Biological interpretation</h3>
+
+          <p>
+            Morphological traits are translated into a structured decision
+            flow that a non-specialist can follow.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Limitations -->
+
+    <section class="shell section">
+      <div class="limitations">
+        <div class="limitations-icon">!</div>
+
+        <div>
+          <p class="kicker">Limitations and future work</p>
+
+          <h2>
+            Educational identification tool
+          </h2>
+
+          <p>
+            The application currently supports a limited set of species and
+            relies on simplified visible traits. It should be presented as an
+            educational identification aid rather than a complete scientific
+            taxonomic key.
+          </p>
+
+          <p>
+            Future versions could add more species, clearer illustrations,
+            location filters, confidence scoring and an image-recognition
+            model.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+
+  <footer>
+    <a class="brand" href="#top">
+      <span>AS</span>
+
+      <div>
+        <strong>Amilia Storm</strong>
+        <small>Bioinformatics & Data Science</small>
+      </div>
+    </a>
+
+    <p>© 2026 Amilia Storm</p>
+
+    <a href="mailto:AmiliaSt@hotmail.com">
+      Get in touch
+    </a>
+  </footer>
+
+  <script src="./bee.js?v=1"></script>
+</body>
+</html>

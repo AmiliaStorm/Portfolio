@@ -1280,22 +1280,44 @@ button {
   left: 0;
   z-index: 9999;
 
-  width: 92px;
-  height: 84px;
+  width: 68px;
+  height: 61px;
 
   pointer-events: none;
   opacity: 0;
 
-  transform-origin: center;
-  will-change: transform;
+  border: 1.5px solid rgba(226, 177, 152, 0.82);
+  border-radius: 48% 52% 55% 45% / 52% 45% 55% 48%;
+
+  background:
+    radial-gradient(
+      circle at 30% 25%,
+      rgba(255, 255, 255, 0.38),
+      transparent 23%
+    ),
+    radial-gradient(
+      circle at 70% 72%,
+      rgba(169, 95, 120, 0.13),
+      transparent 36%
+    ),
+    rgba(190, 121, 102, 0.2);
+
+  box-shadow:
+    0 0 13px rgba(216, 143, 119, 0.36),
+    inset 0 0 15px rgba(255, 220, 203, 0.2),
+    inset -8px -6px 15px rgba(104, 50, 71, 0.08);
+
+  backdrop-filter: blur(2px);
+
+  transform: translate(-50%, -50%);
 
   transition:
     opacity 180ms ease,
+    width 180ms ease,
+    height 180ms ease,
     filter 180ms ease;
 
-  filter:
-    drop-shadow(0 0 10px rgba(89, 193, 255, 0.38))
-    drop-shadow(0 0 20px rgba(145, 116, 255, 0.24));
+  animation: cell-cursor-float 3.8s ease-in-out infinite;
 }
 
 .cell-cursor.visible {
@@ -1303,83 +1325,165 @@ button {
 }
 
 .cell-cursor.hovering {
+  width: 75px;
+  height: 68px;
+
   filter:
-    drop-shadow(0 0 14px rgba(104, 211, 255, 0.72))
-    drop-shadow(0 0 30px rgba(158, 111, 255, 0.45));
+    drop-shadow(0 0 8px rgba(238, 175, 151, 0.45));
 }
 
-.cell-cursor__svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
+.cell-cursor__nucleus {
+  position: absolute;
+  top: 25%;
+  left: 30%;
 
-.cell-membrane {
-  transform-origin: center;
-  animation: membrane-wobble 4s ease-in-out infinite;
-}
+  width: 39%;
+  aspect-ratio: 1;
 
-.cell-nucleus {
-  transform-origin: 52px 57px;
-  transition: transform 80ms linear;
+  border: 1px solid rgba(228, 170, 178, 0.92);
+  border-radius: 48% 52% 46% 54%;
+
+  background:
+    radial-gradient(
+      circle at 33% 27%,
+      rgba(255, 232, 238, 0.28),
+      transparent 24%
+    ),
+    rgba(151, 86, 110, 0.58);
+
+  box-shadow:
+    0 0 8px rgba(218, 133, 158, 0.42),
+    inset 0 0 7px rgba(255, 222, 228, 0.22);
+
+  transition: transform 90ms linear;
+
   animation: nucleus-pulse 3s ease-in-out infinite;
 }
 
-.cell-mitochondrion {
-  transform-box: fill-box;
-  transform-origin: center;
+.cell-cursor__nucleolus {
+  position: absolute;
+  top: 34%;
+  left: 36%;
+
+  width: 29%;
+  aspect-ratio: 1;
+
+  border-radius: 50%;
+
+  background: rgba(246, 184, 188, 0.88);
+
+  box-shadow:
+    0 0 5px rgba(248, 180, 191, 0.6);
 }
 
-.cell-mitochondrion--one {
-  animation: mitochondrion-one 4.2s ease-in-out infinite;
+.cell-cursor__organelle {
+  position: absolute;
+
+  width: 11px;
+  height: 5px;
+
+  border: 1px solid rgba(225, 163, 126, 0.92);
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(201, 115, 80, 0.72),
+      rgba(239, 165, 108, 0.62)
+    );
+
+  box-shadow:
+    0 0 4px rgba(230, 137, 84, 0.38);
 }
 
-.cell-mitochondrion--two {
-  animation: mitochondrion-two 4.8s ease-in-out infinite;
+.cell-cursor__organelle::after {
+  position: absolute;
+  top: 1px;
+  left: 2px;
+
+  width: 6px;
+  height: 2px;
+
+  border-top: 1px solid rgba(255, 222, 177, 0.8);
+  border-radius: 50%;
+
+  content: "";
 }
 
-.cell-particles circle {
-  fill: #dff7ff;
-  filter: drop-shadow(0 0 2px rgba(140, 222, 255, 0.95));
+.organelle-one {
+  top: 18%;
+  right: 13%;
+  transform: rotate(28deg);
+
+  animation: organelle-drift-one 4.2s ease-in-out infinite;
 }
 
-.cell-particles circle:nth-child(1) {
-  animation: particle-float-one 3.2s ease-in-out infinite;
+.organelle-two {
+  right: 11%;
+  bottom: 20%;
+  transform: rotate(-28deg);
+
+  animation: organelle-drift-two 4.7s ease-in-out infinite;
 }
 
-.cell-particles circle:nth-child(2) {
-  animation: particle-float-two 4s ease-in-out infinite;
+.organelle-three {
+  bottom: 15%;
+  left: 17%;
+  transform: rotate(14deg);
+
+  animation: organelle-drift-three 4.4s ease-in-out infinite;
 }
 
-.cell-particles circle:nth-child(3) {
-  animation: particle-float-three 3.6s ease-in-out infinite;
+.cell-particle {
+  position: absolute;
+
+  width: 3px;
+  height: 3px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 223, 209, 0.82);
+
+  box-shadow:
+    0 0 4px rgba(255, 203, 185, 0.58);
 }
 
-.cell-particles circle:nth-child(4) {
-  animation: particle-float-one 4.4s ease-in-out infinite reverse;
+.particle-one {
+  top: 18%;
+  left: 23%;
+
+  animation: particle-drift-one 3.5s ease-in-out infinite;
 }
 
-.cell-particles circle:nth-child(5) {
-  animation: particle-float-two 3.8s ease-in-out infinite reverse;
+.particle-two {
+  top: 47%;
+  right: 14%;
+
+  animation: particle-drift-two 4.1s ease-in-out infinite;
 }
 
-.cell-particles circle:nth-child(6) {
-  animation: particle-float-three 4.3s ease-in-out infinite reverse;
+.particle-three {
+  bottom: 17%;
+  left: 39%;
+
+  animation: particle-drift-three 3.8s ease-in-out infinite;
 }
 
-@keyframes membrane-wobble {
+.particle-four {
+  top: 37%;
+  left: 13%;
+
+  animation: particle-drift-two 4.4s ease-in-out infinite reverse;
+}
+
+@keyframes cell-cursor-float {
   0%,
   100% {
-    transform: scale(1, 1) rotate(0deg);
+    border-radius: 48% 52% 55% 45% / 52% 45% 55% 48%;
   }
 
-  33% {
-    transform: scale(1.035, 0.97) rotate(1deg);
-  }
-
-  66% {
-    transform: scale(0.975, 1.025) rotate(-1deg);
+  50% {
+    border-radius: 54% 46% 47% 53% / 45% 55% 48% 52%;
   }
 }
 
@@ -1390,65 +1494,76 @@ button {
   }
 
   50% {
-    scale: 1.045;
+    scale: 1.04;
   }
 }
 
-@keyframes mitochondrion-one {
+@keyframes organelle-drift-one {
   0%,
   100% {
-    transform: translate(0, 0) rotate(0deg);
+    translate: 0 0;
   }
 
   50% {
-    transform: translate(-3px, 4px) rotate(8deg);
+    translate: -3px 3px;
   }
 }
 
-@keyframes mitochondrion-two {
+@keyframes organelle-drift-two {
   0%,
   100% {
-    transform: translate(0, 0) rotate(0deg);
+    translate: 0 0;
   }
 
   50% {
-    transform: translate(4px, -3px) rotate(-10deg);
+    translate: 3px -3px;
   }
 }
 
-@keyframes particle-float-one {
+@keyframes organelle-drift-three {
   0%,
   100% {
-    transform: translate(0, 0);
-    opacity: 0.65;
+    translate: 0 0;
   }
 
   50% {
-    transform: translate(5px, 3px);
+    translate: 3px 2px;
+  }
+}
+
+@keyframes particle-drift-one {
+  0%,
+  100% {
+    translate: 0 0;
+    opacity: 0.55;
+  }
+
+  50% {
+    translate: 4px 3px;
     opacity: 1;
   }
 }
 
-@keyframes particle-float-two {
+@keyframes particle-drift-two {
   0%,
   100% {
-    transform: translate(0, 0);
+    translate: 0 0;
   }
 
   50% {
-    transform: translate(-4px, 5px);
+    translate: -3px 4px;
   }
 }
 
-@keyframes particle-float-three {
+@keyframes particle-drift-three {
   0%,
   100% {
-    transform: translate(0, 0);
-    opacity: 0.75;
+    translate: 0 0;
+    opacity: 0.65;
   }
 
   50% {
-    transform: translate(4px, -5px);
+    translate: 3px -4px;
     opacity: 1;
   }
 }

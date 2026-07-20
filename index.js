@@ -50,6 +50,8 @@ const observer = new IntersectionObserver(
 pageSections.forEach((section) => {
   observer.observe(section);
 });
+window.onload = () => {
+
 const cellCursor = document.querySelector(".cell-cursor");
 const cellNucleus = document.querySelector(".cell-cursor__nucleus");
 
@@ -110,3 +112,5 @@ interactiveElements.forEach((element) => {
         cellCursor?.classList.remove("hovering");
     });
 });
+
+  };

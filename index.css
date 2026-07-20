@@ -1271,3 +1271,130 @@ button {
     gap: 12px;
   }
 }
+.cell-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+
+    width: 58px;
+    height: 52px;
+
+    pointer-events: none;
+    opacity: 0;
+
+    border: 1.5px solid rgba(226, 177, 152, 0.8);
+    border-radius: 48% 52% 55% 45% / 52% 45% 55% 48%;
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            rgba(255, 255, 255, 0.35),
+            transparent 24%
+        ),
+        rgba(190, 121, 102, 0.18);
+
+    box-shadow:
+        0 0 12px rgba(216, 143, 119, 0.34),
+        inset 0 0 14px rgba(255, 220, 203, 0.18);
+
+    backdrop-filter: blur(2px);
+
+    transform: translate(-50%, -50%);
+    transition:
+        opacity 180ms ease,
+        width 180ms ease,
+        height 180ms ease;
+
+    animation: cell-cursor-float 3.8s ease-in-out infinite;
+}
+
+.cell-cursor.visible {
+    opacity: 1;
+}
+
+.cell-cursor.hovering {
+    width: 70px;
+    height: 63px;
+}
+
+.cell-cursor__nucleus {
+    position: absolute;
+    top: 26%;
+    left: 31%;
+
+    width: 38%;
+    aspect-ratio: 1;
+
+    border: 1px solid rgba(228, 170, 178, 0.9);
+    border-radius: 48% 52% 46% 54%;
+
+    background: rgba(151, 86, 110, 0.48);
+
+    box-shadow:
+        0 0 8px rgba(218, 133, 158, 0.38),
+        inset 0 0 7px rgba(255, 222, 228, 0.2);
+
+    transition: transform 90ms linear;
+}
+
+.cell-cursor__nucleolus {
+    position: absolute;
+    top: 34%;
+    left: 36%;
+
+    width: 29%;
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+    background: rgba(246, 184, 188, 0.85);
+
+    box-shadow: 0 0 5px rgba(248, 180, 191, 0.55);
+}
+
+.cell-cursor__organelle {
+    position: absolute;
+
+    width: 8px;
+    height: 4px;
+
+    border: 1px solid rgba(225, 163, 126, 0.8);
+    border-radius: 999px;
+
+    background: rgba(201, 115, 80, 0.42);
+}
+
+.organelle-one {
+    top: 20%;
+    right: 17%;
+    transform: rotate(30deg);
+}
+
+.organelle-two {
+    right: 13%;
+    bottom: 22%;
+    transform: rotate(-25deg);
+}
+
+.organelle-three {
+    bottom: 17%;
+    left: 18%;
+    transform: rotate(15deg);
+}
+
+@keyframes cell-cursor-float {
+    0%,
+    100% {
+        border-radius: 48% 52% 55% 45% / 52% 45% 55% 48%;
+    }
+
+    50% {
+        border-radius: 54% 46% 47% 53% / 45% 55% 48% 52%;
+    }
+}
+
+@media (hover: none), (pointer: coarse) {
+    .cell-cursor {
+        display: none;
+    }
+}

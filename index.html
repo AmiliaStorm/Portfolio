@@ -673,30 +673,135 @@
     </div>
   </footer>
 
-  <script src="./index.js?v=4"></script>
- <div class="cell-cursor" aria-hidden="true">
-  <div class="cell-cursor__cytoplasm">
-    <span class="cell-particle cell-particle--1"></span>
-    <span class="cell-particle cell-particle--2"></span>
-    <span class="cell-particle cell-particle--3"></span>
-    <span class="cell-particle cell-particle--4"></span>
-    <span class="cell-particle cell-particle--5"></span>
-    <span class="cell-particle cell-particle--6"></span>
+<div class="cell-cursor" aria-hidden="true">
+  <svg
+    class="cell-cursor__svg"
+    viewBox="0 0 120 110"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <radialGradient id="cellCytoplasm" cx="30%" cy="25%" r="80%">
+        <stop offset="0%" stop-color="#dff6ff" stop-opacity="0.55" />
+        <stop offset="45%" stop-color="#68c4f4" stop-opacity="0.28" />
+        <stop offset="100%" stop-color="#7568d8" stop-opacity="0.2" />
+      </radialGradient>
 
-    <span class="mitochondrion mitochondrion--1">
-      <span></span>
-    </span>
+      <radialGradient id="cellNucleus" cx="35%" cy="30%" r="75%">
+        <stop offset="0%" stop-color="#f2d8ff" stop-opacity="0.95" />
+        <stop offset="100%" stop-color="#8e53c6" stop-opacity="0.9" />
+      </radialGradient>
 
-    <span class="mitochondrion mitochondrion--2">
-      <span></span>
-    </span>
+      <linearGradient id="mitochondrionFill" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffca7a" />
+        <stop offset="100%" stop-color="#f26b45" />
+      </linearGradient>
 
-    <div class="cell-cursor__nucleus">
-      <div class="cell-cursor__nucleolus"></div>
-    </div>
-  </div>
+      <filter id="cellGlow" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="3.5" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+
+    <path
+      class="cell-membrane"
+      d="M16,51
+         C13,26 31,11 57,10
+         C81,8 105,23 108,48
+         C112,73 96,96 71,101
+         C44,107 19,92 14,70
+         C12,63 13,57 16,51Z"
+      fill="url(#cellCytoplasm)"
+      stroke="#8bd8ff"
+      stroke-width="2.4"
+      filter="url(#cellGlow)"
+    />
+
+    <g class="cell-particles">
+      <circle cx="30" cy="36" r="2.3" />
+      <circle cx="91" cy="37" r="2" />
+      <circle cx="24" cy="70" r="2.1" />
+      <circle cx="89" cy="76" r="2.4" />
+      <circle cx="61" cy="20" r="1.8" />
+      <circle cx="56" cy="91" r="2.1" />
+    </g>
+
+    <g class="cell-mitochondrion cell-mitochondrion--one">
+      <path
+        d="M77,26 C85,21 95,24 97,31 C99,38 91,43 82,41 C73,39 69,31 77,26Z"
+        fill="url(#mitochondrionFill)"
+        stroke="#ffd09d"
+        stroke-width="1.4"
+      />
+      <path
+        d="M78,31 C82,27 87,35 91,30"
+        fill="none"
+        stroke="#fff1c4"
+        stroke-width="1.4"
+        stroke-linecap="round"
+      />
+      <path
+        d="M80,36 C84,32 88,39 93,35"
+        fill="none"
+        stroke="#fff1c4"
+        stroke-width="1.2"
+        stroke-linecap="round"
+      />
+    </g>
+
+    <g class="cell-mitochondrion cell-mitochondrion--two">
+      <path
+        d="M71,75 C78,69 90,71 93,78 C96,85 88,92 79,91 C70,90 65,81 71,75Z"
+        fill="url(#mitochondrionFill)"
+        stroke="#ffd09d"
+        stroke-width="1.4"
+      />
+      <path
+        d="M73,79 C78,75 81,84 87,78"
+        fill="none"
+        stroke="#fff1c4"
+        stroke-width="1.4"
+        stroke-linecap="round"
+      />
+      <path
+        d="M74,85 C79,81 83,89 89,84"
+        fill="none"
+        stroke="#fff1c4"
+        stroke-width="1.2"
+        stroke-linecap="round"
+      />
+    </g>
+
+    <g class="cell-nucleus">
+      <ellipse
+        cx="52"
+        cy="57"
+        rx="23"
+        ry="21"
+        fill="url(#cellNucleus)"
+        stroke="#d6a4ff"
+        stroke-width="2"
+      />
+
+      <circle
+        cx="48"
+        cy="54"
+        r="6"
+        fill="#ffd6f6"
+        opacity="0.95"
+      />
+
+      <path
+        d="M35,58 C42,48 53,69 65,54"
+        fill="none"
+        stroke="#ead0ff"
+        stroke-width="1.4"
+        opacity="0.8"
+      />
+    </g>
+  </svg>
 </div>
 
-<script src="./index.js?v=6"></script>
-</body>
-</html>
+<script src="./index.js?v=8"></script>

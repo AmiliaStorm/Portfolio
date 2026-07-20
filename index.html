@@ -137,14 +137,27 @@
         </div>
 
         <div class="hero__visual" aria-hidden="true">
-          <div class="hero__image-glow"></div>
+  <div class="hero__image-glow"></div>
 
-          <img
-            class="hero__dna"
-            src="./images/dna-helix.jpg"
-            alt=""
-          />
-        </div>
+  <video
+    class="hero__dna"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+  >
+    <source
+      src="./videos/spinning-dna.webm"
+      type="video/webm"
+    />
+
+    <source
+      src="./videos/spinning-dna.mp4"
+      type="video/mp4"
+    />
+  </video>
+</div>
       </div>
     </section>
 

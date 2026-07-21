@@ -272,3 +272,79 @@ if (!container) {
     );
 
   scene.add(particles);
+    let targetRotationX = 0;
+  let targetRotationY = 0;
+
+  container.addEventListener("mousemove", (event) => {
+    const bounds = container.getBoundingClientRect();
+
+    const mouseX =
+      (event.clientX - bounds.left) / bounds.width - 0.5;
+
+    const mouseY =
+      (event.clientY - bounds.top) / bounds.height - 0.5;
+
+    targetRotationY = mouseX * 0.45;
+    targetRotationX = mouseY * 0.25;
+  });
+
+  container.addEventListener("mouseleave", () => {
+    targetRotationX = 0;
+    targetRotationY = 0;
+  });
+
+  function resizeRenderer() {
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    if (width === 0 || height === 0) {
+      return;
+    }
+
+    renderer.setSize(
+      width,
+      height,
+      false
+    );
+
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+  }
+
+  window.addEventListener(
+    "resize",
+    resizeRenderer
+  );
+
+  resizeRenderer();
+
+  function animate(time) {
+    const seconds = time * 0.001;
+
+    dnaGroup.rotation.y += 0.004;
+
+    dnaGroup.rotation.x +=
+      (targetRotationX - dnaGroup.rotation.x) * 0.04;
+
+    dnaGroup.rotation.z +=
+      (targetRotationY - dnaGroup.rotation.z) * 0.04;
+
+    dnaGroup.position.y =
+      Math.sin(seconds * 0.8) * 0.12;
+
+    particles.rotation.y =
+      seconds * 0.025;
+
+    particles.rotation.x =
+      Math.sin(seconds * 0.15) * 0.08;
+
+    renderer.render(
+      scene,
+      camera
+    );
+
+    requestAnimationFrame(animate);
+  }
+
+  requestAnimationFrame(animate);
+}

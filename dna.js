@@ -186,3 +186,89 @@ if (!container) {
       createCylinder(left, right)
     );
   }
+    /*
+   * Lighting
+   */
+
+  const ambientLight = new THREE.AmbientLight(
+    0x9dc9ff,
+    1.4
+  );
+
+  scene.add(ambientLight);
+
+  const blueLight = new THREE.PointLight(
+    0x2f83ff,
+    25,
+    35
+  );
+
+  blueLight.position.set(5, 2, 6);
+
+  scene.add(blueLight);
+
+  const cyanLight = new THREE.PointLight(
+    0x4be0e8,
+    18,
+    35
+  );
+
+  cyanLight.position.set(-5, -2, 6);
+
+  scene.add(cyanLight);
+
+  /*
+   * Floating particles
+   */
+
+  const particleCount = 250;
+
+  const particleGeometry =
+    new THREE.BufferGeometry();
+
+  const particlePositions =
+    new Float32Array(
+      particleCount * 3
+    );
+
+  for (let i = 0; i < particleCount; i++) {
+
+    particlePositions[i * 3] =
+      (Math.random() - 0.5) * 12;
+
+    particlePositions[i * 3 + 1] =
+      (Math.random() - 0.5) * 14;
+
+    particlePositions[i * 3 + 2] =
+      (Math.random() - 0.5) * 8;
+  }
+
+  particleGeometry.setAttribute(
+    "position",
+    new THREE.BufferAttribute(
+      particlePositions,
+      3
+    )
+  );
+
+  const particleMaterial =
+    new THREE.PointsMaterial({
+
+      color: 0x66bbff,
+
+      size: 0.03,
+
+      transparent: true,
+
+      opacity: 0.55,
+
+      depthWrite: false
+    });
+
+  const particles =
+    new THREE.Points(
+      particleGeometry,
+      particleMaterial
+    );
+
+  scene.add(particles);

@@ -1712,3 +1712,135 @@ button {
   position: relative;
   z-index: 999;
 }
+.codon-translator {
+  position: absolute;
+  top: 50%;
+  right: -230px;
+  z-index: 5;
+
+  width: 360px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.codon-row {
+  display: grid;
+  grid-template-columns: 170px 34px 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.codon-bases {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.base {
+  display: grid;
+  place-items: center;
+
+  width: 48px;
+  height: 48px;
+
+  border: 1px solid currentColor;
+  border-radius: 50%;
+
+  font-size: 1.25rem;
+  font-weight: 700;
+
+  background: rgba(4, 15, 32, 0.88);
+
+  box-shadow:
+    0 0 14px currentColor,
+    inset 0 0 12px rgba(255, 255, 255, 0.04);
+
+  transition:
+    transform 0.55s ease,
+    opacity 0.35s ease,
+    box-shadow 0.55s ease;
+}
+
+.codon-bases.is-joining .base:nth-child(1) {
+  transform: translateX(28px);
+}
+
+.codon-bases.is-joining .base:nth-child(3) {
+  transform: translateX(-28px);
+}
+
+.codon-bases.is-complete .base {
+  box-shadow:
+    0 0 24px currentColor,
+    0 0 44px rgba(75, 224, 232, 0.4);
+}
+
+.codon-arrow {
+  color: #4be0e8;
+  font-size: 1.8rem;
+  opacity: 0;
+  transform: translateX(-10px);
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.codon-arrow.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.amino-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  min-width: 145px;
+  padding: 14px 16px;
+
+  border: 1px solid rgba(75, 224, 232, 0.45);
+  border-radius: 14px;
+
+  background: rgba(5, 19, 38, 0.88);
+
+  opacity: 0;
+  transform: translateX(18px) scale(0.94);
+
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+
+  backdrop-filter: blur(10px);
+}
+
+.amino-card.is-visible {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.amino-name {
+  color: #eef7ff;
+  font-weight: 700;
+}
+
+.amino-code {
+  color: #4be0e8;
+  font-size: 0.85rem;
+}
+
+.base--a {
+  color: #65f0a8;
+}
+
+.base--u {
+  color: #b47cff;
+}
+
+.base--g {
+  color: #ffc43d;
+}
+
+.base--c {
+  color: #4db8ff;
+}

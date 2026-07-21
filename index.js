@@ -341,3 +341,4 @@ if (
     "Translation animation could not find the required HTML elements."
   );
 }
+console.log("index.js is running");

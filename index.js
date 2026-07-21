@@ -114,3 +114,91 @@ interactiveElements.forEach((element) => {
 });
 
   };
+const codons = [
+  {
+    sequence: "AUG",
+    aminoAcid: "Methionine",
+    code: "Met"
+  },
+  {
+    sequence: "GCU",
+    aminoAcid: "Alanine",
+    code: "Ala"
+  },
+  {
+    sequence: "UUU",
+    aminoAcid: "Phenylalanine",
+    code: "Phe"
+  },
+  {
+    sequence: "AAC",
+    aminoAcid: "Asparagine",
+    code: "Asn"
+  },
+  {
+    sequence: "CCA",
+    aminoAcid: "Proline",
+    code: "Pro"
+  },
+  {
+    sequence: "GAU",
+    aminoAcid: "Aspartic acid",
+    code: "Asp"
+  }
+];
+
+const codonBases = document.querySelector(".codon-bases");
+const baseElements = document.querySelectorAll(".codon-bases .base");
+const codonArrow = document.querySelector(".codon-arrow");
+const aminoCard = document.querySelector(".amino-card");
+const aminoName = document.querySelector(".amino-name");
+const aminoCode = document.querySelector(".amino-code");
+
+let codonIndex = 0;
+
+function setBaseStyle(element, base) {
+  element.className = `base base--${base.toLowerCase()}`;
+  element.textContent = base;
+}
+
+function showCodon() {
+  const currentCodon = codons[codonIndex];
+
+  codonBases.classList.remove("is-joining", "is-complete");
+  codonArrow.classList.remove("is-visible");
+  aminoCard.classList.remove("is-visible");
+
+  currentCodon.sequence.split("").forEach((base, index) => {
+    setBaseStyle(baseElements[index], base);
+  });
+
+  aminoName.textContent = currentCodon.aminoAcid;
+  aminoCode.textContent = currentCodon.code;
+
+  setTimeout(() => {
+    codonBases.classList.add("is-joining");
+  }, 500);
+
+  setTimeout(() => {
+    codonBases.classList.add("is-complete");
+    codonArrow.classList.add("is-visible");
+  }, 1200);
+
+  setTimeout(() => {
+    aminoCard.classList.add("is-visible");
+  }, 1600);
+
+  setTimeout(() => {
+    codonIndex = (codonIndex + 1) % codons.length;
+    showCodon();
+  }, 3600);
+}
+
+if (
+  codonBases &&
+  baseElements.length === 3 &&
+  codonArrow &&
+  aminoCard
+) {
+  showCodon();
+}

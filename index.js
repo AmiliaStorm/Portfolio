@@ -325,7 +325,15 @@ function runTranslation() {
     runTranslation();
   }, 3400);
 }
-
+console.log({
+  translationCodon,
+  translationBasesCount: translationBases.length,
+  translationArrow,
+  translationResult,
+  translationName,
+  translationCode,
+  translationHistory
+});
 if (
   translationCodon &&
   translationBases.length === 3 &&

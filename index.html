@@ -144,21 +144,35 @@
     class="hero__dna-canvas"
   ></div>
 
-  <div class="codon-translator">
-    <div class="codon-row">
-      <div class="codon-bases">
+ <div class="hero__visual" aria-hidden="true">
+  <div class="hero__image-glow"></div>
+
+  <div
+    id="dna-canvas"
+    class="hero__dna-canvas"
+  ></div>
+
+  <div class="translation-stream" aria-hidden="true">
+    <div class="translation-line"></div>
+
+    <div class="translation-builder">
+      <div class="translation-codon">
         <span class="base base--a">A</span>
         <span class="base base--u">U</span>
         <span class="base base--g">G</span>
       </div>
 
-      <div class="codon-arrow">→</div>
+      <div class="translation-down-arrow">↓</div>
 
-      <div class="amino-card">
+      <div class="translation-result">
         <span class="amino-name">Methionine</span>
         <span class="amino-code">Met</span>
       </div>
     </div>
+
+    <div class="translation-history"></div>
+  </div>
+</div>
   </div>
 </div>
     </section>

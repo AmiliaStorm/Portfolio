@@ -50,7 +50,7 @@ const observer = new IntersectionObserver(
 pageSections.forEach((section) => {
   observer.observe(section);
 });
-window.onload = () => {
+window.addEventListener("DOMContentLoaded", () => {
 
 const cellCursor = document.querySelector(".cell-cursor");
 const cellNucleus = document.querySelector(".cell-cursor__nucleus");

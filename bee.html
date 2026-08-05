@@ -15,7 +15,10 @@
 
   <title>Bee Species Identifier | Amilia Storm</title>
 
-  <link rel="stylesheet" href="./bee.css?v=1" />
+  <link
+    rel="stylesheet"
+    href="./bee.css?v=2"
+  />
 </head>
 
 <body>
@@ -43,7 +46,7 @@
       class="github"
       href="https://github.com/AmiliaStorm"
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
     >
       GitHub
     </a>
@@ -334,44 +337,41 @@
 
     <!-- Demo and screenshots -->
 
-    <section class="shell section media-grid" id="media">
+    <section
+      class="shell section media-grid"
+      id="media"
+    >
+      <!-- YouTube demo -->
+
       <article class="media-card" id="video">
         <p class="kicker">Project video</p>
 
-        <div class="video-placeholder">
-          <div class="play">▶</div>
-
-          <strong>Bee Identifier walkthrough</strong>
-
-          <span>
-            Add your video as videos/bee-demo.mp4
-          </span>
+        <div class="project-video">
+          <iframe
+            src="https://www.youtube.com/embed/J7jfEBcNm1E"
+            title="Bee Species Identifier walkthrough"
+            loading="lazy"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+              web-share
+            "
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
         </div>
-
-      <div class="project-video">
-  <iframe
-    src="https://www.youtube.com/embed/J7jfEBcNm1E"
-    title="Bee Identifier walkthrough"
-    loading="lazy"
-    allow="
-      accelerometer;
-      autoplay;
-      clipboard-write;
-      encrypted-media;
-      gyroscope;
-      picture-in-picture;
-      web-share
-    "
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen
-  ></iframe>
-</div>
 
         <p>
           Demonstration of the classification questions, navigation and
           final species result.
         </p>
       </article>
+
+      <!-- Application image -->
 
       <article class="media-card">
         <p class="kicker">Application interface</p>
@@ -387,18 +387,24 @@
         </p>
       </article>
 
+      <!-- Decision diagram -->
+
       <article class="media-card">
         <p class="kicker">Decision system</p>
 
         <div class="decision-diagram">
           <div>Insect group</div>
           <span>↓</span>
+
           <div>Wing cells</div>
           <span>↓</span>
+
           <div>Pollen basket</div>
           <span>↓</span>
+
           <div>Colour and hair</div>
           <span>↓</span>
+
           <div>Species result</div>
         </div>
 
@@ -476,7 +482,10 @@
 
     <!-- Code -->
 
-    <section class="shell section code-section" id="code">
+    <section
+      class="shell section code-section"
+      id="code"
+    >
       <div class="heading">
         <p class="kicker">Demo code</p>
 
@@ -676,7 +685,7 @@ pollination and honey production."</em>,
             class="btn"
             href="https://github.com/AmiliaStorm"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             Open GitHub
           </a>
@@ -741,7 +750,9 @@ pollination and honey production."</em>,
         <div class="limitations-icon">!</div>
 
         <div>
-          <p class="kicker">Limitations and future work</p>
+          <p class="kicker">
+            Limitations and future work
+          </p>
 
           <h2>
             Educational identification tool

@@ -346,24 +346,20 @@
       <article class="media-card" id="video">
         <p class="kicker">Project video</p>
 
-        <div class="project-video">
-          <iframe
-            src="https://www.youtube.com/embed/J7jfEBcNm1E"
-            title="Bee Species Identifier walkthrough"
-            loading="lazy"
-            allow="
-              accelerometer;
-              autoplay;
-              clipboard-write;
-              encrypted-media;
-              gyroscope;
-              picture-in-picture;
-              web-share
-            "
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>
-        </div>
+        <video
+  class="project-video"
+  controls
+  preload="metadata"
+  playsinline
+  poster="./images/Species-Identifier.jpg"
+>
+  <source
+    src="./videos/bee-identifier-demo.mp4"
+    type="video/mp4"
+  />
+
+  Your browser does not support embedded video.
+</video>
 
         <p>
           Demonstration of the classification questions, navigation and

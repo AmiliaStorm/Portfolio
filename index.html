@@ -309,34 +309,33 @@
 
           <!-- covid19-pbmc-scrnaseq -->
 
-        <article class="project-card">
-
-  <div class="project-image">
+<article class="project-card">
+  <a class="project-link" href="./covid19-scrnaseq.html">
     <img
-      src="images/umap_celltypes.png"
-      alt="UMAP visualization of annotated immune cell populations from COVID-19 single-cell RNA sequencing data"
+      src="./images/umap_celltypes.png"
+      alt="UMAP visualization of immune cell populations from COVID-19 single-cell RNA sequencing data"
     />
-  </div>
+  </a>
 
-  <div class="project-content">
-
-    <p class="project-category">
-      BIOINFORMATICS · SINGLE-CELL TRANSCRIPTOMICS
+  <div class="project-card__content">
+    <p class="project-card__category">
+      Bioinformatics / Single-Cell Transcriptomics
     </p>
 
-    <h3>
-      COVID-19 Single-Cell Transcriptomics
-    </h3>
+    <h3>COVID-19 Single-Cell Transcriptomics</h3>
 
-    <p class="project-description">
+    <p class="project-card__description">
       Single-cell RNA-seq analysis of peripheral blood immune cells
       comparing severe COVID-19 patients with healthy controls.
-      Using R and Seurat, immune-cell populations were identified and
+      Immune-cell populations were identified using Seurat and
       condition-associated transcriptional differences were explored,
-      including altered expression in monocyte populations.
+      including altered gene expression in monocyte populations.
     </p>
 
-    <div class="project-tags">
+    <div
+      class="tag-list"
+      aria-label="Technologies used"
+    >
       <span>R</span>
       <span>Seurat</span>
       <span>scRNA-seq</span>
@@ -344,28 +343,29 @@
       <span>Transcriptomics</span>
     </div>
 
-    <div class="project-links">
-
+    <div class="project-card__footer">
       <a
-        href="covid19-scrnaseq.html"
-        class="project-button"
+        class="project-link"
+        href="./covid19-scrnaseq.html"
       >
-        View Project
+        View project
+        <span aria-hidden="true">→</span>
       </a>
 
       <a
-        href="YOUR-GITHUB-REPOSITORY-URL"
+        class="icon-link"
+        href="https://github.com/AmiliaStorm"
         target="_blank"
         rel="noopener noreferrer"
-        class="project-link"
+        aria-label="View COVID-19 single-cell transcriptomics project on GitHub"
       >
-        Source Code ↗
+        <img
+          src="./images/github.svg"
+          alt=""
+        />
       </a>
-
     </div>
-
   </div>
-
 </article>
 
           <!-- Bee Identification -->

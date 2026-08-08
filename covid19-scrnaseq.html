@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="description"
+    content="Single-cell RNA-seq analysis of COVID-19 and healthy PBMCs by Amilia Storm."
+  />
+
+  <title>COVID-19 Single-Cell Transcriptomics | Amilia Storm</title>
+
+  <!-- Reuse AGER styling so project pages stay visually consistent -->
+  <link rel="stylesheet" href="./ager.css?v=2" />
+</head>
+
+<body>
+
+  <!-- =========================================================
+       Navigation
+  ========================================================== -->
+
+  <header class="topbar" id="top">
+
+    <a class="brand" href="./index.html">
+      <span>AS</span>
+
+      <div>
+        <strong>Amilia Storm</strong>
+        <small>Bioinformatics & Data Science</small>
+      </div>
+    </a>
+
+    <nav>
+      <a href="./index.html">Home</a>
+      <a class="active" href="#top">Project</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#media">Results</a>
+      <a href="#code">Code</a>
+    </nav>
+
+    <a
+      class="github"
+      href="https://github.com/AmiliaStorm/covid19-pbmc-scrnaseq"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      GitHub
+    </a>
+
+  </header>
+
+
+  <main>
+
+    <!-- =========================================================
+         Hero
+    ========================================================== -->
+
+    <section class="hero shell">
+
+      <div class="hero-copy">
+
+        <a class="back" href="./index.html#projects">
+          ← Back to projects
+        </a>
+
+        <p class="kicker">
+          Bioinformatics / Single-Cell Transcriptomics
+        </p>
+
+        <h1>
+          COVID-19
+          <br />
+          Single-Cell
+          <span>Transcriptomics</span>
+        </h1>
+
+        <p class="lead">
+          Single-cell RNA-seq analysis of peripheral blood immune cells
+          from COVID-19 patients and healthy controls, using Seurat to
+          identify immune-cell populations and investigate
+          condition-associated transcriptional differences.
+        </p>
+
+        <div class="chips">
+          <span>R</span>
+          <span>Seurat</span>
+          <span>scRNA-seq</span>
+          <span>GEO</span>
+          <span>ggplot2</span>
+          <span>dplyr</span>
+          <span>Transcriptomics</span>
+        </div>
+
+        <div class="actions">
+
+          <a class="btn primary" href="#media">
+            View results
+          </a>
+
+          <a
+            class="btn"
+            href="https://github.com/AmiliaStorm/covid19-pbmc-scrnaseq"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            &lt;/&gt; View code
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <div class="hero-visual">
+
+        <img
+          src="./images/umap_celltypes.png"
+          alt="UMAP visualization of annotated PBMC immune cell populations"
+        />
+
+        <div class="metric-panel">
+
+          <h3>Project profile</h3>
+
+          <p>
+            <span>Dataset</span>
+            <strong>GSE150728</strong>
+          </p>
+
+          <p>
+            <span>Cells</span>
+            <strong>81,353</strong>
+          </p>
+
+          <p>
+            <span>Samples</span>
+            <strong>13</strong>
+          </p>
+
+          <p>
+            <span>Populations</span>
+            <strong>19</strong>
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         Overview
+    ========================================================== -->
+
+    <section class="overview shell card">
+
+      <div>
+
+        <p class="kicker">
+          Overview
+        </p>
+
+        <p>
+          Bulk RNA sequencing measures average gene expression across
+          mixed cell populations, potentially masking changes occurring
+          within specific immune-cell populations. Single-cell RNA
+          sequencing resolves expression at the individual-cell level,
+          allowing immune populations and their transcriptional states
+          to be investigated separately.
+        </p>
+
+        <p>
+          This project applies a standard single-cell analysis pipeline
+          to publicly available PBMC data from COVID-19 patients and
+          healthy controls, with particular focus on immune-cell
+          composition and transcriptional changes within monocytes.
+        </p>
+
+      </div>
+
+
+      <dl>
+
+        <div>
+          <dt>Dataset</dt>
+          <dd>GSE150728</dd>
+        </div>
+
+        <div>
+          <dt>Samples</dt>
+          <dd>7 COVID / 6 Healthy</dd>
+        </div>
+
+        <div>
+          <dt>Platform</dt>
+          <dd>10x Genomics</dd>
+        </div>
+
+        <div>
+          <dt>Focus</dt>
+          <dd>PBMC Transcriptomics</dd>
+        </div>
+
+      </dl>
+
+    </section>
+
+
+    <!-- =========================================================
+         Research Question
+    ========================================================== -->
+
+    <section class="shell section">
+
+      <div class="heading">
+
+        <p class="kicker">
+          Research question
+        </p>
+
+        <h2>
+          Which immune-cell populations and transcriptional states
+          differ between COVID-19 patients and healthy controls?
+        </h2>
+
+      </div>
+
+
+      <div class="insights">
+
+        <article>
+
+          <h3>Cell identity</h3>
+
+          <p>
+            Which immune-cell populations can be recovered from the
+            PBMC single-cell dataset using unsupervised clustering
+            and canonical marker genes?
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <h3>Immune composition</h3>
+
+          <p>
+            Are particular immune-cell populations proportionally
+            enriched or depleted in COVID-19 samples?
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <h3>Monocyte state</h3>
+
+          <p>
+            How does gene expression within classical monocytes differ
+            between COVID-19 patients and healthy controls?
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <h3>Inflammatory signalling</h3>
+
+          <p>
+            Do inflammatory and antigen-presentation-associated genes
+            show coordinated transcriptional changes?
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         Workflow
+    ========================================================== -->
+
+    <section class="shell section" id="workflow">
+
+      <div class="heading">
+
+        <p class="kicker">
+          Workflow
+        </p>
+
+        <h2>
+          From raw single-cell data to biological interpretation
+        </h2>
+
+      </div>
+
+
+      <div class="workflow">
+
+        <!-- 01 -->
+
+        <article>
+
+          <b>01</b>
+
+          <h3>Data acquisition</h3>
+
+          <p>
+            Retrieved publicly available PBMC single-cell RNA-seq data
+            from the NCBI Gene Expression Omnibus.
+          </p>
+
+          <a
+            href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE150728"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GEO GSE150728
+          </a>
+
+        </article>
+
+
+        <!-- 02 -->
+
+        <article>
+
+          <b>02</b>
+
+          <h3>Quality control</h3>
+
+          <p>
+            Filtered low-quality cells, probable empty droplets and
+            problematic cells using detected-feature counts and
+            mitochondrial read content.
+          </p>
+
+          <a
+            href="https://satijalab.org/seurat/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Seurat
+          </a>
+
+        </article>
+
+
+        <!-- 03 -->
+
+        <article>
+
+          <b>03</b>
+
+          <h3>Normalization & reduction</h3>
+
+          <p>
+            Log-normalized expression, selected highly variable genes,
+            scaled expression and performed PCA before constructing
+            the neighbourhood graph.
+          </p>
+
+          <a
+            href="#code"
+          >
+            View methods
+          </a>
+
+        </article>
+
+
+        <!-- 04 -->
+
+        <article>
+
+          <b>04</b>
+
+          <h3>Clustering & annotation</h3>
+
+          <p>
+            Applied graph-based clustering and UMAP, then annotated
+            populations using canonical immune-cell marker genes.
+          </p>
+
+          <a
+            href="#media"
+          >
+            View UMAP
+          </a>
+
+        </article>
+
+
+        <!-- 05 -->
+
+        <article>
+
+          <b>05</b>
+
+          <h3>Condition comparison</h3>
+
+          <p>
+            Compared immune-cell composition and performed
+            condition-specific differential expression within
+            classical monocytes.
+          </p>
+
+          <a
+            href="#findings"
+          >
+            Key findings
+          </a>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         Results
+    ========================================================== -->
+
+    <section
+      class="shell section media-grid"
+      id="media"
+    >
+
+      <!-- UMAP -->
+
+      <article class="media-card">
+
+        <p class="kicker">
+          Cellular landscape
+        </p>
+
+        <img
+          src="./images/umap_celltypes.png"
+          alt="UMAP showing annotated immune cell populations"
+        />
+
+        <p>
+          UMAP visualization of the annotated PBMC landscape.
+          Nineteen immune-cell populations were identified using
+          cluster-specific expression patterns and canonical markers.
+        </p>
+
+      </article>
+
+
+      <!-- Monocyte Differential Expression -->
+
+      <article class="media-card">
+
+        <p class="kicker">
+          Monocyte expression
+        </p>
+
+        <img
+          src="./images/monocyte_de_violin.png"
+          alt="Violin plots comparing monocyte gene expression between COVID-19 and healthy samples"
+        />
+
+        <p>
+          Classical monocytes from COVID-19 samples showed increased
+          expression of inflammatory S100-family genes alongside
+          reduced expression of several antigen-presentation-associated
+          genes.
+        </p>
+
+      </article>
+
+
+      <!-- Dataset profile -->
+
+      <article class="media-card">
+
+        <p class="kicker">
+          Analysis scale
+        </p>
+
+        <h3>
+          81,353 cells after quality control
+        </h3>
+
+        <p>
+          Approximately 157,000 raw droplets were processed across
+          thirteen samples. After quality-control filtering,
+          81,353 cells were retained for downstream analysis.
+        </p>
+
+        <p>
+          The final dataset included seven COVID-19 samples and
+          six healthy controls.
+        </p>
+
+      </article>
+
+    </section>
+
+
+    <!-- =========================================================
+         Key Findings
+    ========================================================== -->
+
+    <section
+      class="shell section"
+      id="findings"
+    >
+
+      <div class="heading">
+
+        <p class="kicker">
+          Key findings
+        </p>
+
+        <h2>
+          COVID-associated transcriptional changes in monocytes
+        </h2>
+
+      </div>
+
+
+      <div class="insights">
+
+        <!-- S100 -->
+
+        <article>
+
+          <h3>
+            ↑ S100A8 / S100A9 / S100A12
+          </h3>
+
+          <p>
+            Classical monocytes from COVID-19 samples showed increased
+            expression of inflammatory alarmin genes including
+            S100A8, S100A9 and S100A12.
+          </p>
+
+        </article>
+
+
+        <!-- HLA -->
+
+        <article>
+
+          <h3>
+            ↓ MHC class II expression
+          </h3>
+
+          <p>
+            HLA-DRB1, HLA-DQB1 and CD74 showed reduced expression
+            in COVID-associated classical monocytes, alongside
+            reduced HLA-B expression.
+          </p>
+
+        </article>
+
+
+        <!-- IFN -->
+
+        <article>
+
+          <h3>
+            IFN-stimulated monocytes
+          </h3>
+
+          <p>
+            A distinct interferon-stimulated monocyte population
+            marked by genes including IFI27, IFI6 and IFITM3
+            was observed predominantly in COVID-19 samples.
+          </p>
+
+        </article>
+
+
+        <!-- Interpretation -->
+
+        <article>
+
+          <h3>
+            Coordinated immune-state shift
+          </h3>
+
+          <p>
+            Together, the observed expression patterns indicate an
+            association between COVID-19 status and a more inflammatory
+            monocyte transcriptional state with reduced expression
+            of antigen-presentation-associated genes.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         Exploratory Finding
+    ========================================================== -->
+
+    <section class="overview shell card">
+
+      <div>
+
+        <p class="kicker">
+          Exploratory result
+        </p>
+
+        <h2>
+          IFN-stimulated monocyte expansion
+        </h2>
+
+        <p>
+          An interferon-stimulated monocyte population was nearly absent
+          from healthy samples but appeared at variable levels across
+          multiple COVID-19 samples.
+        </p>
+
+        <p>
+          However, the sample-level difference did not reach
+          statistical significance in the Wilcoxon rank-sum comparison
+          (p = 0.29). Given the small cohort and substantial
+          patient-to-patient heterogeneity, this result is treated as
+          exploratory rather than confirmatory.
+        </p>
+
+      </div>
+
+
+      <dl>
+
+        <div>
+          <dt>COVID samples</dt>
+          <dd>7</dd>
+        </div>
+
+        <div>
+          <dt>Healthy samples</dt>
+          <dd>6</dd>
+        </div>
+
+        <div>
+          <dt>Test</dt>
+          <dd>Wilcoxon</dd>
+        </div>
+
+        <div>
+          <dt>p-value</dt>
+          <dd>0.29</dd>
+        </div>
+
+      </dl>
+
+    </section>
+
+
+    <!-- =========================================================
+         Code
+    ========================================================== -->
+
+    <section
+      class="shell section code-section"
+      id="code"
+    >
+
+      <div class="heading">
+
+        <p class="kicker">
+          Analysis code
+        </p>
+
+        <h2>
+          Core methods from the Seurat workflow
+        </h2>
+
+      </div>
+
+
+      <div class="code-layout">
+
+        <!-- Tabs -->
+
+        <div class="tabs">
+
+          <button
+            class="tab active"
+            type="button"
+            data-tab="qc"
+          >
+            quality_control.R
+          </button>
+
+
+          <button
+            class="tab"
+            type="button"
+            data-tab="clustering"
+          >
+            clustering.R
+          </button>
+
+
+          <button
+            class="tab"
+            type="button"
+            data-tab="annotation"
+          >
+            annotation.R
+          </button>
+
+
+          <button
+            class="tab"
+            type="button"
+            data-tab="de"
+          >
+            differential_expression.R
+          </button>
+
+
+          <a
+            href="https://github.com/AmiliaStorm/covid19-pbmc-scrnaseq"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open full repository
+          </a>
+
+        </div>
+
+
+        <!-- Editor -->
+
+        <div class="editor">
+
+          <!-- QC -->
+
+          <pre
+            id="qc"
+            class="snippet active"
+          ><code><span># Quality-control filtering</span>
+
+combined_seurat &lt;- subset(
+    combined_seurat,
+    subset =
+        nFeature_RNA &gt; 250 &
+        nFeature_RNA &lt; 2500 &
+        percent.mt &lt; 20
+)
+
+combined_seurat &lt;- NormalizeData(
+    combined_seurat,
+    normalization.method = <em>"LogNormalize"</em>,
+    scale.factor = 10000
+)
+
+combined_seurat &lt;- FindVariableFeatures(
+    combined_seurat,
+    selection.method = <em>"vst"</em>,
+    nfeatures = 2000
+)</code></pre>
+
+
+          <!-- Clustering -->
+
+          <pre
+            id="clustering"
+            class="snippet"
+          ><code><span># PCA, graph construction and clustering</span>
+
+combined_seurat &lt;- ScaleData(
+    combined_seurat
+)
+
+combined_seurat &lt;- RunPCA(
+    combined_seurat
+)
+
+combined_seurat &lt;- FindNeighbors(
+    combined_seurat,
+    dims = 1:20
+)
+
+combined_seurat &lt;- FindClusters(
+    combined_seurat,
+    resolution = 0.5
+)
+
+combined_seurat &lt;- RunUMAP(
+    combined_seurat,
+    dims = 1:20
+)</code></pre>
+
+
+          <!-- Annotation -->
+
+          <pre
+            id="annotation"
+            class="snippet"
+          ><code><span># Identify cluster marker genes</span>
+
+cluster_markers &lt;- FindAllMarkers(
+    combined_seurat,
+    only.pos = TRUE
+)
+
+DimPlot(
+    combined_seurat,
+    reduction = <em>"umap"</em>,
+    group.by = <em>"cell_type"</em>,
+    label = TRUE,
+    repel = TRUE
+) + NoLegend()</code></pre>
+
+
+          <!-- Differential expression -->
+
+          <pre
+            id="de"
+            class="snippet"
+          ><code><span># Compare conditions within monocytes</span>
+
+monocyte_de &lt;- FindMarkers(
+    monocyte_subset,
+    ident.1 = <em>"COVID"</em>,
+    ident.2 = <em>"Healthy"</em>,
+    group.by = <em>"condition"</em>
+)
+
+VlnPlot(
+    monocyte_subset,
+    features = c(
+        <em>"S100A8"</em>,
+        <em>"HLA-DRB1"</em>
+    ),
+    group.by = <em>"condition"</em>,
+    pt.size = 0.1
+)</code></pre>
+
+        </div>
+
+
+        <!-- Code side panel -->
+
+        <aside>
+
+          <h3>
+            What this demonstrates
+          </h3>
+
+          <p>
+            Single-cell data processing, quality control,
+            dimensionality reduction, graph-based clustering,
+            cell-type annotation, statistical comparison and
+            biological interpretation using R and Seurat.
+          </p>
+
+          <a
+            class="btn"
+            href="https://github.com/AmiliaStorm/covid19-pbmc-scrnaseq"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open GitHub
+          </a>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         Limitations
+    ========================================================== -->
+
+    <section class="shell section">
+
+      <div class="heading">
+
+        <p class="kicker">
+          Limitations
+        </p>
+
+        <h2>
+          Interpreting the results cautiously
+        </h2>
+
+      </div>
+
+
+      <div class="insights">
+
+        <article>
+
+          <h3>
+            Small cohort
+          </h3>
+
+          <p>
+            The study contains seven COVID-19 samples and six healthy
+            controls, limiting statistical power for patient-level
+            comparisons.
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <h3>
+            Pseudo-replication
+          </h3>
+
+          <p>
+            Individual cells from the same patient are correlated and
+            should not be interpreted as fully independent biological
+            replicates.
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <h3>
+            Disease severity
+          </h3>
+
+          <p>
+            Severity metadata was not available for the analyzed
+            COVID-19 samples, so the project does not distinguish
+            mild from severe disease.
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <h3>
+            PBMC contamination
+          </h3>
+
+          <p>
+            A small red-blood-cell contamination cluster was detected
+            and excluded from biological interpretation.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         Future Work
+    ========================================================== -->
+
+    <section class="shell section">
+
+      <div class="heading">
+
+        <p class="kicker">
+          Future work
+        </p>
+
+        <h2>
+          Extending the analysis
+        </h2>
+
+      </div>
+
+
+      <div class="workflow">
+
+        <article>
+
+          <b>01</b>
+
+          <h3>Pseudobulk analysis</h3>
+
+          <p>
+            Aggregate expression at the patient level before
+            differential-expression testing to reduce
+            pseudo-replication.
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <b>02</b>
+
+          <h3>Patient-level modelling</h3>
+
+          <p>
+            Incorporate biological replicate structure directly into
+            statistical testing and downstream interpretation.
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <b>03</b>
+
+          <h3>Severity cohorts</h3>
+
+          <p>
+            Extend the analysis to datasets containing explicit
+            disease-severity and clinical metadata.
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <b>04</b>
+
+          <h3>RNA velocity</h3>
+
+          <p>
+            Explore transcriptional-state dynamics using intronic
+            and exonic read information where compatible data
+            are available.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         Project Insights
+    ========================================================== -->
+
+    <section class="shell section">
+
+      <div class="heading">
+
+        <p class="kicker">
+          Project skills
+        </p>
+
+        <h2>
+          What this project demonstrates
+        </h2>
+
+      </div>
+
+
+      <div class="insights">
+
+        <article>
+
+          <h3>
+            Single-cell analysis
+          </h3>
+
+          <p>
+            Processing and interpreting high-dimensional scRNA-seq data
+            through quality control, normalization, clustering and
+            dimensionality reduction.
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <h3>
+            Cell-type annotation
+          </h3>
+
+          <p>
+            Combining unsupervised clustering with canonical marker
+            expression to identify biologically meaningful immune-cell
+            populations.
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <h3>
+            Statistical awareness
+          </h3>
+
+          <p>
+            Distinguishing cell-level observations from biological
+            replicates and explicitly considering cohort size,
+            pseudo-replication and non-significant findings.
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <h3>
+            Scientific programming
+          </h3>
+
+          <p>
+            Reproducible analysis using R, Seurat, ggplot2, dplyr,
+            tidyr and structured bioinformatics workflows.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================================================
+       Footer
+  ========================================================== -->
+
+  <footer>
+
+    <a class="brand" href="#top">
+
+      <span>AS</span>
+
+      <div>
+        <strong>Amilia Storm</strong>
+        <small>Bioinformatics & Data Science</small>
+      </div>
+
+    </a>
+
+    <p>
+      © 2026 Amilia Storm
+    </p>
+
+    <a href="mailto:AmiliaSt@hotmail.com">
+      Get in touch
+    </a>
+
+  </footer>
+
+
+  <!-- Reuse the existing project-page tab functionality -->
+  <script src="./ager.js?v=2"></script>
+
+</body>
+</html>

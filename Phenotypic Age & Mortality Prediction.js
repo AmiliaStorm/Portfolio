@@ -1,55 +1,58 @@
 /* =========================================================
    Biological Age Predictor
-   Interactive project page functionality
+   Standalone project-page interactions
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
   /* =======================================================
-     Code tabs
+     Current year
   ======================================================= */
 
-  const tabButtons =
-    document.querySelectorAll(".code-tab");
+  const year = document.getElementById("year");
 
-  const codeSnippets =
-    document.querySelectorAll(".code-snippet");
-
-
-  tabButtons.forEach((button) => {
-
-    button.addEventListener("click", () => {
-
-      const targetId =
-        button.dataset.tab;
+  if (year) {
+    year.textContent = new Date().getFullYear();
+  }
 
 
-      // Remove active state from all tabs
+  /* =======================================================
+     Smooth scrolling for internal links
+  ======================================================= */
 
-      tabButtons.forEach((tab) => {
-        tab.classList.remove("active");
-      });
-
-
-      // Hide all code blocks
-
-      codeSnippets.forEach((snippet) => {
-        snippet.classList.remove("active");
-      });
+  const internalLinks =
+    document.querySelectorAll('a[href^="#"]');
 
 
-      // Activate selected tab
+  internalLinks.forEach((link) => {
 
-      button.classList.add("active");
+    link.addEventListener("click", (event) => {
+
+      const selector =
+        link.getAttribute("href");
 
 
-      const targetSnippet =
-        document.getElementById(targetId);
-
-
-      if (targetSnippet) {
-        targetSnippet.classList.add("active");
+      if (!selector || selector === "#") {
+        return;
       }
+
+
+      const target =
+        document.querySelector(selector);
+
+
+      if (!target) {
+        return;
+      }
+
+
+      event.preventDefault();
+
+
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
 
     });
 
@@ -57,8 +60,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =======================================================
-     Animate AUC bars when results enter viewport
+     Animate AUC result bars
   ======================================================= */
+
+  const resultsSection =
+    document.querySelector("#results");
 
   const aucBars =
     document.querySelectorAll(".auc-fill");
@@ -71,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const targetWidth =
         bar.dataset.width;
 
+
       if (targetWidth) {
         bar.style.width =
           `${targetWidth}%`;
@@ -79,10 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   };
-
-
-  const resultsSection =
-    document.querySelector("#results");
 
 
   if (
@@ -124,77 +127,96 @@ document.addEventListener("DOMContentLoaded", () => {
 
   } else {
 
-    // Fallback for older browsers
-
     animateAucBars();
 
   }
 
 
   /* =======================================================
-     Smooth internal navigation
+     Reveal sections while scrolling
   ======================================================= */
 
-  const internalLinks =
+  const revealTargets =
     document.querySelectorAll(
-      'a[href^="#"]'
+      ".section, .profile-grid"
     );
 
 
-  internalLinks.forEach((link) => {
+  revealTargets.forEach((element) => {
 
-    link.addEventListener(
-      "click",
-      (event) => {
-
-        const targetId =
-          link.getAttribute("href");
-
-
-        if (
-          !targetId ||
-          targetId === "#"
-        ) {
-          return;
-        }
-
-
-        const target =
-          document.querySelector(
-            targetId
-          );
-
-
-        if (!target) {
-          return;
-        }
-
-
-        event.preventDefault();
-
-
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-
-      }
+    element.classList.add(
+      "reveal"
     );
 
   });
 
 
+  if (
+    "IntersectionObserver" in window
+  ) {
+
+    const revealObserver =
+      new IntersectionObserver(
+
+        (entries, observer) => {
+
+          entries.forEach((entry) => {
+
+            if (entry.isIntersecting) {
+
+              entry.target.classList.add(
+                "visible"
+              );
+
+              observer.unobserve(
+                entry.target
+              );
+
+            }
+
+          });
+
+        },
+
+        {
+          threshold: 0.08
+        }
+
+      );
+
+
+    revealTargets.forEach((element) => {
+
+      revealObserver.observe(
+        element
+      );
+
+    });
+
+  } else {
+
+    revealTargets.forEach((element) => {
+
+      element.classList.add(
+        "visible"
+      );
+
+    });
+
+  }
+
+
   /* =======================================================
-     Highlight navigation section
+     Active navigation state
   ======================================================= */
 
   const navLinks =
     document.querySelectorAll(
-      ".topbar nav a[href^='#']"
+      '.topbar nav a[href^="#"]'
     );
 
 
-  const observedSections =
+  const navSections =
     [...navLinks]
       .map((link) => {
 
@@ -210,50 +232,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   if (
-    observedSections.length > 0 &&
+    navSections.length &&
     "IntersectionObserver" in window
   ) {
 
-    const navigationObserver =
+    const navObserver =
       new IntersectionObserver(
 
         (entries) => {
 
-          const visibleEntries =
-            entries.filter(
-              (entry) =>
-                entry.isIntersecting
-            );
+          const visible =
+            entries
+              .filter(
+                (entry) =>
+                  entry.isIntersecting
+              )
+              .sort(
+                (a, b) =>
+                  b.intersectionRatio -
+                  a.intersectionRatio
+              );
 
 
-          if (
-            visibleEntries.length === 0
-          ) {
+          if (!visible.length) {
             return;
           }
 
 
-          const mostVisible =
-            visibleEntries.sort(
-              (a, b) =>
-                b.intersectionRatio -
-                a.intersectionRatio
-            )[0];
-
-
           const activeId =
-            `#${mostVisible.target.id}`;
+            `#${visible[0].target.id}`;
 
 
           navLinks.forEach((link) => {
 
-            const linkTarget =
-              link.getAttribute("href");
-
-
             link.classList.toggle(
               "active",
-              linkTarget === activeId
+              link.getAttribute("href") ===
+                activeId
             );
 
           });
@@ -275,31 +290,13 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
 
-    observedSections.forEach(
-      (section) => {
+    navSections.forEach((section) => {
 
-        navigationObserver.observe(
-          section
-        );
+      navObserver.observe(
+        section
+      );
 
-      }
-    );
-
-  }
-
-
-  /* =======================================================
-     Current year
-  ======================================================= */
-
-  const yearElement =
-    document.getElementById("year");
-
-
-  if (yearElement) {
-
-    yearElement.textContent =
-      new Date().getFullYear();
+    });
 
   }
 

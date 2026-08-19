@@ -1,1 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
 
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="description"
+    content="Biological Age Predictor and mortality analysis using NHANES data, SQLite, Python and machine learning."
+  />
+
+  <title>Biological Age Predictor | Amilia Storm</title>
+
+  <link
+    rel="stylesheet"
+    href="./biological-age-predictor.css"
+  />
+</head>
+
+
+<body>
+
+  <!-- =====================================================
+       NAVIGATION
+  ====================================================== -->
+
+  <header class="topbar">
+
+    <a
+      class="brand"
+      href="./index.html"
+    >
+      <span class="brand-mark">AS</span>
+
+      <span class="brand-text">
+        <strong>Amilia Storm</strong>
+        <small>Bioinformatics & Data Science</small>
+      </span>
+    </a>
+
+
+    <nav aria-label="Project navigation">
+      <a href="#overview">Overview</a>
+      <a href="#database">Database</a>
+      <a href="#analysis">Analysis</a>
+      <a href="#results">Results</a>
+    </nav>
+
+
+    <a
+      class="github-link"
+      href="https://github.com/AmiliaStorm/biological-age-predictor"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      GitHub ↗
+    </a>
+
+  </header>
+
+
+
+  <main>
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="hero shell">
+
+      <div class="hero-copy">
+
+        <a
+          class="back-link"
+          href="./index.html#projects"
+        >
+          ← Back to projects
+        </a>
+
+
+        <p class="eyebrow">
+          Bioinformatics / SQL / Machine Learning
+        </p>
+
+
+        <h1>
+          Biological Age
+
+          <span>
+            Predictor & Mortality Model
+          </span>
+        </h1>
+
+
+        <p class="hero-description">
+          A database-driven analysis of biological aging and
+          mortality using NHANES data. SQLite was used to
+          structure participant and biomarker data before
+          Phenotypic Age, Random Forest and Gradient Boosting
+          models were evaluated against recorded mortality.
+        </p>
+
+
+        <div
+          class="tag-list"
+          aria-label="Technologies used"
+        >
+          <span>SQLite</span>
+          <span>DB Browser</span>
+          <span>Python</span>
+          <span>scikit-learn</span>
+          <span>NHANES</span>
+          <span>Random Forest</span>
+        </div>
+
+
+        <div class="hero-actions">
+
+          <a
+            class="button button-primary"
+            href="#results"
+          >
+            View results ↓
+          </a>
+
+
+          <a
+            class="button button-secondary"
+            href="https://github.com/AmiliaStorm/biological-age-predictor"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View repository ↗
+          </a>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- MAIN RESULT PANEL -->
+
+      <aside class="performance-panel">
+
+        <div class="performance-header">
+
+          <div>
+            <p class="eyebrow">
+              Mortality prediction
+            </p>
+
+            <h2>
+              ROC AUC
+            </h2>
+          </div>
+
+
+          <span class="status-pill">
+            Results
+          </span>
+
+        </div>
+
+
+        <div class="model-row model-best">
+
+          <div class="model-name">
+
+            <span class="model-number">
+              01
+            </span>
+
+            <span>
+              <strong>Phenotypic Age</strong>
+              <small>Published model</small>
+            </span>
+
+          </div>
+
+          <strong class="model-score">
+            0.8593
+          </strong>
+
+        </div>
+
+
+        <div class="model-row">
+
+          <div class="model-name">
+
+            <span class="model-number">
+              02
+            </span>
+
+            <span>
+              <strong>Random Forest</strong>
+              <small>This project</small>
+            </span>
+
+          </div>
+
+          <strong class="model-score">
+            0.8415
+          </strong>
+
+        </div>
+
+
+        <div class="model-row">
+
+          <div class="model-name">
+
+            <span class="model-number">
+              03
+            </span>
+
+            <span>
+              <strong>Gradient Boosting</strong>
+              <small>This project</small>
+            </span>
+
+          </div>
+
+          <strong class="model-score">
+            0.8008
+          </strong>
+
+        </div>
+
+
+        <div class="performance-note">
+          Best self-built model:
+          <strong>Random Forest</strong>
+          — only
+          <strong>0.0178 AUC</strong>
+          below Phenotypic Age.
+        </div>
+
+      </aside>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PROJECT PROFILE
+    ====================================================== -->
+
+    <section class="project-profile shell">
+
+      <article>
+        <span>Dataset</span>
+        <strong>NHANES</strong>
+        <small>2015–2016 cycle</small>
+      </article>
+
+
+      <article>
+        <span>Participants</span>
+        <strong>2,531</strong>
+        <small>Analysis sample</small>
+      </article>
+
+
+      <article>
+        <span>Recorded deaths</span>
+        <strong>109</strong>
+        <small>Mortality outcome</small>
+      </article>
+
+
+      <article>
+        <span>Best own model</span>
+        <strong>0.8415</strong>
+        <small>Random Forest AUC</small>
+      </article>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         OVERVIEW
+    ====================================================== -->
+
+    <section
+      class="section shell"
+      id="overview"
+    >
+
+      <div class="section-heading">
+
+        <p class="eyebrow">
+          Project overview
+        </p>
+
+
+        <h2>
+          Predicting biological risk instead of
+          chronological age.
+        </h2>
+
+      </div>
+
+
+
+      <div class="overview-grid">
+
+        <div class="overview-copy">
+
+          <p>
+            Biological age models are often evaluated by how
+            closely they reproduce chronological age. This
+            project instead focuses on a clinically meaningful
+            outcome: mortality.
+          </p>
+
+
+          <p>
+            NHANES demographic, laboratory and mortality data
+            were organized into a structured SQLite workflow.
+            The resulting biomarker dataset was used to
+            calculate Levine's Phenotypic Age.
+          </p>
+
+
+          <p>
+            Random Forest and Gradient Boosting models were
+            then evaluated against the same mortality outcome,
+            allowing their predictive performance to be
+            compared directly with the published Phenotypic
+            Age model.
+          </p>
+
+        </div>
+
+
+
+        <dl class="project-details">
+
+          <div>
+            <dt>Data source</dt>
+            <dd>NHANES + NCHS</dd>
+          </div>
+
+
+          <div>
+            <dt>Database</dt>
+            <dd>SQLite</dd>
+          </div>
+
+
+          <div>
+            <dt>Database interface</dt>
+            <dd>DB Browser for SQLite</dd>
+          </div>
+
+
+          <div>
+            <dt>Analysis</dt>
+            <dd>Python</dd>
+          </div>
+
+
+          <div>
+            <dt>Target</dt>
+            <dd>Recorded mortality</dd>
+          </div>
+
+
+          <div>
+            <dt>Evaluation metric</dt>
+            <dd>ROC AUC</dd>
+          </div>
+
+        </dl>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         DATABASE
+    ====================================================== -->
+
+    <section
+      class="section shell"
+      id="database"
+    >
+
+      <div class="section-heading">
+
+        <p class="eyebrow">
+          Database
+        </p>
+
+
+        <h2>
+          Structuring NHANES biomarker data
+          for analysis.
+        </h2>
+
+
+        <p class="section-intro">
+          SQLite was used to inspect, organize and prepare
+          participant-level biomarker information before the
+          biological age and mortality analyses were performed.
+        </p>
+
+      </div>
+
+
+
+      <article class="case-study">
+
+        <div class="case-image">
+
+          <img
+            src="./images/biological-age-database-2015-2016.jpg"
+            alt="NHANES 2015-2016 biological age database in DB Browser for SQLite"
+          />
+
+        </div>
+
+
+        <div class="case-copy">
+
+          <span class="section-number">
+            01
+          </span>
+
+
+          <p class="eyebrow">
+            NHANES 2015–2016
+          </p>
+
+
+          <h3>
+            Analysis-ready biomarker data
+          </h3>
+
+
+          <p>
+            The database contains participant-level fields
+            including age, gender, albumin, creatinine,
+            alkaline phosphatase and other biomarkers used
+            throughout the analysis.
+          </p>
+
+
+          <p>
+            Queries against the
+            <code>phenoage_input</code>
+            dataset made it possible to inspect the merged
+            biological inputs before running the mortality
+            models.
+          </p>
+
+        </div>
+
+      </article>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SQL
+    ====================================================== -->
+
+    <section class="section shell">
+
+      <div class="section-heading">
+
+        <p class="eyebrow">
+          SQL workflow
+        </p>
+
+
+        <h2>
+          Inspecting and validating the
+          source tables.
+        </h2>
+
+      </div>
+
+
+
+      <article class="case-study case-study-reverse">
+
+        <div class="case-image">
+
+          <img
+            src="./images/biological-age-sql-query.jpg"
+            alt="SQL query inspecting NHANES source tables in DB Browser for SQLite"
+          />
+
+        </div>
+
+
+        <div class="case-copy">
+
+          <span class="section-number">
+            02
+          </span>
+
+
+          <p class="eyebrow">
+            Data validation
+          </p>
+
+
+          <h3>
+            Checking the imported datasets
+          </h3>
+
+
+          <p>
+            SQL queries were used to inspect the available
+            NHANES tables and verify the number of records
+            available in each source before downstream
+            analysis.
+          </p>
+
+
+          <div class="source-tables">
+
+            <span>DEMO</span>
+            <span>BIOPRO</span>
+            <span>GLU</span>
+            <span>HSCRP</span>
+            <span>CBC</span>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ANALYSIS
+    ====================================================== -->
+
+    <section
+      class="section shell"
+      id="analysis"
+    >
+
+      <div class="section-heading">
+
+        <p class="eyebrow">
+          Model analysis
+        </p>
+
+
+        <h2>
+          Comparing Phenotypic Age with
+          machine learning.
+        </h2>
+
+
+        <p class="section-intro">
+          Python was used to calculate Phenotypic Age and
+          compare mortality prediction using Random Forest
+          and Gradient Boosting.
+        </p>
+
+      </div>
+
+
+
+      <article class="case-study">
+
+        <div class="case-image case-image-terminal">
+
+          <img
+            src="./images/biological-age-model-output.jpg"
+            alt="Mortality model output showing AUC and biomarker importance"
+          />
+
+        </div>
+
+
+        <div class="case-copy">
+
+          <span class="section-number">
+            03
+          </span>
+
+
+          <p class="eyebrow">
+            Model output
+          </p>
+
+
+          <h3>
+            Random Forest nearly matched
+            Phenotypic Age.
+          </h3>
+
+
+          <p>
+            The best self-built model was Random Forest,
+            achieving an AUC of
+            <strong>0.8415</strong>
+            compared with
+            <strong>0.8593</strong>
+            for Levine's Phenotypic Age.
+          </p>
+
+
+          <p>
+            Gradient Boosting achieved an AUC of
+            <strong>0.8008</strong>.
+          </p>
+
+
+          <div class="feature-box">
+
+            <span>
+              Highest Gradient Boosting importance
+            </span>
+
+            <div>
+              <strong>Age</strong>
+              <b>0.3110</b>
+            </div>
+
+            <div>
+              <strong>Creatinine</strong>
+              <b>0.1626</b>
+            </div>
+
+            <div>
+              <strong>CRP</strong>
+              <b>0.1364</b>
+            </div>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RESULTS
+    ====================================================== -->
+
+    <section
+      class="section shell"
+      id="results"
+    >
+
+      <div class="section-heading">
+
+        <p class="eyebrow">
+          Final results
+        </p>
+
+
+        <h2>
+          Mortality prediction performance.
+        </h2>
+
+
+        <p class="section-intro">
+          The final comparison shows that the self-built
+          Random Forest achieved performance very close to
+          the established Phenotypic Age model.
+        </p>
+
+      </div>
+
+
+
+      <div class="result-display">
+
+        <div class="result-image">
+
+          <img
+            src="./images/biological-age-predictor.jpg"
+            alt="Mortality prediction comparison between Phenotypic Age, Random Forest and Gradient Boosting"
+          />
+
+        </div>
+
+
+
+        <div class="result-summary">
+
+          <article>
+
+            <span>
+              Levine PhenoAge
+            </span>
+
+            <strong>
+              0.8593
+            </strong>
+
+            <small>
+              Highest AUC
+            </small>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Random Forest
+            </span>
+
+            <strong>
+              0.8415
+            </strong>
+
+            <small>
+              Best self-built model
+            </small>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Gradient Boosting
+            </span>
+
+            <strong>
+              0.8008
+            </strong>
+
+            <small>
+              Comparison model
+            </small>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FINDINGS
+    ====================================================== -->
+
+    <section class="section shell">
+
+      <div class="section-heading">
+
+        <p class="eyebrow">
+          Key findings
+        </p>
+
+
+        <h2>
+          What the project demonstrated.
+        </h2>
+
+      </div>
+
+
+
+      <div class="findings-grid">
+
+        <article>
+
+          <span>
+            01
+          </span>
+
+
+          <h3>
+            Strong mortality signal
+          </h3>
+
+
+          <p>
+            Phenotypic Age achieved an AUC of 0.8593,
+            showing strong discrimination of the mortality
+            outcome in the analyzed cohort.
+          </p>
+
+        </article>
+
+
+
+        <article>
+
+          <span>
+            02
+          </span>
+
+
+          <h3>
+            Random Forest came close
+          </h3>
+
+
+          <p>
+            Random Forest achieved 0.8415 AUC — a difference
+            of only 0.0178 compared with Phenotypic Age.
+          </p>
+
+        </article>
+
+
+
+        <article>
+
+          <span>
+            03
+          </span>
+
+
+          <h3>
+            Biomarkers carried useful signal
+          </h3>
+
+
+          <p>
+            Age, creatinine and CRP received the highest
+            feature importance in the Gradient Boosting
+            analysis.
+          </p>
+
+        </article>
+
+
+
+        <article>
+
+          <span>
+            04
+          </span>
+
+
+          <h3>
+            Real outcomes were used
+          </h3>
+
+
+          <p>
+            The project evaluated model performance against
+            recorded mortality rather than simply predicting
+            chronological age.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         WORKFLOW FILES
+    ====================================================== -->
+
+    <section class="section shell">
+
+      <div class="section-heading">
+
+        <p class="eyebrow">
+          Analysis workflow
+        </p>
+
+
+        <h2>
+          Core project files.
+        </h2>
+
+      </div>
+
+
+
+      <div class="file-grid">
+
+        <article>
+          <span>PY</span>
+
+          <div>
+            <h3>
+              nhanes_download_setup.py
+            </h3>
+
+            <p>
+              NHANES data acquisition and setup.
+            </p>
+          </div>
+        </article>
+
+
+
+        <article>
+          <span>PY</span>
+
+          <div>
+            <h3>
+              nhanes_mortality_setup.py
+            </h3>
+
+            <p>
+              Mortality dataset preparation.
+            </p>
+          </div>
+        </article>
+
+
+
+        <article>
+          <span>PY</span>
+
+          <div>
+            <h3>
+              calculate_phenoage.py
+            </h3>
+
+            <p>
+              Phenotypic Age calculation.
+            </p>
+          </div>
+        </article>
+
+
+
+        <article>
+          <span>PY</span>
+
+          <div>
+            <h3>
+              calculate_phenoage_mortality.py
+            </h3>
+
+            <p>
+              Phenotypic Age and mortality analysis.
+            </p>
+          </div>
+        </article>
+
+
+
+        <article>
+          <span>PY</span>
+
+          <div>
+            <h3>
+              compare_mortality_models.py
+            </h3>
+
+            <p>
+              Machine learning model comparison.
+            </p>
+          </div>
+        </article>
+
+
+
+        <article>
+          <span>DB</span>
+
+          <div>
+            <h3>
+              nhanes_mortality.sqbpro
+            </h3>
+
+            <p>
+              DB Browser for SQLite project file.
+            </p>
+          </div>
+        </article>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SKILLS
+    ====================================================== -->
+
+    <section class="section shell">
+
+      <div class="section-heading">
+
+        <p class="eyebrow">
+          Project skills
+        </p>
+
+
+        <h2>
+          Technologies demonstrated.
+        </h2>
+
+      </div>
+
+
+      <div class="skills-list">
+
+        <span>SQL</span>
+        <span>SQLite</span>
+        <span>Database Management</span>
+        <span>DB Browser for SQLite</span>
+        <span>Python</span>
+        <span>NHANES</span>
+        <span>Data Cleaning</span>
+        <span>Biomarker Analysis</span>
+        <span>Random Forest</span>
+        <span>Gradient Boosting</span>
+        <span>scikit-learn</span>
+        <span>ROC AUC</span>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         GITHUB
+    ====================================================== -->
+
+    <section class="github-cta shell">
+
+      <div>
+
+        <p class="eyebrow">
+          Source code
+        </p>
+
+
+        <h2>
+          Explore the full analysis.
+        </h2>
+
+
+        <p>
+          The repository contains the Python scripts and
+          database workflow used for the NHANES biological
+          age and mortality analysis.
+        </p>
+
+      </div>
+
+
+      <a
+        href="https://github.com/AmiliaStorm/biological-age-predictor"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Open GitHub repository ↗
+      </a>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="footer shell">
+
+    <a
+      class="brand"
+      href="./index.html"
+    >
+
+      <span class="brand-mark">
+        AS
+      </span>
+
+
+      <span class="brand-text">
+
+        <strong>
+          Amilia Storm
+        </strong>
+
+        <small>
+          Bioinformatics & Data Science
+        </small>
+
+      </span>
+
+    </a>
+
+
+    <p>
+      © 2026 Amilia Storm
+    </p>
+
+
+    <a href="mailto:AmiliaSt@hotmail.com">
+      Get in touch ↗
+    </a>
+
+  </footer>
+
+</body>
+</html>

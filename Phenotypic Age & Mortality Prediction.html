@@ -15,8 +15,10 @@
 
   <title>Biological Age Predictor | Amilia Storm</title>
 
-  <!-- Reuse AGER styling so project pages stay visually consistent -->
-  <link rel="stylesheet" href="./ager.css?v=2" />
+  <link
+    rel="stylesheet"
+    href="./biological-age-predictor.css?v=1"
+  />
 </head>
 
 <body>
@@ -28,7 +30,7 @@
   <header class="topbar" id="top">
 
     <a class="brand" href="./index.html">
-      <span>AS</span>
+      <span class="brand-mark">AS</span>
 
       <div>
         <strong>Amilia Storm</strong>
@@ -36,21 +38,22 @@
       </div>
     </a>
 
-    <nav>
+    <nav aria-label="Project navigation">
       <a href="./index.html">Home</a>
       <a class="active" href="#top">Project</a>
       <a href="#workflow">Workflow</a>
-      <a href="#media">Results</a>
+      <a href="#results">Results</a>
       <a href="#code">Code</a>
     </nav>
 
-    
-      class="github"
+    <a
+      class="github-link"
       href="https://github.com/AmiliaStorm/biological-age-predictor"
       target="_blank"
       rel="noopener noreferrer"
     >
       GitHub
+      <span aria-hidden="true">↗</span>
     </a>
 
   </header>
@@ -66,46 +69,52 @@
 
       <div class="hero-copy">
 
-        <a class="back" href="./index.html#projects">
+        <a
+          class="back-link"
+          href="./index.html#projects"
+        >
           ← Back to projects
         </a>
 
-        <p class="kicker">
-          Bioinformatics / Biomarker-Based Mortality Prediction
+        <p class="eyebrow">
+          Bioinformatics / Mortality Prediction
         </p>
 
         <h1>
           Biological Age
-          <br />
-          Predictor &
-          <span>Mortality Model</span>
+          <span>Predictor & Mortality Model</span>
         </h1>
 
-        <p class="lead">
+        <p class="hero-lead">
           A SQL and machine learning pipeline benchmarking Levine's
-          published Phenotypic Age formula against a self-built
-          Random Forest model, evaluated on real mortality outcomes
-          from NHANES rather than a proxy measure of aging.
+          Phenotypic Age formula against self-built Random Forest and
+          Gradient Boosting models using real NHANES mortality outcomes.
         </p>
 
-        <div class="chips">
+        <div
+          class="tech-list"
+          aria-label="Technologies used"
+        >
           <span>SQL</span>
           <span>SQLite</span>
           <span>Python</span>
           <span>pandas</span>
           <span>scikit-learn</span>
           <span>NHANES</span>
-          <span>Random Forest</span>
         </div>
 
-        <div class="actions">
+        <div class="hero-actions">
 
-          <a class="btn primary" href="#media">
+          <a
+            class="button button-primary"
+            href="#results"
+          >
             View results
+            <span aria-hidden="true">↓</span>
           </a>
 
-          
-            class="btn"
+          <a
+            class="button button-secondary"
             href="https://github.com/AmiliaStorm/biological-age-predictor"
             target="_blank"
             rel="noopener noreferrer"
@@ -118,32 +127,75 @@
       </div>
 
 
-      <div class="hero-visual">
+      <!-- Hero model comparison -->
 
-        <div class="metric-panel">
+      <div class="hero-dashboard">
 
-          <h3>Project profile</h3>
+        <div class="dashboard-header">
 
-          <p>
-            <span>Dataset</span>
-            <strong>NHANES 2015-2016</strong>
-          </p>
+          <div>
+            <p class="eyebrow">Model performance</p>
+            <h2>Mortality discrimination</h2>
+          </div>
 
-          <p>
-            <span>Participants</span>
-            <strong>2,531</strong>
-          </p>
+          <span class="status-pill">
+            AUC
+          </span>
 
-          <p>
-            <span>Recorded deaths</span>
-            <strong>109</strong>
-          </p>
+        </div>
 
-          <p>
-            <span>Best AUC</span>
-            <strong>0.859</strong>
-          </p>
 
+        <div class="hero-model best-model">
+
+          <div>
+            <span class="model-number">01</span>
+            <strong>Phenotypic Age</strong>
+            <small>Levine clinical formula</small>
+          </div>
+
+          <strong class="model-score">
+            0.859
+          </strong>
+
+        </div>
+
+
+        <div class="hero-model">
+
+          <div>
+            <span class="model-number">02</span>
+            <strong>Random Forest</strong>
+            <small>Self-built ML model</small>
+          </div>
+
+          <strong class="model-score">
+            0.842
+          </strong>
+
+        </div>
+
+
+        <div class="hero-model">
+
+          <div>
+            <span class="model-number">03</span>
+            <strong>Gradient Boosting</strong>
+            <small>Ensemble comparison</small>
+          </div>
+
+          <strong class="model-score">
+            0.801
+          </strong>
+
+        </div>
+
+
+        <div class="dashboard-note">
+          <span></span>
+
+          Random Forest came within
+          <strong>0.017 AUC</strong>
+          of the published Phenotypic Age model.
         </div>
 
       </div>
@@ -152,59 +204,118 @@
 
 
     <!-- =========================================================
+         Quick project profile
+    ========================================================== -->
+
+    <section class="shell project-profile">
+
+      <article>
+        <span>Dataset</span>
+        <strong>NHANES</strong>
+        <small>2015–2016 cycle</small>
+      </article>
+
+      <article>
+        <span>Participants</span>
+        <strong>2,531</strong>
+        <small>Complete cases</small>
+      </article>
+
+      <article>
+        <span>Deaths</span>
+        <strong>109</strong>
+        <small>Recorded during follow-up</small>
+      </article>
+
+      <article>
+        <span>Best AUC</span>
+        <strong>0.859</strong>
+        <small>Phenotypic Age</small>
+      </article>
+
+    </section>
+
+
+    <!-- =========================================================
          Overview
     ========================================================== -->
 
-    <section class="overview shell card">
+    <section class="shell section overview">
 
-      <div>
+      <div class="section-heading">
 
-        <p class="kicker">
-          Overview
+        <p class="eyebrow">
+          Project overview
         </p>
 
-        <p>
-          Biological age clocks are usually validated against
-          chronological age, a convenient but imperfect proxy for
-          the thing that actually matters: health risk. Levine et
-          al.'s Phenotypic Age (2018) was built differently — it was
-          derived directly from a mortality-risk model, using nine
-          routine blood biomarkers.
-        </p>
-
-        <p>
-          This project asks whether a machine learning model, trained
-          only on raw biomarkers with no prior clinical knowledge,
-          can match that formula on its own terms: predicting who
-          died during follow-up, not just who "looked older."
-        </p>
+        <h2>
+          Predicting biological risk instead of chronological age.
+        </h2>
 
       </div>
 
 
-      <dl>
+      <div class="overview-grid">
 
-        <div>
-          <dt>Data source</dt>
-          <dd>NHANES + NCHS Mortality File</dd>
+        <div class="overview-copy">
+
+          <p>
+            Biological age clocks are often compared with chronological
+            age. But chronological age is only a proxy for the outcome
+            that matters clinically: differences in health and mortality
+            risk.
+          </p>
+
+          <p>
+            Levine's Phenotypic Age takes a different approach. It uses
+            routine blood biomarkers together with chronological age to
+            estimate mortality-related biological aging.
+          </p>
+
+          <p>
+            This project asks whether machine learning models trained
+            directly on the same mortality outcome can learn a similarly
+            useful risk signal without being given the published formula.
+          </p>
+
         </div>
 
-        <div>
-          <dt>Biomarkers</dt>
-          <dd>9 blood panel measures</dd>
-        </div>
 
-        <div>
-          <dt>Follow-up</dt>
-          <dd>Through Dec 2019</dd>
-        </div>
+        <dl class="project-details">
 
-        <div>
-          <dt>Focus</dt>
-          <dd>Mortality Prediction</dd>
-        </div>
+          <div>
+            <dt>Data source</dt>
+            <dd>NHANES + NCHS mortality</dd>
+          </div>
 
-      </dl>
+          <div>
+            <dt>Outcome</dt>
+            <dd>Recorded mortality</dd>
+          </div>
+
+          <div>
+            <dt>Biomarkers</dt>
+            <dd>9 blood panel measures</dd>
+          </div>
+
+          <div>
+            <dt>Follow-up</dt>
+            <dd>Through December 2019</dd>
+          </div>
+
+          <div>
+            <dt>Evaluation</dt>
+            <dd>Cross-validated ROC AUC</dd>
+          </div>
+
+          <div>
+            <dt>Primary model</dt>
+            <dd>Random Forest</dd>
+          </div>
+
+        </dl>
+
+      </div>
 
     </section>
 
@@ -215,71 +326,63 @@
 
     <section class="shell section">
 
-      <div class="heading">
+      <div class="section-heading">
 
-        <p class="kicker">
+        <p class="eyebrow">
           Research question
         </p>
 
         <h2>
-          Can a machine learning model match a peer-reviewed clinical
-          aging formula at predicting real mortality outcomes?
+          Can machine learning match a peer-reviewed biological aging
+          model at predicting real mortality?
         </h2>
 
       </div>
 
 
-      <div class="insights">
+      <div class="question-grid">
 
-        <article>
-
+        <article class="info-card">
+          <span class="card-index">01</span>
           <h3>Formula validation</h3>
 
           <p>
-            Does Levine's Phenotypic Age actually separate those who
-            died during follow-up from those who survived, in this
-            dataset?
+            Does Levine's Phenotypic Age separate participants who died
+            during follow-up from those who survived?
           </p>
-
         </article>
 
 
-        <article>
-
+        <article class="info-card">
+          <span class="card-index">02</span>
           <h3>Model comparison</h3>
 
           <p>
-            How does a Random Forest trained directly on mortality
-            outcomes compare to the formula's discrimination ability
-            (AUC / C-statistic)?
+            How closely can Random Forest and Gradient Boosting match the
+            published formula's mortality discrimination?
           </p>
-
         </article>
 
 
-        <article>
-
+        <article class="info-card">
+          <span class="card-index">03</span>
           <h3>Feature importance</h3>
 
           <p>
-            Which biomarkers does an unconstrained model learn to
-            weight most heavily, and do they match the formula's
-            own coefficients?
+            Which biomarkers does an unconstrained model learn to value
+            most strongly?
           </p>
-
         </article>
 
 
-        <article>
-
-          <h3>Model robustness</h3>
+        <article class="info-card">
+          <span class="card-index">04</span>
+          <h3>Robustness</h3>
 
           <p>
-            How do different ensemble methods (Random Forest vs.
-            Gradient Boosting) behave on a small, imbalanced
-            mortality outcome?
+            How do different ensemble methods behave when mortality is a
+            relatively rare outcome?
           </p>
-
         </article>
 
       </div>
@@ -291,16 +394,19 @@
          Workflow
     ========================================================== -->
 
-    <section class="shell section" id="workflow">
+    <section
+      class="shell section"
+      id="workflow"
+    >
 
-      <div class="heading">
+      <div class="section-heading">
 
-        <p class="kicker">
+        <p class="eyebrow">
           Workflow
         </p>
 
         <h2>
-          From raw NHANES files to a validated mortality model
+          From raw public-health data to mortality prediction.
         </h2>
 
       </div>
@@ -308,110 +414,117 @@
 
       <div class="workflow">
 
-        <!-- 01 -->
-
         <article>
 
-          <b>01</b>
+          <div class="workflow-number">
+            01
+          </div>
 
-          <h3>Data acquisition</h3>
+          <div>
+            <h3>Data acquisition</h3>
 
-          <p>
-            Downloaded biomarker panels directly from CDC servers and
-            linked participants to the NCHS Public-Use Mortality File
-            via participant ID.
-          </p>
+            <p>
+              Downloaded NHANES demographic and laboratory data and linked
+              participants to the NCHS Public-Use Mortality File through
+              participant ID.
+            </p>
 
-          
-            href="https://wwwn.cdc.gov/nchs/nhanes/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            CDC NHANES
-          </a>
+            <a
+              href="https://wwwn.cdc.gov/nchs/nhanes/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              CDC NHANES ↗
+            </a>
+          </div>
 
         </article>
 
 
-        <!-- 02 -->
-
         <article>
 
-          <b>02</b>
+          <div class="workflow-number">
+            02
+          </div>
 
-          <h3>SQL data modeling</h3>
+          <div>
+            <h3>SQL data modeling</h3>
 
-          <p>
-            Built a normalized SQLite schema across five component
-            tables, joined on participant ID into an analysis-ready
-            view.
-          </p>
+            <p>
+              Built relational SQLite tables and joined biomarker,
+              demographic and mortality data into an analysis-ready view.
+            </p>
 
-          <a href="#code">
-            View schema
-          </a>
+            <a href="#code">
+              View SQL ↓
+            </a>
+          </div>
 
         </article>
 
 
-        <!-- 03 -->
-
         <article>
 
-          <b>03</b>
+          <div class="workflow-number">
+            03
+          </div>
 
-          <h3>PhenoAge implementation</h3>
+          <div>
+            <h3>PhenoAge implementation</h3>
 
-          <p>
-            Implemented Levine's Gompertz-based mortality-risk formula
-            from its published coefficients, with careful unit
-            conversion across biomarkers.
-          </p>
+            <p>
+              Implemented Levine's published Phenotypic Age calculation,
+              including the required biomarker unit conversions.
+            </p>
 
-          <a href="#code">
-            View formula
-          </a>
+            <a href="#code">
+              View formula ↓
+            </a>
+          </div>
 
         </article>
 
 
-        <!-- 04 -->
-
         <article>
 
-          <b>04</b>
+          <div class="workflow-number">
+            04
+          </div>
 
-          <h3>Model training</h3>
+          <div>
+            <h3>Machine learning</h3>
 
-          <p>
-            Trained Random Forest and Gradient Boosting classifiers
-            on the same biomarkers, using stratified cross-validation
-            to handle the rare-outcome imbalance.
-          </p>
+            <p>
+              Trained Random Forest and Gradient Boosting classifiers using
+              the biomarker panel and stratified cross-validation.
+            </p>
 
-          <a href="#code">
-            View training
-          </a>
+            <a href="#code">
+              View training ↓
+            </a>
+          </div>
 
         </article>
 
 
-        <!-- 05 -->
-
         <article>
 
-          <b>05</b>
+          <div class="workflow-number">
+            05
+          </div>
 
-          <h3>Model comparison</h3>
+          <div>
+            <h3>Model evaluation</h3>
 
-          <p>
-            Compared discrimination ability (AUC) between the formula
-            and each ML model on identical, out-of-fold predictions.
-          </p>
+            <p>
+              Compared all models using mortality ROC AUC on
+              cross-validated predictions.
+            </p>
 
-          <a href="#findings">
-            Key findings
-          </a>
+            <a href="#results">
+              View results ↓
+            </a>
+          </div>
 
         </article>
 
@@ -419,79 +532,207 @@
 
     </section>
 
-        <!-- =========================================================
+
+    <!-- =========================================================
          Results
     ========================================================== -->
 
     <section
-      class="shell section media-grid"
-      id="media"
+      class="shell section"
+      id="results"
     >
 
-      <!-- Formula validation -->
+      <div class="section-heading">
 
-      <article class="media-card">
-
-        <p class="kicker">
-          Formula validation
+        <p class="eyebrow">
+          Results
         </p>
 
-        <h3>
-          +7.5 years higher biological age among those who died
-        </h3>
+        <h2>
+          Random Forest nearly matched the published clinical model.
+        </h2>
 
-        <p>
-          Participants who died during follow-up had an average
-          Phenotypic Age <strong>7.5 years above</strong> their
-          chronological age, while surviving participants averaged
-          <strong>1.7 years below</strong> — confirming the formula
-          captures a real mortality signal in this dataset.
+        <p class="section-description">
+          All three models showed useful mortality discrimination,
+          but Phenotypic Age remained the strongest performer.
         </p>
 
-      </article>
+      </div>
 
 
-      <!-- AUC comparison -->
+      <div class="results-layout">
 
-      <article class="media-card">
+        <!-- AUC chart -->
 
-        <p class="kicker">
-          Model comparison
-        </p>
+        <article class="result-panel auc-panel">
 
-        <h3>
-          Random Forest (0.842) nearly matched PhenoAge (0.859)
-        </h3>
+          <div class="panel-heading">
 
-        <p>
-          A Random Forest trained with no prior knowledge of clinical
-          risk structure came within 0.02 AUC of a peer-reviewed,
-          expert-calibrated formula. Gradient Boosting trailed at
-          0.801, overfitting on the small number of deaths.
-        </p>
+            <div>
+              <span>ROC AUC</span>
+              <h3>Model comparison</h3>
+            </div>
 
-      </article>
+            <small>
+              Higher is better
+            </small>
+
+          </div>
 
 
-      <!-- Dataset profile -->
+          <div class="auc-chart">
 
-      <article class="media-card">
+            <div class="auc-row">
 
-        <p class="kicker">
-          Analysis scale
-        </p>
+              <div class="auc-label">
+                <strong>Phenotypic Age</strong>
+                <span>Published formula</span>
+              </div>
 
-        <h3>
-          2,531 adults, 109 recorded deaths
-        </h3>
+              <div class="auc-track">
+                <div
+                  class="auc-fill auc-primary"
+                  data-width="85.9"
+                ></div>
+              </div>
 
-        <p>
-          Five NHANES 2015-2016 component files were linked to the
-          NCHS mortality file through December 2019, yielding a
-          complete-case sample with a 4.3% observed death rate.
-        </p>
+              <strong class="auc-value">
+                0.859
+              </strong>
 
-      </article>
+            </div>
+
+
+            <div class="auc-row">
+
+              <div class="auc-label">
+                <strong>Random Forest</strong>
+                <span>Machine learning</span>
+              </div>
+
+              <div class="auc-track">
+                <div
+                  class="auc-fill auc-secondary"
+                  data-width="84.2"
+                ></div>
+              </div>
+
+              <strong class="auc-value">
+                0.842
+              </strong>
+
+            </div>
+
+
+            <div class="auc-row">
+
+              <div class="auc-label">
+                <strong>Gradient Boosting</strong>
+                <span>Machine learning</span>
+              </div>
+
+              <div class="auc-track">
+                <div
+                  class="auc-fill auc-tertiary"
+                  data-width="80.1"
+                ></div>
+              </div>
+
+              <strong class="auc-value">
+                0.801
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="auc-scale">
+            <span>0.50 chance</span>
+            <span>1.00 perfect</span>
+          </div>
+
+        </article>
+
+
+        <!-- Biological age signal -->
+
+        <article class="result-panel age-signal-panel">
+
+          <div class="panel-heading">
+
+            <div>
+              <span>Formula validation</span>
+              <h3>Phenotypic Age signal</h3>
+            </div>
+
+          </div>
+
+
+          <div class="signal-stat signal-positive">
+
+            <strong>+7.5</strong>
+
+            <div>
+              <span>years</span>
+              <p>
+                Mean Phenotypic Age acceleration among participants
+                who died during follow-up.
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="signal-divider"></div>
+
+
+          <div class="signal-stat">
+
+            <strong>−1.7</strong>
+
+            <div>
+              <span>years</span>
+              <p>
+                Mean Phenotypic Age acceleration among surviving
+                participants.
+              </p>
+            </div>
+
+          </div>
+
+        </article>
+
+      </div>
+
+
+      <div class="result-stat-grid">
+
+        <article>
+          <span>Participants</span>
+          <strong>2,531</strong>
+          <p>Complete-case analysis sample.</p>
+        </article>
+
+        <article>
+          <span>Deaths</span>
+          <strong>109</strong>
+          <p>Observed mortality events.</p>
+        </article>
+
+        <article>
+          <span>Death rate</span>
+          <strong>4.3%</strong>
+          <p>Rare and imbalanced outcome.</p>
+        </article>
+
+        <article>
+          <span>RF difference</span>
+          <strong>0.017</strong>
+          <p>AUC below Phenotypic Age.</p>
+        </article>
+
+      </div>
 
     </section>
 
@@ -500,91 +741,84 @@
          Key Findings
     ========================================================== -->
 
-    <section
-      class="shell section"
-      id="findings"
-    >
+    <section class="shell section">
 
-      <div class="heading">
+      <div class="section-heading">
 
-        <p class="kicker">
+        <p class="eyebrow">
           Key findings
         </p>
 
         <h2>
-          What the models agreed on — and where they diverged
+          What the models agreed on — and where they diverged.
         </h2>
 
       </div>
 
 
-      <div class="insights">
+      <div class="findings-grid">
 
-        <!-- AUC table -->
+        <article class="finding-card">
 
-        <article>
+          <span>01</span>
 
           <h3>
-            AUC (C-statistic)
+            Strong mortality signal
           </h3>
 
           <p>
-            Levine PhenoAge: 0.859 · Random Forest: 0.842 ·
-            Gradient Boosting: 0.801. All three substantially
-            outperform chance (0.5).
+            Phenotypic Age achieved an AUC of 0.859, confirming that the
+            biomarker-based formula carried substantial mortality
+            information in this cohort.
           </p>
 
         </article>
 
 
-        <!-- Feature importance -->
+        <article class="finding-card">
 
-        <article>
+          <span>02</span>
 
           <h3>
-            Age, creatinine and RDW dominate
+            Random Forest came close
           </h3>
 
           <p>
-            The Random Forest's own feature importances (age 40%,
-            creatinine 15%, RDW 12%) closely track independent
-            findings in the aging biomarker literature — learned
-            with no formula given to it.
+            The Random Forest reached 0.842 AUC without being given the
+            published clinical formula.
           </p>
 
         </article>
 
 
-        <!-- RF vs GBM -->
+        <article class="finding-card">
 
-        <article>
+          <span>03</span>
 
           <h3>
-            Random Forest beat Gradient Boosting
+            Age, creatinine and RDW dominated
           </h3>
 
           <p>
-            With only 109 deaths, Gradient Boosting's sequential
-            error-correction overfit to noise in the minority class.
-            Random Forest's bagging was more robust on this small,
-            imbalanced outcome.
+            The Random Forest placed the greatest feature importance on
+            age, creatinine and red-cell distribution width.
           </p>
 
         </article>
 
 
-        <!-- Interpretation -->
+        <article class="finding-card">
 
-        <article>
+          <span>04</span>
 
           <h3>
-            Matching, not beating
+            Gradient Boosting performed lower
           </h3>
 
           <p>
-            The honest conclusion: an unconstrained model matched a
-            decades-validated clinical formula. That's a meaningful
-            result in itself, without overclaiming superiority.
+            Gradient Boosting reached 0.801 AUC, performing below both
+            Phenotypic Age and Random Forest on the limited mortality
+            sample.
           </p>
 
         </article>
@@ -603,82 +837,80 @@
       id="code"
     >
 
-      <div class="heading">
+      <div class="section-heading">
 
-        <p class="kicker">
+        <p class="eyebrow">
           Analysis code
         </p>
 
         <h2>
-          Core methods from the pipeline
+          Core methods from the pipeline.
         </h2>
 
       </div>
 
 
-      <div class="code-layout">
+      <div class="code-window">
 
-        <!-- Tabs -->
+        <div class="code-toolbar">
 
-        <div class="tabs">
+          <div class="code-tabs">
 
-          <button
-            class="tab active"
-            type="button"
-            data-tab="schema"
-          >
-            sql_view.sql
-          </button>
+            <button
+              class="code-tab active"
+              type="button"
+              data-tab="schema"
+            >
+              sql_view.sql
+            </button>
+
+            <button
+              class="code-tab"
+              type="button"
+              data-tab="phenoage"
+            >
+              phenoage.py
+            </button>
+
+            <button
+              class="code-tab"
+              type="button"
+              data-tab="training"
+            >
+              model_training.py
+            </button>
+
+            <button
+              class="code-tab"
+              type="button"
+              data-tab="comparison"
+            >
+              compare_models.py
+            </button>
+
+          </div>
 
 
-          <button
-            class="tab"
-            type="button"
-            data-tab="phenoage"
-          >
-            phenoage_formula.py
-          </button>
-
-
-          <button
-            class="tab"
-            type="button"
-            data-tab="training"
-          >
-            model_training.py
-          </button>
-
-
-          <button
-            class="tab"
-            type="button"
-            data-tab="comparison"
-          >
-            compare_models.py
-          </button>
-
-
-          
+          <a
+            class="repository-link"
             href="https://github.com/AmiliaStorm/biological-age-predictor"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Open full repository
+            Full repository ↗
           </a>
 
         </div>
 
 
-        <!-- Editor -->
+        <div class="code-content">
 
-        <div class="editor">
-
-          <!-- Schema -->
+          <!-- SQL -->
 
           <pre
             id="schema"
-            class="snippet active"
-          ><code><span>-- Join biomarker tables + mortality outcome on SEQN</span>
+            class="code-snippet active"
+          ><code>-- Join biomarker tables + mortality outcome on SEQN
 
 CREATE VIEW phenoage_mortality_input AS
 SELECT
@@ -692,18 +924,24 @@ SELECT
     m.mortstat,
     m.permth_exm
 FROM DEMO d
-LEFT JOIN BIOPRO b ON d.SEQN = b.SEQN
-LEFT JOIN GLU g ON d.SEQN = g.SEQN
-LEFT JOIN HSCRP h ON d.SEQN = h.SEQN
-LEFT JOIN CBC c ON d.SEQN = c.SEQN
-INNER JOIN MORTALITY m ON d.SEQN = m.SEQN;</code></pre>
+LEFT JOIN BIOPRO b
+    ON d.SEQN = b.SEQN
+LEFT JOIN GLU g
+    ON d.SEQN = g.SEQN
+LEFT JOIN HSCRP h
+    ON d.SEQN = h.SEQN
+LEFT JOIN CBC c
+    ON d.SEQN = c.SEQN
+INNER JOIN MORTALITY m
+    ON d.SEQN = m.SEQN;</code></pre>
 
-          <!-- PhenoAge formula -->
+
+          <!-- Phenotypic Age -->
 
           <pre
             id="phenoage"
-            class="snippet"
-          ><code><span># Levine et al. 2018 Phenotypic Age</span>
+            class="code-snippet"
+          ><code># Levine et al. Phenotypic Age
 
 xb = (
     -19.9067
@@ -716,11 +954,14 @@ xb = (
 )
 
 M = 1 - math.exp(
-    (-1.51714 * math.exp(xb)) / 0.0076927
+    (-1.51714 * math.exp(xb))
+    / 0.0076927
 )
 
 pheno_age = 141.50225 + (
-    math.log(-0.00553 * math.log(1 - M))
+    math.log(
+        -0.00553 * math.log(1 - M)
+    )
     / 0.090165
 )</code></pre>
 
@@ -729,23 +970,29 @@ pheno_age = 141.50225 + (
 
           <pre
             id="training"
-            class="snippet"
-          ><code><span># Cross-validated Random Forest on mortality</span>
+            class="code-snippet"
+          ><code># Cross-validated Random Forest
 
 skf = StratifiedKFold(
-    n_splits=5, shuffle=True, random_state=42
+    n_splits=5,
+    shuffle=True,
+    random_state=42
 )
 
 model = RandomForestClassifier(
     n_estimators=300,
     max_depth=5,
     min_samples_leaf=10,
-    class_weight=<em>"balanced"</em>,
+    class_weight="balanced",
     random_state=42
 )
 
 proba = cross_val_predict(
-    model, X, y, cv=skf, method=<em>"predict_proba"</em>
+    model,
+    X,
+    y,
+    cv=skf,
+    method="predict_proba"
 )[:, 1]</code></pre>
 
 
@@ -753,49 +1000,29 @@ proba = cross_val_predict(
 
           <pre
             id="comparison"
-            class="snippet"
-          ><code><span># Compare formula vs. ML on identical outcome</span>
+            class="code-snippet"
+          ><code># Compare formula vs ML models
 
 auc_phenoage = roc_auc_score(
-    y, phenoage_score
+    y,
+    phenoage_score
 )
 
 auc_rf = roc_auc_score(
-    y, proba_rf
+    y,
+    proba_rf
 )
 
 auc_gbm = roc_auc_score(
-    y, proba_gbm
-)</code></pre>
+    y,
+    proba_gbm
+)
+
+print("PhenoAge:", auc_phenoage)
+print("Random Forest:", auc_rf)
+print("Gradient Boosting:", auc_gbm)</code></pre>
 
         </div>
-
-
-        <!-- Code side panel -->
-
-        <aside>
-
-          <h3>
-            What this demonstrates
-          </h3>
-
-          <p>
-            Relational data modeling in SQL, implementation of a
-            published statistical formula from primary literature,
-            and rigorous ML evaluation (stratified cross-validation,
-            AUC) on an imbalanced real-world outcome.
-          </p>
-
-          
-            class="btn"
-            href="https://github.com/AmiliaStorm/biological-age-predictor"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open GitHub
-          </a>
-
-        </aside>
 
       </div>
 
@@ -808,78 +1035,58 @@ auc_gbm = roc_auc_score(
 
     <section class="shell section">
 
-      <div class="heading">
+      <div class="section-heading">
 
-        <p class="kicker">
+        <p class="eyebrow">
           Limitations
         </p>
 
         <h2>
-          Interpreting the results cautiously
+          Interpreting the results cautiously.
         </h2>
 
       </div>
 
 
-      <div class="insights">
+      <div class="limitations-grid">
 
         <article>
-
-          <h3>
-            Modest event count
-          </h3>
+          <h3>109 mortality events</h3>
 
           <p>
-            Only 109 deaths were available to train and evaluate the
-            ML models, limiting statistical power and increasing
-            variance in AUC estimates.
+            The modest event count limits statistical power and increases
+            uncertainty around model performance.
           </p>
-
         </article>
 
 
         <article>
-
-          <h3>
-            No claim of superiority
-          </h3>
+          <h3>No claim of superiority</h3>
 
           <p>
-            The ML model matched, but did not clearly outperform,
-            Phenotypic Age — a meaningful result given the formula's
-            clinical validation history, not a shortfall.
+            Random Forest approached, but did not outperform,
+            Phenotypic Age.
           </p>
-
         </article>
 
 
         <article>
-
-          <h3>
-            Older data cycle
-          </h3>
+          <h3>Single NHANES cycle</h3>
 
           <p>
-            NHANES mortality linkage files are not yet available for
-            the most recent (2017–March 2020) cycle, so this analysis
-            uses 2015–2016 data instead.
+            Evaluation was performed within the 2015–2016 cycle rather
+            than through independent external validation.
           </p>
-
         </article>
 
 
         <article>
-
-          <h3>
-            Complete-case sample
-          </h3>
+          <h3>Complete-case sample</h3>
 
           <p>
-            Participants missing any of the nine biomarkers were
-            excluded, which may not be representative of the full
-            surveyed population.
+            Participants missing required biomarkers were excluded from
+            the final modeling dataset.
           </p>
-
         </article>
 
       </div>
@@ -891,32 +1098,34 @@ auc_gbm = roc_auc_score(
          Future Work
     ========================================================== -->
 
-    <section class="shell section">
+    <section class="shell section future-section">
 
-      <div class="heading">
+      <div class="section-heading">
 
-        <p class="kicker">
+        <p class="eyebrow">
           Future work
         </p>
 
         <h2>
-          Extending the analysis
+          Extending the biological age analysis.
         </h2>
 
       </div>
 
 
-      <div class="workflow">
+      <div class="future-grid">
 
         <article>
 
-          <b>01</b>
+          <span>01</span>
 
-          <h3>Newer data cycle</h3>
+          <h3>
+            External validation
+          </h3>
 
           <p>
-            Extend to the 2017–March 2020 cycle once its mortality
-            linkage file is released by NCHS.
+            Evaluate the trained model on an independent NHANES cohort
+            rather than only cross-validation within one cycle.
           </p>
 
         </article>
@@ -924,14 +1133,15 @@ auc_gbm = roc_auc_score(
 
         <article>
 
-          <b>02</b>
+          <span>02</span>
 
-          <h3>Tuned XGBoost</h3>
+          <h3>
+            Tuned XGBoost
+          </h3>
 
           <p>
-            Test regularization-tuned XGBoost to see whether it can
-            overcome the overfitting seen with untuned Gradient
-            Boosting on this small sample.
+            Explore more strongly regularized boosting models for the
+            small and imbalanced mortality outcome.
           </p>
 
         </article>
@@ -939,13 +1149,15 @@ auc_gbm = roc_auc_score(
 
         <article>
 
-          <b>03</b>
+          <span>03</span>
 
-          <h3>Multi-omics extension</h3>
+          <h3>
+            Multi-omics extension
+          </h3>
 
           <p>
-            Incorporate epigenetic clock data alongside blood
-            biomarkers, following recent multi-omics aging research.
+            Combine routine blood biomarkers with epigenetic and other
+            molecular aging measurements.
           </p>
 
         </article>
@@ -953,14 +1165,15 @@ auc_gbm = roc_auc_score(
 
         <article>
 
-          <b>04</b>
+          <span>04</span>
 
-          <h3>External validation</h3>
+          <h3>
+            Survival modeling
+          </h3>
 
           <p>
-            Test whether the trained Random Forest generalizes to a
-            held-out NHANES cycle rather than only cross-validated
-            folds within one cycle.
+            Extend binary mortality prediction toward time-to-event
+            modeling using follow-up duration directly.
           </p>
 
         </article>
@@ -971,81 +1184,79 @@ auc_gbm = roc_auc_score(
 
 
     <!-- =========================================================
-         Project Insights
+         Skills
     ========================================================== -->
 
-    <section class="shell section">
+    <section class="shell section skills-section">
 
-      <div class="heading">
+      <div class="section-heading">
 
-        <p class="kicker">
+        <p class="eyebrow">
           Project skills
         </p>
 
         <h2>
-          What this project demonstrates
+          What this project demonstrates.
         </h2>
 
       </div>
 
 
-      <div class="insights">
+      <div class="skills-grid">
 
         <article>
+          <span>SQL</span>
 
           <h3>
             Relational data modeling
           </h3>
 
           <p>
-            Designing a normalized SQL schema across multiple public
-            health data files and joining them into analysis-ready
-            views.
+            Combining multiple public-health data sources through
+            structured joins and analysis-ready views.
           </p>
-
         </article>
 
 
         <article>
+          <span>Statistics</span>
 
           <h3>
-            Statistical formula implementation
+            Published model implementation
           </h3>
 
           <p>
-            Translating a published clinical algorithm from primary
-            literature into working code, including careful biomarker
-            unit conversion.
+            Translating a peer-reviewed biomarker formula into working
+            computational code.
           </p>
-
         </article>
 
 
         <article>
+          <span>Machine Learning</span>
 
           <h3>
-            Rigorous ML evaluation
+            Imbalanced classification
           </h3>
 
           <p>
-            Applying stratified cross-validation and AUC evaluation
-            appropriate for a small, imbalanced real-world outcome.
+            Using stratified validation, ensemble methods and ROC AUC for
+            a rare mortality outcome.
           </p>
-
         </article>
 
 
         <article>
+          <span>Bioinformatics</span>
 
           <h3>
-            Honest scientific communication
+            Scientific interpretation
           </h3>
 
           <p>
-            Reporting results, including negative or neutral findings,
-            without overstating what the model does or does not show.
+            Connecting biomarker-level patterns with biological aging
+            and mortality risk.
           </p>
-
         </article>
 
       </div>
@@ -1059,11 +1270,13 @@ auc_gbm = roc_auc_score(
        Footer
   ========================================================== -->
 
-  <footer>
+  <footer class="footer">
 
     <a class="brand" href="#top">
 
-      <span>AS</span>
+      <span class="brand-mark">
+        AS
+      </span>
 
       <div>
         <strong>Amilia Storm</strong>
@@ -1072,19 +1285,20 @@ auc_gbm = roc_auc_score(
 
     </a>
 
+
     <p>
-      © 2026 Amilia Storm
+      © <span id="year">2026</span> Amilia Storm
     </p>
 
+
     <a href="mailto:AmiliaSt@hotmail.com">
-      Get in touch
+      Get in touch ↗
     </a>
 
   </footer>
 
 
-  <!-- Reuse the existing project-page tab functionality -->
-  <script src="./ager.js?v=2"></script>
+  <script src="./biological-age-predictor.js?v=1"></script>
 
 </body>
 </html>

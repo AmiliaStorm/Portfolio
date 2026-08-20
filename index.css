@@ -2417,4 +2417,160 @@ button {
     transform: scale(0.74);
     transform-origin: top right;
   }
+
+  /* =========================================
+   HERO VISUAL — FINAL LAYOUT REFINEMENT
+   ========================================= */
+
+.hero__layout {
+  grid-template-columns:
+    minmax(0, 1.08fr)
+    minmax(500px, 0.92fr);
+}
+
+/* Keep text safely above the visual */
+
+.hero__content {
+  position: relative;
+  z-index: 10;
+}
+
+/* Right side */
+
+.hero__visual {
+  position: relative;
+
+  min-width: 0;
+  min-height: 720px;
+
+  overflow: visible;
+}
+
+/* DNA */
+
+.hero__dna-canvas {
+  position: absolute;
+
+  top: 50%;
+  left: 42%;
+
+  width: 500px;
+  height: 650px;
+
+  max-width: none;
+
+  transform:
+    translate(-50%, -50%)
+    scale(0.9);
+
+  z-index: 2;
+}
+
+/* Glow behind DNA */
+
+.hero__image-glow {
+  inset: 18% 22% 16% 8%;
+
+  opacity: 0.8;
+
+  filter: blur(100px);
+}
+
+/* Highlight around transcription area */
+
+.transcription-focus {
+  top: 41%;
+  left: 37%;
+
+  width: 125px;
+  height: 125px;
+}
+
+/* Codon bubbles at top right */
+
+.codon-orbit {
+  top: 15%;
+  right: 20px;
+
+  gap: 10px;
+
+  transform: scale(0.78);
+  transform-origin: top right;
+}
+
+/* Translation column */
+
+.translation-stream {
+  top: 31%;
+  right: -5px;
+
+  width: 215px;
+  height: 470px;
+
+  transform: scale(0.88);
+  transform-origin: top right;
+}
+
+.translation-line {
+  left: 25px;
+}
+
+.translation-builder {
+  margin-left: 42px;
+}
+
+.translation-result,
+.translation-history-item {
+  width: 190px;
+}
+
+/* Temporary: hide old straight sequence text.
+   We'll replace this with the curved mRNA strand next. */
+
+.sequence-ribbon {
+  display: none;
+}
+
+/* Particles */
+
+.hero__particle-field {
+  inset: 12% 9% 12% 15%;
+  opacity: 0.52;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 1180px) {
+
+  .hero__layout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(430px, 0.82fr);
+  }
+
+  .hero__dna-canvas {
+    width: 450px;
+    height: 590px;
+
+    left: 43%;
+
+    transform:
+      translate(-50%, -50%)
+      scale(0.88);
+  }
+
+  .translation-stream {
+    right: -5px;
+
+    transform: scale(0.76);
+    transform-origin: top right;
+  }
+
+  .codon-orbit {
+    transform: scale(0.7);
+    transform-origin: top right;
+  }
 }

@@ -2573,4 +2573,112 @@ button {
     transform: scale(0.7);
     transform-origin: top right;
   }
+
+  /* =========================================
+   TRANSLATION — FINAL CLEANUP
+   ========================================= */
+
+.translation-stream {
+  top: 17%;
+  right: 0;
+
+  width: 220px;
+  height: 520px;
+}
+
+.translation-line {
+  top: 38px;
+  left: 25px;
+
+  height: calc(100% - 50px);
+}
+
+.translation-builder {
+  margin-left: 43px;
+  gap: 10px;
+}
+
+.translation-codon {
+  gap: 7px;
+
+  margin-left: -18px;
+  margin-bottom: 0;
+}
+
+.translation-codon .base {
+  width: 49px;
+  height: 49px;
+
+  background:
+    rgba(3, 13, 28, 0.94);
+
+  box-shadow:
+    0 0 14px rgba(75, 224, 232, 0.08);
+}
+
+.translation-down-arrow {
+  margin-left: 53px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.translation-result {
+  margin-left: 0;
+
+  width: 205px;
+
+  padding: 15px 16px;
+
+  border:
+    1px solid
+    rgba(75, 224, 232, 0.38);
+
+  border-radius: 14px;
+
+  background:
+    rgba(5, 18, 35, 0.88);
+
+  box-shadow:
+    0 18px 45px
+    rgba(0, 0, 0, 0.22);
+}
+
+.amino-name {
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.amino-code {
+  display: block;
+
+  margin-top: 5px;
+
+  color: var(--cyan);
+  font-size: 0.78rem;
+}
+
+.translation-history {
+  margin-top: 4px;
+  gap: 9px;
+}
+
+.translation-history-item {
+  width: 205px;
+
+  padding: 11px 14px;
+
+  border-left:
+    2px solid
+    rgba(75, 224, 232, 0.62);
+
+  background:
+    rgba(5, 18, 35, 0.67);
+}
+
+.translation-history-item strong {
+  font-size: 0.84rem;
+}
+
+.translation-history-item span {
+  font-size: 0.74rem;
 }

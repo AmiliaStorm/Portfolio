@@ -194,19 +194,16 @@ const translationResult =
   document.querySelector(".translation-result");
 
 const translationName =
-  document.querySelector(
-    ".translation-result .amino-name"
-  );
+  document.querySelector(".amino-name");
 
 const translationCode =
-  document.querySelector(
-    ".translation-result .amino-code"
-  );
+  document.querySelector(".amino-code");
 
 const translationHistory =
   document.querySelector(".translation-history");
 
 let codonIndex = 0;
+let previousCodon = null;
 
 function setBase(element, base) {
   if (!element) {
@@ -224,7 +221,6 @@ function addHistoryItem(codon) {
   }
 
   const item = document.createElement("div");
-
   item.className = "translation-history-item";
 
   const title = document.createElement("strong");
@@ -238,13 +234,17 @@ function addHistoryItem(codon) {
   item.append(title, code);
   translationHistory.prepend(item);
 
-  while (translationHistory.children.length > 3) {
+  while (translationHistory.children.length > 2) {
     translationHistory.lastElementChild?.remove();
   }
 }
 
 function runTranslation() {
   const currentCodon = codons[codonIndex];
+
+  if (previousCodon) {
+    addHistoryItem(previousCodon);
+  }
 
   translationCodon.classList.remove(
     "is-joining",
@@ -257,38 +257,39 @@ function runTranslation() {
   currentCodon.sequence
     .split("")
     .forEach((base, index) => {
-      setBase(translationBases[index], base);
+      setBase(
+        translationBases[index],
+        base
+      );
     });
 
   translationName.textContent =
-    currentCodon.aminoAcid;
+    `${currentCodon.sequence} → ${currentCodon.aminoAcid}`;
 
   translationCode.textContent =
     currentCodon.code;
 
   window.setTimeout(() => {
     translationCodon.classList.add("is-joining");
-  }, 500);
+  }, 450);
 
   window.setTimeout(() => {
     translationCodon.classList.add("is-complete");
     translationArrow.classList.add("is-visible");
-  }, 1100);
+  }, 950);
 
   window.setTimeout(() => {
     translationResult.classList.add("is-visible");
-  }, 1500);
+  }, 1350);
 
   window.setTimeout(() => {
-    addHistoryItem(currentCodon);
-  }, 2300);
+    previousCodon = currentCodon;
 
-  window.setTimeout(() => {
     codonIndex =
       (codonIndex + 1) % codons.length;
 
     runTranslation();
-  }, 3400);
+  }, 3300);
 }
 
 const translationElementsExist =

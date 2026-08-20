@@ -2290,6 +2290,131 @@ button {
   .transcription-focus {
     display: none;
   }
+
+/* =========================================
+   HERO VISUAL — POSITION FIX
+   ========================================= */
+
+.hero__layout {
+  grid-template-columns:
+    minmax(0, 1.05fr)
+    minmax(500px, 0.95fr);
 }
 
+.hero__content {
+  z-index: 10;
+}
+
+.hero__visual {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+
+  overflow: visible;
+}
+
+/* DNA smaller + centered inside right column */
+
+.hero__dna-canvas {
+  position: relative;
+
+  width: 520px;
+  max-width: 100%;
+  height: 650px;
+
+  margin-left: -30px;
+
+  z-index: 2;
+}
+
+/* mRNA sequence */
+
+.sequence-ribbon {
+  top: 44%;
+  right: 100px;
+
+  gap: 7px;
+
+  font-size: 0.78rem;
+
+  transform:
+    rotate(-10deg)
+    scale(0.92);
+}
+
+/* transcription glow */
+
+.transcription-focus {
+  top: 40%;
+  left: 34%;
+
+  width: 140px;
+  height: 140px;
+}
+
+/* top codon circles */
+
+.codon-orbit {
+  top: 15%;
+  right: -5px;
+
+  gap: 12px;
+
+  transform: scale(0.82);
+}
+
+/* Translation column */
+
+.translation-stream {
+  top: 27%;
+  right: -35px;
+
+  width: 205px;
+  height: 520px;
+
+  transform: scale(0.9);
+  transform-origin: top right;
+}
+
+.translation-builder {
+  margin-left: 44px;
+}
+
+.translation-result,
+.translation-history-item {
+  width: 185px;
+}
+
+/* Make sure DNA doesn't cover left content */
+
+.hero__visual canvas {
+  max-width: 100%;
+}
+
+/* Responsive */
+
+@media (max-width: 1180px) {
+
+  .hero__layout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(420px, 0.8fr);
+  }
+
+  .hero__dna-canvas {
+    width: 470px;
+    height: 600px;
+  }
+
+  .translation-stream {
+    right: -15px;
+    transform: scale(0.78);
+    transform-origin: top right;
+  }
+
+  .codon-orbit {
+    transform: scale(0.74);
+    transform-origin: top right;
+  }
 }

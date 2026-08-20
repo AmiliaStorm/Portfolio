@@ -983,6 +983,33 @@ mrnaGroup.add(
       }
     );
 
+    /* mRNA information pulse */
+
+const readProgress =
+  (seconds * 0.085) % 1;
+
+const readPosition =
+  mrnaCurve.getPointAt(
+    readProgress
+  );
+
+readHead.position.copy(
+  readPosition
+);
+
+readHeadGlow.position.copy(
+  readPosition
+);
+
+const readPulse =
+  0.7 +
+  Math.sin(seconds * 5) *
+  0.08;
+
+readHeadGlow.scale.setScalar(
+  readPulse
+);
+
     renderer.render(
       scene,
       camera

@@ -508,6 +508,32 @@ if (!container) {
     mrnaTube
   );
 
+  /* ==================================================
+   mRNA READ HEAD
+   ================================================== */
+
+const readHead = new THREE.Mesh(
+  new THREE.SphereGeometry(
+    0.075,
+    18,
+    18
+  ),
+  new THREE.MeshBasicMaterial({
+    color: 0xb8fbff,
+  })
+);
+
+const readHeadGlow =
+  createGlowSprite(
+    0x4be0e8,
+    0.75
+  );
+
+mrnaGroup.add(
+  readHead,
+  readHeadGlow
+);
+
   function nucleotideColor(letter) {
     switch (letter) {
       case "A":

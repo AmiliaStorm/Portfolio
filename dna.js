@@ -7,11 +7,6 @@ const container = document.getElementById("dna-canvas");
 if (!container) {
   console.warn("DNA canvas container was not found.");
 } else {
-
-  /* ==================================================
-     SCENE / CAMERA / RENDERER
-     ================================================== */
-
   const scene = new THREE.Scene();
 
   const camera = new THREE.PerspectiveCamera(
@@ -38,311 +33,163 @@ if (!container) {
   );
 
   renderer.setClearColor(0x000000, 0);
-
-  renderer.outputColorSpace =
-    THREE.SRGBColorSpace;
-
-  renderer.toneMapping =
-    THREE.ACESFilmicToneMapping;
-
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 0.88;
 
-  /*
-   * Clear the container before adding the canvas.
-   * Prevents accidental duplicate WebGL canvases.
-   */
-
   container.innerHTML = "";
+  container.appendChild(renderer.domElement);
 
-  container.appendChild(
-    renderer.domElement
-  );
-
-
-  /* ==================================================
-     MASTER GROUP
-     ================================================== */
-
-  const visualGroup =
-    new THREE.Group();
-
+  const visualGroup = new THREE.Group();
   visualGroup.position.x = -0.5;
-
   scene.add(visualGroup);
 
-
-  /*
-   * DNA group
-   */
-
-  const dnaGroup =
-    new THREE.Group();
-
+  const dnaGroup = new THREE.Group();
   visualGroup.add(dnaGroup);
 
-
-  /*
-   * mRNA group
-   */
-
-  const mrnaGroup =
-    new THREE.Group();
-
+  const mrnaGroup = new THREE.Group();
   visualGroup.add(mrnaGroup);
 
+  const strandBlue = new THREE.MeshStandardMaterial({
+    color: 0x2f83ff,
+    emissive: 0x0b4fa8,
+    emissiveIntensity: 1.1,
+    roughness: 0.34,
+    metalness: 0.14,
+  });
 
-  /* ==================================================
-     DNA MATERIALS
-     ================================================== */
+  const strandCyan = new THREE.MeshStandardMaterial({
+    color: 0x32cadd,
+    emissive: 0x087f98,
+    emissiveIntensity: 0.95,
+    roughness: 0.32,
+    metalness: 0.1,
+  });
 
-  const strandBlue =
-    new THREE.MeshStandardMaterial({
-      color: 0x2f83ff,
-      emissive: 0x0b4fa8,
-      emissiveIntensity: 1.1,
-      roughness: 0.34,
-      metalness: 0.14,
-    });
+  const rungMaterial = new THREE.MeshStandardMaterial({
+    color: 0x69aeea,
+    emissive: 0x123f72,
+    emissiveIntensity: 0.75,
+    roughness: 0.4,
+    metalness: 0.06,
+  });
 
+  const nodeBlueMaterial = new THREE.MeshStandardMaterial({
+    color: 0x68a7ff,
+    emissive: 0x1756b8,
+    emissiveIntensity: 0.85,
+    roughness: 0.3,
+    metalness: 0.06,
+  });
 
-  const strandCyan =
-    new THREE.MeshStandardMaterial({
-      color: 0x32cadd,
-      emissive: 0x087f98,
-      emissiveIntensity: 0.95,
-      roughness: 0.32,
-      metalness: 0.1,
-    });
+  const nodeCyanMaterial = new THREE.MeshStandardMaterial({
+    color: 0x52dbe5,
+    emissive: 0x087f98,
+    emissiveIntensity: 0.8,
+    roughness: 0.28,
+    metalness: 0.06,
+  });
 
-
-  const rungMaterial =
-    new THREE.MeshStandardMaterial({
-      color: 0x69aeea,
-      emissive: 0x123f72,
-      emissiveIntensity: 0.75,
-      roughness: 0.4,
-      metalness: 0.06,
-    });
-
-
-  const nodeBlueMaterial =
-    new THREE.MeshStandardMaterial({
-      color: 0x68a7ff,
-      emissive: 0x1756b8,
-      emissiveIntensity: 0.85,
-      roughness: 0.3,
-      metalness: 0.06,
-    });
-
-
-  const nodeCyanMaterial =
-    new THREE.MeshStandardMaterial({
-      color: 0x52dbe5,
-      emissive: 0x087f98,
-      emissiveIntensity: 0.8,
-      roughness: 0.28,
-      metalness: 0.06,
-    });
-
-
-  /* ==================================================
-     mRNA MATERIAL
-     ================================================== */
-
-  const mrnaMaterial =
-    new THREE.MeshStandardMaterial({
-      color: 0x26cfe0,
-      emissive: 0x087f98,
-      emissiveIntensity: 1.0,
-      roughness: 0.32,
-      metalness: 0.05,
-    });
-
-
-  /* ==================================================
-     GLOW TEXTURE
-     ================================================== */
+  const mrnaMaterial = new THREE.MeshStandardMaterial({
+    color: 0x26cfe0,
+    emissive: 0x087f98,
+    emissiveIntensity: 1.0,
+    roughness: 0.32,
+    metalness: 0.05,
+  });
 
   function createGlowTexture() {
-
     const size = 128;
-
-    const canvas =
-      document.createElement("canvas");
-
+    const canvas = document.createElement("canvas");
     canvas.width = size;
     canvas.height = size;
 
-    const context =
-      canvas.getContext("2d");
+    const context = canvas.getContext("2d");
 
-
-    const gradient =
-      context.createRadialGradient(
-        size / 2,
-        size / 2,
-        0,
-
-        size / 2,
-        size / 2,
-        size / 2
-      );
-
-
-    gradient.addColorStop(
+    const gradient = context.createRadialGradient(
+      size / 2,
+      size / 2,
       0,
-      "rgba(255,255,255,1)"
+      size / 2,
+      size / 2,
+      size / 2
     );
 
-    gradient.addColorStop(
-      0.2,
-      "rgba(120,235,255,0.8)"
-    );
-
-    gradient.addColorStop(
-      0.45,
-      "rgba(75,224,232,0.35)"
-    );
-
-    gradient.addColorStop(
-      1,
-      "rgba(75,224,232,0)"
-    );
-
+    gradient.addColorStop(0, "rgba(255,255,255,1)");
+    gradient.addColorStop(0.2, "rgba(120,235,255,0.8)");
+    gradient.addColorStop(0.45, "rgba(75,224,232,0.35)");
+    gradient.addColorStop(1, "rgba(75,224,232,0)");
 
     context.fillStyle = gradient;
+    context.fillRect(0, 0, size, size);
 
-    context.fillRect(
-      0,
-      0,
-      size,
-      size
-    );
-
-
-    const texture =
-      new THREE.CanvasTexture(canvas);
-
+    const texture = new THREE.CanvasTexture(canvas);
     texture.needsUpdate = true;
 
     return texture;
   }
 
+  const glowTexture = createGlowTexture();
 
-  const glowTexture =
-    createGlowTexture();
+  function createGlowSprite(color, scale = 1) {
+    const material = new THREE.SpriteMaterial({
+      map: glowTexture,
+      color,
+      transparent: true,
+      opacity: 0.75,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
 
-
-  function createGlowSprite(
-    color,
-    scale = 1
-  ) {
-
-    const material =
-      new THREE.SpriteMaterial({
-        map: glowTexture,
-        color,
-        transparent: true,
-        opacity: 0.75,
-        depthWrite: false,
-        blending:
-          THREE.AdditiveBlending,
-      });
-
-
-    const sprite =
-      new THREE.Sprite(material);
-
+    const sprite = new THREE.Sprite(material);
     sprite.scale.setScalar(scale);
 
     return sprite;
   }
 
-
-  /* ==================================================
-     DNA GEOMETRY
-     ================================================== */
-
   const turns = 4.5;
-
   const pointCount = 180;
-
   const helixRadius = 1.65;
-
   const helixHeight = 10.8;
 
-
-  function helixPoint(
-    t,
-    phase = 0
-  ) {
-
+  function helixPoint(t, phase = 0) {
     const angle =
-      t *
-      Math.PI *
-      2 *
-      turns +
-      phase;
-
+      t * Math.PI * 2 * turns + phase;
 
     const y =
-      t * helixHeight -
-      helixHeight / 2;
-
+      t * helixHeight - helixHeight / 2;
 
     return new THREE.Vector3(
-      Math.cos(angle) *
-        helixRadius,
-
+      Math.cos(angle) * helixRadius,
       y,
-
-      Math.sin(angle) *
-        helixRadius *
-        0.95
+      Math.sin(angle) * helixRadius * 0.95
     );
   }
 
-
   const strandOnePoints = [];
-
   const strandTwoPoints = [];
 
-
-  for (
-    let i = 0;
-    i < pointCount;
-    i += 1
-  ) {
-
-    const t =
-      i / (pointCount - 1);
-
+  for (let i = 0; i < pointCount; i += 1) {
+    const t = i / (pointCount - 1);
 
     strandOnePoints.push(
       helixPoint(t, 0)
     );
 
-
     strandTwoPoints.push(
-      helixPoint(
-        t,
-        Math.PI
-      )
+      helixPoint(t, Math.PI)
     );
   }
-
 
   const strandOneCurve =
     new THREE.CatmullRomCurve3(
       strandOnePoints
     );
 
-
   const strandTwoCurve =
     new THREE.CatmullRomCurve3(
       strandTwoPoints
     );
-
 
   const strandOneGeometry =
     new THREE.TubeGeometry(
@@ -353,7 +200,6 @@ if (!container) {
       false
     );
 
-
   const strandTwoGeometry =
     new THREE.TubeGeometry(
       strandTwoCurve,
@@ -363,13 +209,11 @@ if (!container) {
       false
     );
 
-
   const strandOne =
     new THREE.Mesh(
       strandOneGeometry,
       strandBlue
     );
-
 
   const strandTwo =
     new THREE.Mesh(
@@ -377,16 +221,10 @@ if (!container) {
       strandCyan
     );
 
-
   dnaGroup.add(
     strandOne,
     strandTwo
   );
-
-
-  /* ==================================================
-     SMALL DNA NODES
-     ================================================== */
 
   const nodeGeometry =
     new THREE.SphereGeometry(
@@ -395,29 +233,22 @@ if (!container) {
       12
     );
 
-
   for (
     let i = 0;
     i < strandOnePoints.length;
     i += 4
   ) {
-
     const blueNode =
       new THREE.Mesh(
         nodeGeometry,
         nodeBlueMaterial
       );
 
-
     blueNode.position.copy(
       strandOnePoints[i]
     );
 
-
-    dnaGroup.add(
-      blueNode
-    );
-
+    dnaGroup.add(blueNode);
 
     const cyanNode =
       new THREE.Mesh(
@@ -425,39 +256,24 @@ if (!container) {
         nodeCyanMaterial
       );
 
-
     cyanNode.position.copy(
       strandTwoPoints[i]
     );
 
-
-    dnaGroup.add(
-      cyanNode
-    );
+    dnaGroup.add(cyanNode);
   }
-
-
-  /* ==================================================
-     DNA BASE PAIRS
-     ================================================== */
 
   function createCylinder(
     start,
     end,
     radius = 0.038
   ) {
-
     const direction =
       new THREE.Vector3()
-        .subVectors(
-          end,
-          start
-        );
-
+        .subVectors(end, start);
 
     const length =
       direction.length();
-
 
     const geometry =
       new THREE.CylinderGeometry(
@@ -467,13 +283,11 @@ if (!container) {
         10
       );
 
-
     const cylinder =
       new THREE.Mesh(
         geometry,
         rungMaterial
       );
-
 
     cylinder.position.copy(
       start
@@ -482,49 +296,33 @@ if (!container) {
         .multiplyScalar(0.5)
     );
 
-
     cylinder.quaternion
       .setFromUnitVectors(
-        new THREE.Vector3(
-          0,
-          1,
-          0
-        ),
-
+        new THREE.Vector3(0, 1, 0),
         direction.normalize()
       );
-
 
     return cylinder;
   }
 
-
   const rungCount = 42;
-
 
   for (
     let i = 0;
     i < rungCount;
     i += 1
   ) {
-
     const t =
       i / (rungCount - 1);
 
-
     const left =
-      helixPoint(
-        t,
-        0
-      );
-
+      helixPoint(t, 0);
 
     const right =
       helixPoint(
         t,
         Math.PI
       );
-
 
     const rung =
       createCylinder(
@@ -533,17 +331,10 @@ if (!container) {
         0.036
       );
 
-
     dnaGroup.add(rung);
   }
 
-
-  /* ==================================================
-     TRANSCRIPTION HOTSPOT
-     ================================================== */
-
   const transcriptionT = 0.54;
-
 
   const leftHot =
     helixPoint(
@@ -551,13 +342,11 @@ if (!container) {
       0
     );
 
-
   const rightHot =
     helixPoint(
       transcriptionT,
       Math.PI
     );
-
 
   const hotspotPosition =
     leftHot
@@ -565,30 +354,24 @@ if (!container) {
       .add(rightHot)
       .multiplyScalar(0.5);
 
-
   const hotspotGroup =
     new THREE.Group();
-
 
   hotspotGroup.position.copy(
     hotspotPosition
   );
 
-
   visualGroup.add(
     hotspotGroup
   );
 
-
   const hotspotCore =
     new THREE.Mesh(
-
       new THREE.SphereGeometry(
         0.08,
         18,
         18
       ),
-
       new THREE.MeshBasicMaterial({
         color: 0x89f8ff,
         transparent: true,
@@ -596,13 +379,11 @@ if (!container) {
       })
     );
 
-
   const hotspotGlow =
     createGlowSprite(
       0x4be0e8,
       1.5
     );
-
 
   const hotspotGlowOuter =
     createGlowSprite(
@@ -610,30 +391,16 @@ if (!container) {
       2.4
     );
 
-
   hotspotGroup.add(
     hotspotGlowOuter,
     hotspotGlow,
     hotspotCore
   );
 
-
-  /* ==================================================
-     mRNA STRAND
-     ================================================== */
-
   const mrnaSequence =
     "AUGCUUACGAAUGCC";
 
-
-  /*
-   * mRNA starts inside the active DNA
-   * region and flows toward the
-   * translation interface.
-   */
-
   const mrnaPoints = [
-
     hotspotPosition.clone(),
 
     hotspotPosition
@@ -710,20 +477,17 @@ if (!container) {
       .clone()
       .add(
         new THREE.Vector3(
-          4.65,
+          5.15,
           0.20,
           0.02
         )
       ),
-
   ];
-
 
   const mrnaCurve =
     new THREE.CatmullRomCurve3(
       mrnaPoints
     );
-
 
   const mrnaGeometry =
     new THREE.TubeGeometry(
@@ -734,27 +498,18 @@ if (!container) {
       false
     );
 
-
   const mrnaTube =
     new THREE.Mesh(
       mrnaGeometry,
       mrnaMaterial
     );
 
-
   mrnaGroup.add(
     mrnaTube
   );
 
-
-  /* ==================================================
-     mRNA NUCLEOTIDE COLORS
-     ================================================== */
-
   function nucleotideColor(letter) {
-
     switch (letter) {
-
       case "A":
         return 0x65f0a8;
 
@@ -772,11 +527,6 @@ if (!container) {
     }
   }
 
-
-  /* ==================================================
-     mRNA NUCLEOTIDE BEADS
-     ================================================== */
-
   const nucleotideGeometry =
     new THREE.SphereGeometry(
       0.04,
@@ -784,27 +534,22 @@ if (!container) {
       12
     );
 
-
   for (
     let i = 0;
     i < mrnaSequence.length;
     i += 1
   ) {
-
     const t =
       i /
       (mrnaSequence.length - 1);
 
-
     const point =
       mrnaCurve.getPointAt(t);
-
 
     const baseColor =
       nucleotideColor(
         mrnaSequence[i]
       );
-
 
     const beadMaterial =
       new THREE.MeshStandardMaterial({
@@ -815,67 +560,50 @@ if (!container) {
         metalness: 0.04,
       });
 
-
     const bead =
       new THREE.Mesh(
         nucleotideGeometry,
         beadMaterial
       );
 
-
     bead.position.copy(point);
-
 
     bead.position.y +=
       Math.sin(i * 0.8) *
       0.075;
 
-
     bead.position.z +=
       Math.cos(i * 0.55) *
       0.045;
 
-
     mrnaGroup.add(bead);
   }
 
-
-  /* ==================================================
-     BACKGROUND PARTICLES
-     ================================================== */
-
   const particleCount = 320;
-
-
   const particleGeometry =
     new THREE.BufferGeometry();
-
 
   const particlePositions =
     new Float32Array(
       particleCount * 3
     );
 
-
   for (
     let i = 0;
     i < particleCount;
     i += 1
   ) {
-
     particlePositions[
       i * 3
     ] =
       (Math.random() - 0.5) *
       14;
 
-
     particlePositions[
       i * 3 + 1
     ] =
       (Math.random() - 0.5) *
       16;
-
 
     particlePositions[
       i * 3 + 2
@@ -884,31 +612,22 @@ if (!container) {
       8;
   }
 
-
   particleGeometry.setAttribute(
     "position",
-
     new THREE.BufferAttribute(
       particlePositions,
       3
     )
   );
 
-
   const particleMaterial =
     new THREE.PointsMaterial({
-
       color: 0x4f9be8,
-
       size: 0.03,
-
       transparent: true,
-
       opacity: 0.4,
-
       depthWrite: false,
     });
-
 
   const particles =
     new THREE.Points(
@@ -916,20 +635,12 @@ if (!container) {
       particleMaterial
     );
 
-
   scene.add(particles);
-
-
-  /* ==================================================
-     DATA DOT CLUSTERS
-     ================================================== */
 
   const dataDots =
     new THREE.Group();
 
-
   visualGroup.add(dataDots);
-
 
   function addDotCluster(
     x,
@@ -940,7 +651,6 @@ if (!container) {
     spacing,
     color
   ) {
-
     const material =
       new THREE.MeshBasicMaterial({
         color,
@@ -948,26 +658,22 @@ if (!container) {
         opacity: 0.55,
       });
 
-
     const geometry =
       new THREE.PlaneGeometry(
         0.04,
         0.04
       );
 
-
     for (
       let row = 0;
       row < rows;
       row += 1
     ) {
-
       for (
         let column = 0;
         column < columns;
         column += 1
       ) {
-
         if (
           Math.random() >
           0.55
@@ -975,34 +681,26 @@ if (!container) {
           continue;
         }
 
-
         const dot =
           new THREE.Mesh(
             geometry,
             material.clone()
           );
 
-
         dot.position.set(
-
           x +
             column *
               spacing,
-
           y -
             row *
               spacing,
-
           z
-
         );
-
 
         dataDots.add(dot);
       }
     }
   }
-
 
   addDotCluster(
     1.8,
@@ -1014,7 +712,6 @@ if (!container) {
     0x2f83ff
   );
 
-
   addDotCluster(
     1.5,
     -1.1,
@@ -1024,7 +721,6 @@ if (!container) {
     0.11,
     0x4be0e8
   );
-
 
   addDotCluster(
     -2.2,
@@ -1036,7 +732,6 @@ if (!container) {
     0x2f83ff
   );
 
-
   addDotCluster(
     2.2,
     -2.2,
@@ -1047,22 +742,15 @@ if (!container) {
     0x4be0e8
   );
 
-
-  /* ==================================================
-     LIGHTING
-     ================================================== */
-
   const ambientLight =
     new THREE.AmbientLight(
       0x6fa7e0,
       0.72
     );
 
-
   scene.add(
     ambientLight
   );
-
 
   const blueLight =
     new THREE.PointLight(
@@ -1071,18 +759,15 @@ if (!container) {
       40
     );
 
-
   blueLight.position.set(
     4.8,
     2.8,
     5.5
   );
 
-
   scene.add(
     blueLight
   );
-
 
   const cyanLight =
     new THREE.PointLight(
@@ -1091,18 +776,15 @@ if (!container) {
       38
     );
 
-
   cyanLight.position.set(
     -4.4,
     -2.4,
     5.2
   );
 
-
   scene.add(
     cyanLight
   );
-
 
   const fillLight =
     new THREE.DirectionalLight(
@@ -1110,35 +792,24 @@ if (!container) {
       0.45
     );
 
-
   fillLight.position.set(
     0,
     2,
     6
   );
 
-
   scene.add(
     fillLight
   );
 
-
-  /* ==================================================
-     MOUSE INTERACTION
-     ================================================== */
-
   let targetRotationX = 0;
-
   let targetRotationY = 0;
-
 
   container.addEventListener(
     "mousemove",
     (event) => {
-
       const bounds =
         container.getBoundingClientRect();
-
 
       const mouseX =
         (
@@ -1148,7 +819,6 @@ if (!container) {
         bounds.width -
         0.5;
 
-
       const mouseY =
         (
           event.clientY -
@@ -1157,41 +827,28 @@ if (!container) {
         bounds.height -
         0.5;
 
-
       targetRotationY =
         mouseX * 0.18;
-
 
       targetRotationX =
         mouseY * 0.1;
     }
   );
 
-
   container.addEventListener(
     "mouseleave",
     () => {
-
       targetRotationX = 0;
-
       targetRotationY = 0;
     }
   );
 
-
-  /* ==================================================
-     RESPONSIVE RENDERER
-     ================================================== */
-
   function resizeRenderer() {
-
     const width =
       container.clientWidth;
 
-
     const height =
       container.clientHeight;
-
 
     if (
       width === 0 ||
@@ -1200,52 +857,31 @@ if (!container) {
       return;
     }
 
-
     renderer.setSize(
       width,
       height,
       false
     );
 
-
     camera.aspect =
       width / height;
 
-
     camera.updateProjectionMatrix();
   }
-
 
   window.addEventListener(
     "resize",
     resizeRenderer
   );
 
-
   resizeRenderer();
 
-
-  /* ==================================================
-     ANIMATION
-     ================================================== */
-
   function animate(time) {
-
     const seconds =
       time * 0.001;
 
-
-    /*
-     * Slow DNA rotation
-     */
-
     dnaGroup.rotation.y +=
       0.0025;
-
-
-    /*
-     * Mouse parallax
-     */
 
     visualGroup.rotation.x +=
       (
@@ -1254,7 +890,6 @@ if (!container) {
       ) *
       0.03;
 
-
     visualGroup.rotation.z +=
       (
         targetRotationY -
@@ -1262,61 +897,35 @@ if (!container) {
       ) *
       0.03;
 
-
-    /*
-     * Gentle floating motion
-     */
-
     visualGroup.position.y =
       Math.sin(
         seconds * 0.65
       ) *
       0.07;
 
-
-    /*
-     * Transcription pulse
-     */
-
     hotspotGlow.scale.setScalar(
-
       1.45 +
-
       Math.sin(
         seconds * 2.8
       ) *
       0.10
-
     );
 
-
     hotspotGlowOuter.scale.setScalar(
-
       2.25 +
-
       Math.sin(
         seconds * 2.8
       ) *
       0.14
-
     );
 
-
     hotspotCore.scale.setScalar(
-
       1 +
-
       Math.sin(
         seconds * 3.1
       ) *
       0.05
-
     );
-
-
-    /*
-     * Gentle mRNA floating
-     */
 
     mrnaGroup.position.y =
       Math.sin(
@@ -1324,14 +933,8 @@ if (!container) {
       ) *
       0.025;
 
-
-    /*
-     * Background particles
-     */
-
     particles.rotation.y =
       seconds * 0.018;
-
 
     particles.rotation.x =
       Math.sin(
@@ -1339,17 +942,10 @@ if (!container) {
       ) *
       0.05;
 
-
-    /*
-     * Pulsating data dots
-     */
-
     dataDots.children.forEach(
       (dot, index) => {
-
         dot.material.opacity =
           0.2 +
-
           (
             Math.sin(
               seconds * 2.2 +
@@ -1361,18 +957,15 @@ if (!container) {
       }
     );
 
-
     renderer.render(
       scene,
       camera
     );
 
-
     requestAnimationFrame(
       animate
     );
   }
-
 
   requestAnimationFrame(
     animate

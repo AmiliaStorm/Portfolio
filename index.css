@@ -2683,155 +2683,196 @@ button {
   font-size: 0.74rem;
 }
 
-  /* =========================
-   Flashy "Explore all projects" CTA
-   ========================= */
+  /* =========================================
+   EXPLORE ALL PROJECTS 
+   ========================================= */
 
-.projects .section-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.text-link--projects {
+.section-heading .text-link.text-link--projects {
   position: relative;
+
   display: inline-flex;
   align-items: center;
-  gap: 0.85rem;
+  justify-content: center;
+  gap: 16px;
 
-  padding: 1rem 1.45rem;
-  border-radius: 16px;
+  min-width: 290px;
+  padding: 18px 28px;
 
-  border: 1px solid rgba(93, 173, 255, 0.45);
+  border: 1px solid #5fa8ff;
+  border-radius: 14px;
+
   background:
-    linear-gradient(135deg, rgba(33, 82, 255, 0.18), rgba(110, 61, 255, 0.18)),
-    rgba(10, 19, 40, 0.7);
+    linear-gradient(
+      135deg,
+      rgba(45, 85, 255, 0.28),
+      rgba(88, 46, 255, 0.22)
+    );
 
-  color: #eaf3ff;
-  text-decoration: none;
+  color: #ffffff;
+
+  font-size: 18px;
   font-weight: 700;
-  font-size: 1rem;
-  letter-spacing: -0.01em;
+  text-decoration: none;
 
   box-shadow:
-    0 0 0 1px rgba(130, 190, 255, 0.06) inset,
-    0 0 24px rgba(63, 131, 248, 0.18),
-    0 10px 30px rgba(0, 0, 0, 0.28);
+    0 0 8px rgba(72, 144, 255, 0.8),
+    0 0 20px rgba(72, 144, 255, 0.55),
+    0 0 40px rgba(73, 84, 255, 0.25),
+    inset 0 0 20px rgba(77, 120, 255, 0.08);
 
-  backdrop-filter: blur(10px);
+  overflow: visible;
 
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease,
-    border-color 0.25s ease,
-    background 0.25s ease;
+    border-color 0.25s ease;
 }
 
-.text-link--projects::before {
+
+/* blue/purple glow underneath */
+.section-heading .text-link.text-link--projects::before {
   content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(90deg, rgba(103, 196, 255, 0.8), rgba(109, 88, 255, 0.8), rgba(103, 196, 255, 0.8));
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.7;
-  pointer-events: none;
-}
 
-.text-link--projects::after {
-  content: "";
   position: absolute;
-  right: -28px;
-  bottom: -10px;
-  width: 120px;
-  height: 32px;
-  background: radial-gradient(circle at center, rgba(76, 130, 255, 0.45), transparent 72%);
-  filter: blur(10px);
-  opacity: 0.75;
-  pointer-events: none;
-}
 
-.text-link--projects:hover {
-  transform: translateY(-3px) scale(1.015);
-  border-color: rgba(122, 197, 255, 0.75);
+  width: 330px;
+  height: 75px;
+
+  left: 50%;
+  bottom: -32px;
+
+  transform: translateX(-50%);
+
   background:
-    linear-gradient(135deg, rgba(41, 101, 255, 0.28), rgba(120, 71, 255, 0.26)),
-    rgba(10, 19, 40, 0.82);
+    radial-gradient(
+      ellipse,
+      rgba(71, 91, 255, 0.48) 0%,
+      rgba(57, 107, 255, 0.22) 40%,
+      transparent 72%
+    );
+
+  filter: blur(16px);
+
+  z-index: -1;
+
+  pointer-events: none;
+}
+
+
+/* little light streak */
+.section-heading .text-link.text-link--projects::after {
+  content: "";
+
+  position: absolute;
+
+  width: 75%;
+  height: 2px;
+
+  left: 12%;
+  bottom: -12px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #527cff,
+    #59c4ff,
+    transparent
+  );
 
   box-shadow:
-    0 0 0 1px rgba(146, 208, 255, 0.08) inset,
-    0 0 34px rgba(73, 144, 255, 0.38),
-    0 12px 36px rgba(0, 0, 0, 0.34);
+    0 0 8px #527cff,
+    0 0 16px rgba(82, 124, 255, 0.8);
+
+  border-radius: 100%;
+  opacity: 0.8;
+
+  pointer-events: none;
 }
 
-.text-link--projects:active {
-  transform: translateY(-1px) scale(1.005);
-}
 
-.text-link__sparkle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.15rem;
-  line-height: 1;
-  color: #dff3ff;
+/* sparkle */
+.section-heading .text-link--projects .text-link__sparkle {
+  color: #c9ddff;
+
+  font-size: 25px;
+
   text-shadow:
-    0 0 10px rgba(123, 202, 255, 0.8),
-    0 0 20px rgba(112, 107, 255, 0.55);
+    0 0 6px #ffffff,
+    0 0 12px #6ea8ff,
+    0 0 20px #625cff;
+
+  animation: projectSparkle 2.3s ease-in-out infinite;
 }
 
-.text-link__arrow {
-  font-size: 1.15rem;
+
+/* arrow */
+.section-heading .text-link--projects .text-link__arrow {
+  color: #73b9ff;
+  font-size: 23px;
+
+  text-shadow:
+    0 0 10px rgba(75, 163, 255, 0.8);
+
   transition: transform 0.25s ease;
 }
 
-.text-link--projects:hover .text-link__arrow {
-  transform: translateX(5px);
+
+/* hover */
+.section-heading .text-link.text-link--projects:hover {
+  color: #ffffff;
+
+  transform: translateY(-3px);
+
+  border-color: #89c9ff;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(50, 105, 255, 0.4),
+      rgba(105, 54, 255, 0.32)
+    );
+
+  box-shadow:
+    0 0 10px rgba(89, 174, 255, 0.95),
+    0 0 28px rgba(75, 142, 255, 0.7),
+    0 0 55px rgba(83, 65, 255, 0.4),
+    inset 0 0 24px rgba(115, 162, 255, 0.12);
 }
 
-/* Optional subtle glow pulse */
-@keyframes projectButtonPulse {
+
+.section-heading
+.text-link.text-link--projects:hover
+.text-link__arrow {
+  transform: translateX(6px);
+}
+
+
+/* sparkle animation */
+@keyframes projectSparkle {
+
   0%,
   100% {
-    box-shadow:
-      0 0 0 1px rgba(130, 190, 255, 0.06) inset,
-      0 0 24px rgba(63, 131, 248, 0.18),
-      0 10px 30px rgba(0, 0, 0, 0.28);
+    transform: scale(1);
+    opacity: 0.8;
   }
+
   50% {
-    box-shadow:
-      0 0 0 1px rgba(130, 190, 255, 0.08) inset,
-      0 0 34px rgba(84, 151, 255, 0.28),
-      0 10px 30px rgba(0, 0, 0, 0.28);
+    transform: scale(1.22) rotate(8deg);
+    opacity: 1;
   }
 }
 
-.text-link--projects {
-  animation: projectButtonPulse 3.2s ease-in-out infinite;
-}
 
-/* Mobile */
+/* mobile */
 @media (max-width: 768px) {
-  .projects .section-heading {
-    align-items: flex-start;
-  }
 
-  .text-link--projects {
+  .section-heading .text-link.text-link--projects {
+    min-width: 0;
     width: 100%;
-    justify-content: center;
-    padding: 0.95rem 1.2rem;
+
+    padding: 16px 22px;
+
+    font-size: 16px;
   }
 
-  .text-link--projects::after {
-    right: 10px;
-    bottom: -8px;
-    width: 90px;
-  }
 }

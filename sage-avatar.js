@@ -1,19 +1,13 @@
 import * as THREE from "three";
 
-
 // ==========================================================
-// SAGE v0.3
-// HUMAN FORM + ENERGY NETWORK
+// SAGE v0.4 — FACE, POSE & ENERGY FLOW
 // ==========================================================
 
-const mount =
-  document.getElementById("sageAvatarMount");
-
+const mount = document.getElementById("sageAvatarMount");
 
 if (!mount) {
-  throw new Error(
-    "SAGE: #sageAvatarMount not found"
-  );
+  throw new Error("SAGE: #sageAvatarMount not found");
 }
 
 
@@ -21,134 +15,98 @@ if (!mount) {
 // Renderer
 // ==========================================================
 
-const renderer =
-  new THREE.WebGLRenderer({
-    alpha: true,
-    antialias: true,
-    powerPreference: "high-performance"
-  });
-
+const renderer = new THREE.WebGLRenderer({
+  alpha: true,
+  antialias: true,
+  powerPreference: "high-performance"
+});
 
 renderer.setPixelRatio(
-  Math.min(
-    window.devicePixelRatio || 1,
-    2
-  )
+  Math.min(window.devicePixelRatio || 1, 2)
 );
 
+renderer.setClearColor(0x000000, 0);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-renderer.setClearColor(
-  0x000000,
-  0
-);
-
-
-renderer.outputColorSpace =
-  THREE.SRGBColorSpace;
-
-
-mount.appendChild(
-  renderer.domElement
-);
+mount.appendChild(renderer.domElement);
 
 
 // ==========================================================
-// Scene / camera
+// Scene / Camera
 // ==========================================================
 
-const scene =
-  new THREE.Scene();
+const scene = new THREE.Scene();
 
-
-const camera =
-  new THREE.PerspectiveCamera(
-    31,
-    1,
-    0.1,
-    100
-  );
-
+const camera = new THREE.PerspectiveCamera(
+  30,
+  1,
+  0.1,
+  100
+);
 
 camera.position.set(
   0,
-  0.08,
-  12.7
+  0.05,
+  12.4
 );
-
 
 camera.lookAt(
   0,
-  0,
+  0.05,
   0
 );
 
 
 // ==========================================================
-// SAGE root
+// SAGE rigs
 // ==========================================================
 
-const sage =
-  new THREE.Group();
-
+const sage = new THREE.Group();
 
 sage.position.set(
-  0.1,
+  0.08,
   0.08,
   0
 );
 
-
-scene.add(
-  sage
-);
+scene.add(sage);
 
 
-const bodyRig =
-  new THREE.Group();
+const bodyRig = new THREE.Group();
 
+const headRig = new THREE.Group();
 
-const headRig =
-  new THREE.Group();
+const leftArmRig = new THREE.Group();
 
+const rightArmRig = new THREE.Group();
 
-const armRig =
-  new THREE.Group();
+const energyRig = new THREE.Group();
 
+const particleRig = new THREE.Group();
 
-const hairRig =
-  new THREE.Group();
+const tailRig = new THREE.Group();
 
-
-const particleRig =
-  new THREE.Group();
-
-
-const energyRig =
-  new THREE.Group();
-
-
-const tailRig =
-  new THREE.Group();
+const hairRig = new THREE.Group();
 
 
 headRig.position.set(
-  0,
-  2.67,
-  0.015
+  0.02,
+  2.63,
+  0.03
 );
 
+headRig.rotation.z = -0.018;
 
-headRig.add(
-  hairRig
-);
+headRig.add(hairRig);
 
 
 sage.add(
   bodyRig,
   headRig,
-  armRig,
-  particleRig,
+  leftArmRig,
+  rightArmRig,
   energyRig,
+  particleRig,
   tailRig
 );
 
@@ -157,29 +115,18 @@ sage.add(
 // Glow texture
 // ==========================================================
 
-function makeGlowTexture() {
+function createGlowTexture() {
 
   const canvas =
-    document.createElement(
-      "canvas"
-    );
+    document.createElement("canvas");
 
-
-  canvas.width =
-    256;
-
-
-  canvas.height =
-    256;
-
+  canvas.width = 256;
+  canvas.height = 256;
 
   const ctx =
-    canvas.getContext(
-      "2d"
-    );
+    canvas.getContext("2d");
 
-
-  const glow =
+  const gradient =
     ctx.createRadialGradient(
       128,
       128,
@@ -189,46 +136,37 @@ function makeGlowTexture() {
       128
     );
 
-
-  glow.addColorStop(
+  gradient.addColorStop(
     0,
     "rgba(255,255,255,1)"
   );
 
-
-  glow.addColorStop(
-    0.08,
-    "rgba(230,252,255,1)"
+  gradient.addColorStop(
+    0.07,
+    "rgba(235,253,255,1)"
   );
 
-
-  glow.addColorStop(
-    0.23,
-    "rgba(87,226,255,.82)"
+  gradient.addColorStop(
+    0.22,
+    "rgba(97,229,255,.88)"
   );
 
-
-  glow.addColorStop(
-    0.48,
-    "rgba(68,128,255,.3)"
+  gradient.addColorStop(
+    0.47,
+    "rgba(69,126,255,.34)"
   );
 
-
-  glow.addColorStop(
+  gradient.addColorStop(
     0.72,
-    "rgba(128,81,255,.08)"
+    "rgba(138,83,255,.09)"
   );
 
-
-  glow.addColorStop(
+  gradient.addColorStop(
     1,
     "rgba(0,0,0,0)"
   );
 
-
-  ctx.fillStyle =
-    glow;
-
+  ctx.fillStyle = gradient;
 
   ctx.fillRect(
     0,
@@ -237,23 +175,18 @@ function makeGlowTexture() {
     256
   );
 
-
   const texture =
-    new THREE.CanvasTexture(
-      canvas
-    );
-
+    new THREE.CanvasTexture(canvas);
 
   texture.colorSpace =
     THREE.SRGBColorSpace;
-
 
   return texture;
 }
 
 
 const glowTexture =
-  makeGlowTexture();
+  createGlowTexture();
 
 
 // ==========================================================
@@ -261,7 +194,7 @@ const glowTexture =
 // ==========================================================
 
 function makeHologramMaterial({
-  opacity = 0.72,
+  opacity = 0.68,
   dissolve = false
 } = {}) {
 
@@ -269,11 +202,9 @@ function makeHologramMaterial({
 
     transparent: true,
 
-    side:
-      THREE.DoubleSide,
+    side: THREE.DoubleSide,
 
-    depthWrite:
-      false,
+    depthWrite: false,
 
     blending:
       THREE.AdditiveBlending,
@@ -291,30 +222,22 @@ function makeHologramMaterial({
 
       uCyan: {
         value:
-          new THREE.Color(
-            "#58e8ff"
-          )
+          new THREE.Color("#5be8ff")
       },
 
       uBlue: {
         value:
-          new THREE.Color(
-            "#397fff"
-          )
+          new THREE.Color("#3e7fff")
       },
 
       uPurple: {
         value:
-          new THREE.Color(
-            "#8c68ff"
-          )
+          new THREE.Color("#8d68ff")
       },
 
       uDissolve: {
         value:
-          dissolve
-            ? 1
-            : 0
+          dissolve ? 1 : 0
       }
 
     },
@@ -335,19 +258,19 @@ function makeHologramMaterial({
           position;
 
 
-        float wave =
+        float shimmer =
           sin(
-            position.y * 10.0 +
+            position.y * 9.0 +
             position.x * 5.5 +
             uTime * 1.35
           )
           *
-          0.0045;
+          0.004;
 
 
         p +=
           normal *
-          wave;
+          shimmer;
 
 
         vec4 mv =
@@ -388,25 +311,28 @@ function makeHologramMaterial({
 
 
       uniform float uTime;
+
       uniform float uOpacity;
 
-
       uniform vec3 uCyan;
-      uniform vec3 uBlue;
-      uniform vec3 uPurple;
 
+      uniform vec3 uBlue;
+
+      uniform vec3 uPurple;
 
       uniform int uDissolve;
 
 
       varying vec3 vNormal;
+
       varying vec3 vView;
+
       varying vec3 vPosition;
 
 
       void main() {
 
-        vec3 viewDirection =
+        vec3 viewDir =
           normalize(
             vView
           );
@@ -414,26 +340,30 @@ function makeHologramMaterial({
 
         float fresnel =
           pow(
+
             1.0 -
+
             abs(
               dot(
                 normalize(
                   vNormal
                 ),
-                viewDirection
+                viewDir
               )
             ),
-            2.3
+
+            2.35
+
           );
 
 
-        float current =
+        float flow =
           0.5 +
           0.5 *
           sin(
-            vPosition.y * 13.0 -
+            vPosition.y * 12.5 -
             uTime * 2.0 +
-            vPosition.x * 6.0
+            vPosition.x * 5.8
           );
 
 
@@ -441,24 +371,23 @@ function makeHologramMaterial({
           0.5 +
           0.5 *
           sin(
-            vPosition.x * 34.0 +
-            vPosition.y * 22.0 +
-            vPosition.z * 19.0 +
-            uTime * 1.4
+            vPosition.x * 31.0 +
+            vPosition.y * 23.0 +
+            vPosition.z * 17.0 +
+            uTime * 1.45
           );
 
 
         float vertical =
           clamp(
-            vPosition.y *
-            0.15 +
+            vPosition.y * 0.14 +
             0.5,
             0.0,
             1.0
           );
 
 
-        vec3 colour =
+        vec3 color =
           mix(
             uPurple,
             uBlue,
@@ -466,22 +395,19 @@ function makeHologramMaterial({
           );
 
 
-        colour =
+        color =
           mix(
-            colour,
+            color,
             uCyan,
-            fresnel *
-            0.78
+            fresnel * 0.80
           );
 
 
         float alpha =
           (
-            0.024 +
-            fresnel *
-            0.57 +
-            current *
-            0.035
+            0.020 +
+            fresnel * 0.55 +
+            flow * 0.03
           )
           *
           uOpacity;
@@ -492,34 +418,28 @@ function makeHologramMaterial({
           1
         ) {
 
-          float fade =
+          alpha *=
             smoothstep(
-              -0.67,
+              -0.76,
               -0.28,
               vPosition.y
             );
-
-
-          alpha *=
-            fade;
 
         }
 
 
         float brightness =
-          0.38 +
-          fresnel *
-          2.8 +
-          current *
-          0.13 +
-          detail *
-          0.06;
+          0.34 +
+          fresnel * 2.95 +
+          flow * 0.13 +
+          detail * 0.05;
 
 
         gl_FragColor =
           vec4(
-            colour *
+            color *
             brightness,
+
             alpha
           );
 
@@ -532,20 +452,20 @@ function makeHologramMaterial({
 
 const bodyMaterial =
   makeHologramMaterial({
-    opacity: 0.72,
+    opacity: 0.70,
     dissolve: true
   });
 
 
 const limbMaterial =
   makeHologramMaterial({
-    opacity: 0.67
+    opacity: 0.64
   });
 
 
 const headMaterial =
   makeHologramMaterial({
-    opacity: 0.63
+    opacity: 0.58
   });
 
 
@@ -557,111 +477,229 @@ const hologramMaterials = [
 
 
 // ==========================================================
-// Continuous body profile
+// Glow sprite helper
+// ==========================================================
+
+function makeGlowSprite(
+  parent,
+  size,
+  opacity,
+  color
+) {
+
+  const sprite =
+    new THREE.Sprite(
+
+      new THREE.SpriteMaterial({
+
+        map:
+          glowTexture,
+
+        color,
+
+        transparent:
+          true,
+
+        opacity,
+
+        blending:
+          THREE.AdditiveBlending,
+
+        depthWrite:
+          false
+
+      })
+
+    );
+
+
+  sprite.scale.set(
+    size,
+    size,
+    1
+  );
+
+
+  parent.add(
+    sprite
+  );
+
+
+  return sprite;
+}
+
+
+// ==========================================================
+// Energy tube helper
+// ==========================================================
+
+function createTube(
+  points,
+  radius,
+  color,
+  opacity = 0.28,
+  segments = 44
+) {
+
+  const curve =
+    new THREE.CatmullRomCurve3(
+      points,
+      false,
+      "catmullrom",
+      0.42
+    );
+
+
+  const mesh =
+    new THREE.Mesh(
+
+      new THREE.TubeGeometry(
+        curve,
+        segments,
+        radius,
+        4,
+        false
+      ),
+
+      new THREE.MeshBasicMaterial({
+
+        color,
+
+        transparent:
+          true,
+
+        opacity,
+
+        blending:
+          THREE.AdditiveBlending,
+
+        depthWrite:
+          false
+
+      })
+
+    );
+
+
+  return {
+    curve,
+    mesh
+  };
+}
+
+
+// ==========================================================
+// Body profile
 // ==========================================================
 
 const bodyProfile = [
 
   {
-    y: 2.03,
-    width: 0.27,
-    depth: 0.20
+    y: 2.02,
+    w: 0.25,
+    d: 0.19
   },
 
   {
     y: 1.93,
-    width: 0.43,
-    depth: 0.24
+    w: 0.40,
+    d: 0.22
   },
 
   {
-    y: 1.82,
-    width: 0.73,
-    depth: 0.29
+    y: 1.84,
+    w: 0.66,
+    d: 0.27
   },
 
   {
-    y: 1.70,
-    width: 0.88,
-    depth: 0.34
+    y: 1.74,
+    w: 0.82,
+    d: 0.32
   },
 
   {
-    y: 1.52,
-    width: 0.86,
-    depth: 0.41
+    y: 1.60,
+    w: 0.86,
+    d: 0.38
   },
 
   {
-    y: 1.31,
-    width: 0.80,
-    depth: 0.43
+    y: 1.42,
+    w: 0.82,
+    d: 0.42
   },
 
   {
-    y: 1.08,
-    width: 0.69,
-    depth: 0.38
+    y: 1.20,
+    w: 0.73,
+    d: 0.39
   },
 
   {
-    y: 0.82,
-    width: 0.57,
-    depth: 0.33
+    y: 0.96,
+    w: 0.62,
+    d: 0.35
   },
 
   {
-    y: 0.56,
-    width: 0.48,
-    depth: 0.30
+    y: 0.72,
+    w: 0.53,
+    d: 0.31
   },
 
   {
-    y: 0.34,
-    width: 0.52,
-    depth: 0.31
+    y: 0.50,
+    w: 0.47,
+    d: 0.29
   },
 
   {
-    y: 0.12,
-    width: 0.63,
-    depth: 0.36
+    y: 0.30,
+    w: 0.52,
+    d: 0.31
+  },
+
+  {
+    y: 0.10,
+    w: 0.62,
+    d: 0.35
   },
 
   {
     y: -0.10,
-    width: 0.74,
-    depth: 0.40
+    w: 0.72,
+    d: 0.39
   },
 
   {
-    y: -0.30,
-    width: 0.78,
-    depth: 0.41
+    y: -0.28,
+    w: 0.76,
+    d: 0.40
   },
 
   {
-    y: -0.50,
-    width: 0.66,
-    depth: 0.36
+    y: -0.46,
+    w: 0.66,
+    d: 0.35
   },
 
   {
-    y: -0.68,
-    width: 0.46,
-    depth: 0.28
+    y: -0.64,
+    w: 0.48,
+    d: 0.27
   }
 
 ];
 
 
 // ==========================================================
-// Build torso geometry
+// Torso geometry
 // ==========================================================
 
-function buildBodyGeometry(
+function makeProfileGeometry(
   profile,
-  radialSegments = 72
+  radialSegments = 80
 ) {
 
   const positions = [];
@@ -671,8 +709,7 @@ function buildBodyGeometry(
 
   for (
     let ring = 0;
-    ring <
-    profile.length;
+    ring < profile.length;
     ring++
   ) {
 
@@ -682,8 +719,7 @@ function buildBodyGeometry(
 
     for (
       let i = 0;
-      i <
-      radialSegments;
+      i < radialSegments;
       i++
     ) {
 
@@ -697,55 +733,51 @@ function buildBodyGeometry(
         2;
 
 
-      const cos =
+      const cosine =
         Math.cos(
           angle
         );
 
 
-      const sin =
+      const sine =
         Math.sin(
           angle
         );
 
 
       let width =
-        section.width;
+        section.w;
 
 
       let depth =
-        section.depth;
+        section.d;
 
 
-      // Small organic variation
-      // across chest / ribs.
       if (
         section.y >
-        1.05 &&
+        1.08 &&
         section.y <
-        1.65
+        1.62 &&
+        sine >
+        0
       ) {
 
         depth *=
-          1 +
-          Math.max(
-            sin,
-            0
-          )
-          *
-          0.07;
+          1.04 +
+          sine *
+          0.035;
 
       }
 
 
       positions.push(
 
-        cos *
+        cosine *
         width,
 
         section.y,
 
-        sin *
+        sine *
         depth
 
       );
@@ -857,7 +889,7 @@ function buildBodyGeometry(
 const torso =
   new THREE.Mesh(
 
-    buildBodyGeometry(
+    makeProfileGeometry(
       bodyProfile
     ),
 
@@ -875,117 +907,50 @@ bodyRig.add(
 // Neck
 // ==========================================================
 
-function createCylinderBetween(
-  start,
-  end,
-  radiusStart,
-  radiusEnd,
-  material
-) {
+const neck =
+  new THREE.Mesh(
 
-  const direction =
-    new THREE.Vector3()
-      .subVectors(
-        end,
-        start
-      );
+    new THREE.CylinderGeometry(
+      0.16,
+      0.205,
+      0.26,
+      36,
+      1,
+      false
+    ),
 
-
-  const length =
-    direction.length();
-
-
-  const mesh =
-    new THREE.Mesh(
-
-      new THREE.CylinderGeometry(
-        radiusEnd,
-        radiusStart,
-        length,
-        32,
-        1,
-        false
-      ),
-
-      material
-
-    );
-
-
-  mesh.position.copy(
-
-    start
-      .clone()
-      .add(end)
-      .multiplyScalar(
-        0.5
-      )
+    limbMaterial
 
   );
 
 
-  mesh.quaternion
-    .setFromUnitVectors(
-
-      new THREE.Vector3(
-        0,
-        1,
-        0
-      ),
-
-      direction
-        .clone()
-        .normalize()
-
-    );
-
-
-  return mesh;
-}
+neck.position.set(
+  0.01,
+  2.14,
+  0.005
+);
 
 
 bodyRig.add(
-
-  createCylinderBetween(
-
-    new THREE.Vector3(
-      0,
-      2.02,
-      0
-    ),
-
-    new THREE.Vector3(
-      0,
-      2.27,
-      0
-    ),
-
-    0.215,
-
-    0.17,
-
-    limbMaterial
-
-  )
-
+  neck
 );
 
 
 // ==========================================================
-// More human head
+// Head
 // ==========================================================
 
-function buildHeadGeometry() {
+function makeHeadGeometry() {
 
   const geometry =
     new THREE.SphereGeometry(
       1,
-      72,
-      72
+      80,
+      80
     );
 
 
-  const positions =
+  const position =
     geometry.getAttribute(
       "position"
     );
@@ -998,12 +963,12 @@ function buildHeadGeometry() {
   for (
     let i = 0;
     i <
-    positions.count;
+    position.count;
     i++
   ) {
 
     vertex.fromBufferAttribute(
-      positions,
+      position,
       i
     );
 
@@ -1012,64 +977,59 @@ function buildHeadGeometry() {
       vertex.y;
 
 
-    let width =
-      0.43;
+    let scaleX =
+      0.455;
 
 
-    let depth =
-      0.39;
+    let scaleY =
+      0.515;
 
 
-    // Cranium
+    let scaleZ =
+      0.385;
+
+
+    // fuller cranium
     if (
       originalY >
-      0.45
+      0.30
     ) {
 
-      width *=
-        THREE.MathUtils.lerp(
-          1,
-          0.91,
-          (
-            originalY -
-            0.45
-          )
-          /
-          0.55
-        );
+      scaleX *=
+        1.025;
 
     }
 
 
-    // Cheekbones
+    // cheekbone area
     if (
       originalY <
-      0.22 &&
+      0.08 &&
       originalY >
-      -0.22
+      -0.28
     ) {
 
-      width *=
-        1.055;
+      scaleX *=
+        1.045;
 
     }
 
 
-    // Jaw
+    // tapered jaw
     if (
       originalY <
-      -0.18
+      -0.16
     ) {
 
-      const jaw =
+      const amount =
         THREE.MathUtils.clamp(
 
           (
             -originalY -
-            0.18
+            0.16
           )
           /
-          0.82,
+          0.84,
 
           0,
           1
@@ -1077,62 +1037,75 @@ function buildHeadGeometry() {
         );
 
 
-      width *=
+      scaleX *=
         THREE.MathUtils.lerp(
           1,
-          0.66,
-          jaw
+          0.70,
+          amount
         );
 
 
-      depth *=
+      scaleZ *=
         THREE.MathUtils.lerp(
           1,
-          0.82,
-          jaw
+          0.86,
+          amount
         );
 
     }
 
 
     vertex.x *=
-      width;
+      scaleX;
 
 
     vertex.y *=
-      0.56;
+      scaleY;
 
 
     vertex.z *=
-      depth;
+      scaleZ;
 
 
-    // Soft facial projection
     if (
       vertex.z >
       0
     ) {
 
-      const centerFace =
+      const faceBand =
         1 -
         Math.min(
+
           Math.abs(
             vertex.y
           )
           /
-          0.54,
+          0.50,
+
           1
+
         );
 
 
       vertex.z +=
-        centerFace *
-        0.035;
+        0.030 *
+        faceBand;
+
+
+      if (
+        vertex.y <
+        -0.20
+      ) {
+
+        vertex.z +=
+          0.012;
+
+      }
 
     }
 
 
-    positions.setXYZ(
+    position.setXYZ(
       i,
       vertex.x,
       vertex.y,
@@ -1142,7 +1115,7 @@ function buildHeadGeometry() {
   }
 
 
-  positions.needsUpdate =
+  position.needsUpdate =
     true;
 
 
@@ -1156,7 +1129,7 @@ function buildHeadGeometry() {
 const head =
   new THREE.Mesh(
 
-    buildHeadGeometry(),
+    makeHeadGeometry(),
 
     headMaterial
 
@@ -1169,6 +1142,51 @@ headRig.add(
 
 
 // ==========================================================
+// Nose / face detail
+// ==========================================================
+
+const nose =
+  createTube(
+
+    [
+
+      new THREE.Vector3(
+        0,
+        0.10,
+        0.388
+      ),
+
+      new THREE.Vector3(
+        0,
+        0.02,
+        0.420
+      ),
+
+      new THREE.Vector3(
+        0,
+        -0.07,
+        0.405
+      )
+
+    ],
+
+    0.006,
+
+    "#6ddfff",
+
+    0.22,
+
+    20
+
+  );
+
+
+headRig.add(
+  nose.mesh
+);
+
+
+// ==========================================================
 // Eyes
 // ==========================================================
 
@@ -1176,13 +1194,13 @@ const eyeMaterial =
   new THREE.MeshBasicMaterial({
 
     color:
-      "#c9f7ff",
+      "#d9fbff",
 
     transparent:
       true,
 
     opacity:
-      0.76,
+      0.68,
 
     blending:
       THREE.AdditiveBlending,
@@ -1193,7 +1211,7 @@ const eyeMaterial =
   });
 
 
-function createEye(
+function makeEye(
   x
 ) {
 
@@ -1201,9 +1219,9 @@ function createEye(
     new THREE.Mesh(
 
       new THREE.SphereGeometry(
-        0.047,
-        20,
-        12
+        0.040,
+        18,
+        10
       ),
 
       eyeMaterial
@@ -1212,16 +1230,16 @@ function createEye(
 
 
   eye.scale.set(
-    1.3,
-    0.24,
-    0.38
+    1.25,
+    0.20,
+    0.34
   );
 
 
   eye.position.set(
     x,
     0.055,
-    0.393
+    0.397
   );
 
 
@@ -1234,24 +1252,26 @@ function createEye(
 }
 
 
-createEye(
-  -0.147
+makeEye(
+  -0.145
 );
 
 
-createEye(
-  0.147
+makeEye(
+  0.145
 );
 
 
 // ==========================================================
-// Arms
+// Variable radius arm geometry
 // ==========================================================
 
-function createVariableTube(
+function makeVariableTube(
   points,
-  radiusFunction,
-  material
+  radiusAt,
+  material,
+  tubularSegments = 54,
+  radialSegments = 16
 ) {
 
   const curve =
@@ -1259,47 +1279,200 @@ function createVariableTube(
       points,
       false,
       "catmullrom",
-      0.35
+      0.38
     );
 
 
-  const geometry =
-    new THREE.TubeGeometry(
-      curve,
-      48,
-      0.1,
-      16,
+  const frames =
+    curve.computeFrenetFrames(
+      tubularSegments,
       false
     );
 
 
-  const position =
-    geometry.getAttribute(
-      "position"
-    );
+  const positions = [];
+
+  const indices = [];
 
 
-  // TubeGeometry itself cannot vary
-  // radius per segment easily,
-  // so scale gently in shader-like
-  // post process.
-  const temp =
-    new THREE.Vector3();
+  for (
+    let i = 0;
+    i <= tubularSegments;
+    i++
+  ) {
+
+    const t =
+      i /
+      tubularSegments;
+
+
+    const center =
+      curve.getPointAt(
+        t
+      );
+
+
+    const normal =
+      frames.normals[i];
+
+
+    const binormal =
+      frames.binormals[i];
+
+
+    const radius =
+      radiusAt(
+        t
+      );
+
+
+    for (
+      let j = 0;
+      j <
+      radialSegments;
+      j++
+    ) {
+
+      const angle =
+        (
+          j /
+          radialSegments
+        )
+        *
+        Math.PI *
+        2;
+
+
+      const offset =
+        normal
+          .clone()
+          .multiplyScalar(
+            Math.cos(angle) *
+            radius
+          )
+          .add(
+
+            binormal
+              .clone()
+              .multiplyScalar(
+                Math.sin(angle) *
+                radius
+              )
+
+          );
+
+
+      const point =
+        center
+          .clone()
+          .add(
+            offset
+          );
+
+
+      positions.push(
+        point.x,
+        point.y,
+        point.z
+      );
+
+    }
+
+  }
 
 
   for (
     let i = 0;
     i <
-    position.count;
+    tubularSegments;
     i++
   ) {
 
-    temp.fromBufferAttribute(
-      position,
-      i
-    );
+    for (
+      let j = 0;
+      j <
+      radialSegments;
+      j++
+    ) {
+
+      const next =
+        (
+          j +
+          1
+        )
+        %
+        radialSegments;
+
+
+      const a =
+        i *
+        radialSegments +
+        j;
+
+
+      const b =
+        i *
+        radialSegments +
+        next;
+
+
+      const c =
+        (
+          i +
+          1
+        )
+        *
+        radialSegments +
+        next;
+
+
+      const d =
+        (
+          i +
+          1
+        )
+        *
+        radialSegments +
+        j;
+
+
+      indices.push(
+        a,
+        d,
+        b,
+
+        b,
+        d,
+        c
+      );
+
+    }
 
   }
+
+
+  const geometry =
+    new THREE.BufferGeometry();
+
+
+  geometry.setAttribute(
+
+    "position",
+
+    new THREE.Float32BufferAttribute(
+      positions,
+      3
+    )
+
+  );
+
+
+  geometry.setIndex(
+    indices
+  );
+
+
+  geometry.computeVertexNormals();
 
 
   return {
@@ -1316,38 +1489,40 @@ function createVariableTube(
 }
 
 
-// Relaxed floating pose
+// ==========================================================
+// Relaxed asymmetric arms
+// ==========================================================
 
 const leftArmPoints = [
 
   new THREE.Vector3(
-    -0.79,
-    1.68,
+    -0.77,
+    1.69,
     0
   ),
 
   new THREE.Vector3(
-    -0.98,
-    1.43,
-    0.04
+    -0.96,
+    1.44,
+    0.03
   ),
 
   new THREE.Vector3(
-    -1.18,
-    0.92,
+    -1.15,
+    1.02,
     0.08
   ),
 
   new THREE.Vector3(
-    -1.36,
-    0.42,
-    0.16
+    -1.34,
+    0.58,
+    0.15
   ),
 
   new THREE.Vector3(
-    -1.55,
-    0.03,
-    0.24
+    -1.51,
+    0.22,
+    0.23
   )
 
 ];
@@ -1356,71 +1531,160 @@ const leftArmPoints = [
 const rightArmPoints = [
 
   new THREE.Vector3(
-    0.79,
-    1.68,
-    0
+    0.77,
+    1.67,
+    0.01
   ),
 
   new THREE.Vector3(
     0.99,
-    1.42,
+    1.40,
     0.04
   ),
 
   new THREE.Vector3(
     1.18,
-    0.90,
-    0.08
+    0.94,
+    0.10
   ),
 
   new THREE.Vector3(
-    1.38,
-    0.40,
-    0.16
+    1.37,
+    0.52,
+    0.18
   ),
 
   new THREE.Vector3(
-    1.57,
-    0.02,
-    0.24
+    1.60,
+    0.16,
+    0.28
   )
 
 ];
 
 
+function armRadiusAt(
+  t
+) {
+
+  if (
+    t <
+    0.45
+  ) {
+
+    return THREE.MathUtils.lerp(
+      0.17,
+      0.12,
+      t /
+      0.45
+    );
+
+  }
+
+
+  return THREE.MathUtils.lerp(
+
+    0.12,
+
+    0.065,
+
+    (
+      t -
+      0.45
+    )
+    /
+    0.55
+
+  );
+}
+
+
 const leftArm =
-  createVariableTube(
+  makeVariableTube(
     leftArmPoints,
-    () => 0.1,
+    armRadiusAt,
     limbMaterial
   );
 
 
 const rightArm =
-  createVariableTube(
+  makeVariableTube(
     rightArmPoints,
-    () => 0.1,
+    armRadiusAt,
     limbMaterial
   );
 
 
-leftArm.mesh.scale.set(
-  1,
-  1,
-  0.9
+leftArmRig.add(
+  leftArm.mesh
 );
 
 
-rightArm.mesh.scale.set(
-  1,
-  1,
-  0.9
-);
-
-
-armRig.add(
-  leftArm.mesh,
+rightArmRig.add(
   rightArm.mesh
+);
+
+
+// ==========================================================
+// Shoulder blending
+// ==========================================================
+
+function makeShoulder(
+  x,
+  y,
+  rotationZ
+) {
+
+  const shoulder =
+    new THREE.Mesh(
+
+      new THREE.SphereGeometry(
+        1,
+        36,
+        28
+      ),
+
+      limbMaterial
+
+    );
+
+
+  shoulder.position.set(
+    x,
+    y,
+    0.01
+  );
+
+
+  shoulder.scale.set(
+    0.26,
+    0.16,
+    0.22
+  );
+
+
+  shoulder.rotation.z =
+    rotationZ;
+
+
+  bodyRig.add(
+    shoulder
+  );
+
+}
+
+
+makeShoulder(
+  -0.74,
+  1.70,
+  -0.20
+);
+
+
+makeShoulder(
+  0.74,
+  1.68,
+  0.20
 );
 
 
@@ -1428,12 +1692,20 @@ armRig.add(
 // Hands
 // ==========================================================
 
-function createHand(
+function makeHand(
   position,
-  side
+  side,
+  spreadScale = 1
 ) {
 
-  const hand =
+  const rig =
+    side <
+    0
+      ? leftArmRig
+      : rightArmRig;
+
+
+  const palm =
     new THREE.Mesh(
 
       new THREE.SphereGeometry(
@@ -1447,25 +1719,25 @@ function createHand(
     );
 
 
-  hand.scale.set(
-    0.095,
-    0.18,
-    0.065
+  palm.scale.set(
+    0.085,
+    0.145,
+    0.060
   );
 
 
-  hand.position.copy(
+  palm.position.copy(
     position
   );
 
 
-  hand.rotation.z =
+  palm.rotation.z =
     side *
-    0.12;
+    -0.18;
 
 
-  armRig.add(
-    hand
+  rig.add(
+    palm
   );
 
 
@@ -1473,13 +1745,13 @@ function createHand(
     new THREE.LineBasicMaterial({
 
       color:
-        "#68ddff",
+        "#6fe5ff",
 
       transparent:
         true,
 
       opacity:
-        0.32,
+        0.34,
 
       blending:
         THREE.AdditiveBlending,
@@ -1496,17 +1768,19 @@ function createHand(
     i++
   ) {
 
-    const offset =
+    const spread =
       (
         i -
         2
       )
       *
-      0.025;
+      0.025
+      *
+      spreadScale;
 
 
     const length =
-      0.12 +
+      0.095 +
       (
         2 -
         Math.abs(
@@ -1522,10 +1796,10 @@ function createHand(
       new THREE.Vector3(
 
         position.x +
-        offset,
+        spread,
 
         position.y -
-        0.08,
+        0.055,
 
         position.z
 
@@ -1536,38 +1810,37 @@ function createHand(
       new THREE.Vector3(
 
         position.x +
-        offset +
+        spread +
         side *
         (
           i -
           2
         )
         *
-        0.008,
+        0.010,
 
         position.y -
-        0.08 -
+        0.055 -
         length,
 
         position.z +
-        0.015
+        0.012
 
       );
 
 
-    const geometry =
-      new THREE.BufferGeometry()
-        .setFromPoints([
-          start,
-          end
-        ]);
-
-
-    armRig.add(
+    rig.add(
 
       new THREE.Line(
-        geometry,
+
+        new THREE.BufferGeometry()
+          .setFromPoints([
+            start,
+            end
+          ]),
+
         fingerMaterial
+
       )
 
     );
@@ -1577,34 +1850,38 @@ function createHand(
 }
 
 
-createHand(
+makeHand(
 
   new THREE.Vector3(
-    -1.57,
-    -0.10,
-    0.25
+    -1.52,
+    0.08,
+    0.24
   ),
 
-  -1
+  -1,
+
+  0.85
 
 );
 
 
-createHand(
+makeHand(
 
   new THREE.Vector3(
-    1.59,
-    -0.09,
-    0.25
+    1.61,
+    0.02,
+    0.29
   ),
 
-  1
+  1,
+
+  1.15
 
 );
 
 
 // ==========================================================
-// Core
+// Chest core
 // ==========================================================
 
 const core =
@@ -1614,7 +1891,7 @@ const core =
 core.position.set(
   0,
   1.30,
-  0.45
+  0.455
 );
 
 
@@ -1627,9 +1904,9 @@ const coreSphere =
   new THREE.Mesh(
 
     new THREE.SphereGeometry(
-      0.07,
-      26,
-      26
+      0.055,
+      24,
+      24
     ),
 
     new THREE.MeshBasicMaterial({
@@ -1659,127 +1936,113 @@ core.add(
 );
 
 
-function coreGlow(
-  size,
-  opacity,
-  colour
-) {
-
-  const sprite =
-    new THREE.Sprite(
-
-      new THREE.SpriteMaterial({
-
-        map:
-          glowTexture,
-
-        color:
-          colour,
-
-        transparent:
-          true,
-
-        opacity,
-
-        blending:
-          THREE.AdditiveBlending,
-
-        depthWrite:
-          false
-
-      })
-
-    );
-
-
-  sprite.scale.set(
-    size,
-    size,
-    1
-  );
-
-
-  core.add(
-    sprite
-  );
-
-
-  return sprite;
-}
-
-
 const coreInner =
-  coreGlow(
-    0.48,
-    0.94,
-    "#d7fbff"
+  makeGlowSprite(
+    core,
+    0.38,
+    0.96,
+    "#ddfdff"
   );
 
 
-const coreMiddle =
-  coreGlow(
-    0.95,
-    0.46,
-    "#55dbff"
+const coreMid =
+  makeGlowSprite(
+    core,
+    0.82,
+    0.42,
+    "#59ddff"
   );
 
 
 const coreOuter =
-  coreGlow(
-    1.75,
-    0.17,
-    "#5c6fff"
+  makeGlowSprite(
+    core,
+    1.55,
+    0.15,
+    "#5e6fff"
   );
 
 
 // ==========================================================
-// Energy tubes
+// Star rays
 // ==========================================================
 
-const energyMaterial =
-  new THREE.MeshBasicMaterial({
-
-    color:
-      "#67e6ff",
-
-    transparent:
-      true,
-
-    opacity:
-      0.33,
-
-    blending:
-      THREE.AdditiveBlending,
-
-    depthWrite:
-      false
-
-  });
+const rayPoints = [];
 
 
-function energyLine(
-  points,
-  radius = 0.009,
-  colour = "#67e6ff",
-  opacity = 0.3
+for (
+  let i = 0;
+  i < 16;
+  i++
 ) {
 
-  const curve =
-    new THREE.CatmullRomCurve3(
-      points
-    );
+  const angle =
+    (
+      i /
+      16
+    )
+    *
+    Math.PI *
+    2;
 
 
-  const material =
-    new THREE.MeshBasicMaterial({
+  const inner =
+    0.055;
+
+
+  const outer =
+    i %
+    2 ===
+    0
+      ? 0.26
+      : 0.17;
+
+
+  rayPoints.push(
+
+    new THREE.Vector3(
+      Math.cos(angle) *
+      inner,
+
+      Math.sin(angle) *
+      inner,
+
+      0
+    ),
+
+    new THREE.Vector3(
+      Math.cos(angle) *
+      outer,
+
+      Math.sin(angle) *
+      outer,
+
+      0
+    )
+
+  );
+
+}
+
+
+const coreRays =
+  new THREE.LineSegments(
+
+    new THREE.BufferGeometry()
+      .setFromPoints(
+        rayPoints
+      ),
+
+    new THREE.LineBasicMaterial({
 
       color:
-        colour,
+        "#93efff",
 
       transparent:
         true,
 
-      opacity,
+      opacity:
+        0.30,
 
       blending:
         THREE.AdditiveBlending,
@@ -1787,196 +2050,151 @@ function energyLine(
       depthWrite:
         false
 
-    });
+    })
+
+  );
 
 
-  const tube =
-    new THREE.Mesh(
+core.add(
+  coreRays
+);
 
-      new THREE.TubeGeometry(
-        curve,
-        40,
-        radius,
-        4,
-        false
-      ),
 
-      material
+// ==========================================================
+// Long organic energy fibres
+// ==========================================================
 
+const energyFibres = [];
+
+
+function addEnergy(
+  points,
+  radius,
+  color,
+  opacity
+) {
+
+  const result =
+    createTube(
+      points,
+      radius,
+      color,
+      opacity,
+      48
     );
 
 
   energyRig.add(
-    tube
+    result.mesh
   );
 
 
-  return tube;
+  energyFibres.push(
+    result.mesh
+  );
+
+
+  return result.mesh;
 }
 
 
-// Central spine
+// Central flow
 
-energyLine(
+addEnergy(
+
   [
 
     new THREE.Vector3(
       0,
-      2.15,
-      0.12
+      2.16,
+      0.08
     ),
 
     new THREE.Vector3(
-      0,
-      1.75,
-      0.20
-    ),
-
-    new THREE.Vector3(
-      0,
-      1.30,
-      0.36
-    ),
-
-    new THREE.Vector3(
-      0,
-      0.80,
-      0.23
-    ),
-
-    new THREE.Vector3(
-      0,
-      0.25,
+      0.02,
+      1.80,
       0.14
     ),
 
     new THREE.Vector3(
       0,
-      -0.40,
-      0.05
-    )
+      1.31,
+      0.38
+    ),
 
-  ],
+    new THREE.Vector3(
+      -0.03,
+      0.86,
+      0.26
+    ),
 
-  0.012,
+    new THREE.Vector3(
+      0.02,
+      0.42,
+      0.20
+    ),
 
-  "#70ecff",
-
-  0.48
-);
-
-
-// Core → left shoulder
-
-energyLine(
-  [
+    new THREE.Vector3(
+      -0.02,
+      -0.10,
+      0.10
+    ),
 
     new THREE.Vector3(
       0,
-      1.30,
-      0.40
-    ),
-
-    new THREE.Vector3(
-      -0.28,
-      1.48,
-      0.32
-    ),
-
-    new THREE.Vector3(
-      -0.72,
-      1.66,
-      0.16
+      -0.48,
+      0.02
     )
 
   ],
 
   0.009,
 
-  "#5fe4ff",
+  "#79ecff",
 
-  0.36
+  0.42
+
 );
 
 
-// Core → right shoulder
-
-energyLine(
-  [
-
-    new THREE.Vector3(
-      0,
-      1.30,
-      0.40
-    ),
-
-    new THREE.Vector3(
-      0.28,
-      1.48,
-      0.32
-    ),
-
-    new THREE.Vector3(
-      0.72,
-      1.66,
-      0.16
-    )
-
-  ],
-
-  0.009,
-
-  "#5fe4ff",
-
-  0.36
-);
-
-
-// Side torso fibres
+// Core → shoulders
 
 for (
-  let side of [
+  const side of [
     -1,
     1
   ]
 ) {
 
-  energyLine(
+  addEnergy(
+
     [
 
       new THREE.Vector3(
+        0,
+        1.31,
+        0.39
+      ),
+
+      new THREE.Vector3(
         side *
-        0.60,
-        1.52,
+        0.27,
+        1.46,
+        0.34
+      ),
+
+      new THREE.Vector3(
+        side *
+        0.53,
+        1.61,
+        0.25
+      ),
+
+      new THREE.Vector3(
+        side *
+        0.75,
+        1.68,
         0.12
-      ),
-
-      new THREE.Vector3(
-        side *
-        0.47,
-        1.08,
-        0.22
-      ),
-
-      new THREE.Vector3(
-        side *
-        0.30,
-        0.55,
-        0.20
-      ),
-
-      new THREE.Vector3(
-        side *
-        0.42,
-        0.05,
-        0.13
-      ),
-
-      new THREE.Vector3(
-        side *
-        0.30,
-        -0.40,
-        0.04
       )
 
     ],
@@ -1985,246 +2203,245 @@ for (
 
     side <
     0
-      ? "#4fcfff"
-      : "#8a70ff",
+      ? "#5ce0ff"
+      : "#8976ff",
 
-    0.24
+    0.28
 
   );
 
 }
 
 
-// ==========================================================
-// Hair
-// ==========================================================
-
-const hairStrands =
-  [];
-
-
-const hairColours = [
-  "#64e8ff",
-  "#4fbfff",
-  "#668dff",
-  "#9473ff"
-];
-
+// Torso flow lanes
 
 for (
-  let i = 0;
-  i < 52;
-  i++
+  const side of [
+    -1,
+    1
+  ]
 ) {
 
-  const angle =
-    THREE.MathUtils.lerp(
-      -Math.PI *
-      0.95,
-      Math.PI *
-      0.95,
-      i /
-      51
-    );
+  for (
+    let lane = 0;
+    lane < 3;
+    lane++
+  ) {
+
+    const outward =
+      0.34 +
+      lane *
+      0.11;
 
 
-  const rootX =
-    Math.sin(
-      angle
-    )
-    *
-    (
-      0.25 +
-      Math.random() *
-      0.15
-    );
+    addEnergy(
 
-
-  const rootY =
-    0.32 +
-    Math.cos(
-      angle
-    )
-    *
-    0.21;
-
-
-  const rootZ =
-    -0.07 -
-    Math.abs(
-      Math.sin(
-        angle
-      )
-    )
-    *
-    0.13;
-
-
-  const side =
-    Math.sign(
-      rootX ||
-      1
-    );
-
-
-  const length =
-    0.65 +
-    Math.random() *
-    1.25;
-
-
-  const curve =
-    new THREE.CatmullRomCurve3(
       [
 
         new THREE.Vector3(
-          rootX,
-          rootY,
-          rootZ
+          side *
+          0.18,
+          1.42 -
+          lane *
+          0.05,
+          0.30
         ),
 
         new THREE.Vector3(
-
-          rootX +
           side *
-          (
-            0.15 +
-            Math.random() *
-            0.17
-          ),
-
-          rootY -
-          length *
-          0.26,
-
-          rootZ -
-          0.06
-
+          outward,
+          1.08,
+          0.28
         ),
 
         new THREE.Vector3(
-
-          rootX +
           side *
           (
-            0.30 +
-            Math.random() *
-            0.28
+            0.28 +
+            lane *
+            0.06
           ),
-
-          rootY -
-          length *
-          0.58,
-
-          rootZ +
-          0.02
-
+          0.70,
+          0.24
         ),
 
         new THREE.Vector3(
-
-          rootX +
           side *
           (
-            0.46 +
-            Math.random() *
-            0.42
+            0.20 +
+            lane *
+            0.05
           ),
+          0.30,
+          0.18
+        ),
 
-          rootY -
-          length,
-
-          rootZ +
-          0.08
-
+        new THREE.Vector3(
+          side *
+          (
+            0.31 +
+            lane *
+            0.04
+          ),
+          -0.18,
+          0.10
         )
 
-      ]
-    );
+      ],
 
+      0.0055,
 
-  const strand =
-    new THREE.Mesh(
+      lane ===
+      2
+        ? "#916fff"
+        : "#55cfff",
 
-      new THREE.TubeGeometry(
-        curve,
-        38,
-        0.0055,
-        3,
-        false
-      ),
-
-      new THREE.MeshBasicMaterial({
-
-        color:
-          hairColours[
-            i %
-            hairColours.length
-          ],
-
-        transparent:
-          true,
-
-        opacity:
-          0.18 +
-          Math.random() *
-          0.20,
-
-        blending:
-          THREE.AdditiveBlending,
-
-        depthWrite:
-          false
-
-      })
+      0.17 +
+      lane *
+      0.02
 
     );
 
+  }
 
-  strand.userData.phase =
-    Math.random() *
-    Math.PI *
-    2;
+}
 
 
-  strand.userData.motion =
-    0.012 +
-    Math.random() *
-    0.020;
+// Arm energy
+
+function addArmEnergy(
+  curve,
+  color
+) {
+
+  const points = [];
 
 
-  hairRig.add(
-    strand
+  for (
+    let i = 0;
+    i <= 14;
+    i++
+  ) {
+
+    points.push(
+      curve.getPointAt(
+        i /
+        14
+      )
+    );
+
+  }
+
+
+  const result =
+    createTube(
+      points,
+      0.0045,
+      color,
+      0.20,
+      36
+    );
+
+
+  energyRig.add(
+    result.mesh
   );
 
+}
 
-  hairStrands.push(
-    strand
+
+addArmEnergy(
+  leftArm.curve,
+  "#59dcff"
+);
+
+
+addArmEnergy(
+  rightArm.curve,
+  "#8675ff"
+);
+
+
+// ==========================================================
+// Face energy fibres
+// ==========================================================
+
+for (
+  const side of [
+    -1,
+    1
+  ]
+) {
+
+  const faceEnergy =
+    createTube(
+
+      [
+
+        new THREE.Vector3(
+          side *
+          0.10,
+          -0.33,
+          0.28
+        ),
+
+        new THREE.Vector3(
+          side *
+          0.13,
+          -0.05,
+          0.34
+        ),
+
+        new THREE.Vector3(
+          side *
+          0.12,
+          0.18,
+          0.33
+        ),
+
+        new THREE.Vector3(
+          side *
+          0.08,
+          0.34,
+          0.24
+        )
+
+      ],
+
+      0.0045,
+
+      side <
+      0
+        ? "#5adfff"
+        : "#8a76ff",
+
+      0.19,
+
+      28
+
+    );
+
+
+  headRig.add(
+    faceEnergy.mesh
   );
 
 }
 
 
 // ==========================================================
-// Body particles
+// Particle system
 // ==========================================================
-
-const particlePositions = [];
-
-const particleBase = [];
-
-const particleColours = [];
-
 
 const CYAN =
   new THREE.Color(
-    "#62e8ff"
+    "#63e8ff"
   );
 
 
 const BLUE =
   new THREE.Color(
-    "#4b86ff"
+    "#4a86ff"
   );
 
 
@@ -2234,15 +2451,15 @@ const PURPLE =
   );
 
 
-function randomColour() {
+function randomColor() {
 
-  const value =
+  const random =
     Math.random();
 
 
   if (
-    value <
-    0.4
+    random <
+    0.42
   ) {
 
     return CYAN;
@@ -2251,8 +2468,8 @@ function randomColour() {
 
 
   if (
-    value <
-    0.77
+    random <
+    0.78
   ) {
 
     return BLUE;
@@ -2264,42 +2481,7 @@ function randomColour() {
 }
 
 
-function addParticle(
-  point
-) {
-
-  particlePositions.push(
-    point.x,
-    point.y,
-    point.z
-  );
-
-
-  particleBase.push(
-    point.x,
-    point.y,
-    point.z
-  );
-
-
-  const colour =
-    randomColour();
-
-
-  particleColours.push(
-    colour.r,
-    colour.g,
-    colour.b
-  );
-
-}
-
-
-// ==========================================================
-// Interpolate body profile
-// ==========================================================
-
-function getBodyProfileAtY(
+function profileAtY(
   y
 ) {
 
@@ -2338,11 +2520,11 @@ function getBodyProfileAtY(
     i++
   ) {
 
-    const upper =
+    const a =
       bodyProfile[i];
 
 
-    const lower =
+    const b =
       bodyProfile[
         i +
         1
@@ -2351,20 +2533,20 @@ function getBodyProfileAtY(
 
     if (
       y <=
-      upper.y &&
+      a.y &&
       y >=
-      lower.y
+      b.y
     ) {
 
       const amount =
         (
-          upper.y -
+          a.y -
           y
         )
         /
         (
-          upper.y -
-          lower.y
+          a.y -
+          b.y
         );
 
 
@@ -2372,17 +2554,17 @@ function getBodyProfileAtY(
 
         y,
 
-        width:
+        w:
           THREE.MathUtils.lerp(
-            upper.width,
-            lower.width,
+            a.w,
+            b.w,
             amount
           ),
 
-        depth:
+        d:
           THREE.MathUtils.lerp(
-            upper.depth,
-            lower.depth,
+            a.d,
+            b.d,
             amount
           )
 
@@ -2397,24 +2579,62 @@ function getBodyProfileAtY(
 }
 
 
+const particlePositions = [];
+
+const particleBase = [];
+
+const particleColors = [];
+
+
+function pushParticle(
+  point
+) {
+
+  particlePositions.push(
+    point.x,
+    point.y,
+    point.z
+  );
+
+
+  particleBase.push(
+    point.x,
+    point.y,
+    point.z
+  );
+
+
+  const color =
+    randomColor();
+
+
+  particleColors.push(
+    color.r,
+    color.g,
+    color.b
+  );
+
+}
+
+
 // Torso particles
 
 for (
   let i = 0;
-  i < 1650;
+  i < 1900;
   i++
 ) {
 
   const y =
     THREE.MathUtils.lerp(
-      -0.52,
-      1.92,
+      -0.50,
+      1.94,
       Math.random()
     );
 
 
   const profile =
-    getBodyProfileAtY(
+    profileAtY(
       y
     );
 
@@ -2425,42 +2645,28 @@ for (
     2;
 
 
-  const radial =
+  const radius =
     Math.sqrt(
       Math.random()
     );
 
 
-  const x =
-    Math.cos(
-      angle
-    )
-    *
-    profile.width
-    *
-    radial
-    *
-    0.93;
-
-
-  const z =
-    Math.sin(
-      angle
-    )
-    *
-    profile.depth
-    *
-    radial
-    *
-    0.91;
-
-
-  addParticle(
+  pushParticle(
 
     new THREE.Vector3(
-      x,
+
+      Math.cos(angle) *
+      profile.w *
+      radius *
+      0.92,
+
       y,
-      z
+
+      Math.sin(angle) *
+      profile.d *
+      radius *
+      0.90
+
     )
 
   );
@@ -2472,7 +2678,7 @@ for (
 
 for (
   let i = 0;
-  i < 390;
+  i < 420;
   i++
 ) {
 
@@ -2505,55 +2711,44 @@ for (
   );
 
 
-  let jaw =
-    1;
-
-
-  if (
+  const jawAmount =
     point.y <
-    -0.18
-  ) {
-
-    jaw =
-      THREE.MathUtils.lerp(
-
-        1,
-
-        0.67,
-
-        THREE.MathUtils.clamp(
-
+    -0.15
+      ? THREE.MathUtils.clamp(
           (
             -point.y -
-            0.18
+            0.15
           )
           /
-          0.82,
-
+          0.85,
           0,
           1
-
         )
-
-      );
-
-  }
+      : 0;
 
 
-  addParticle(
+  const jawScale =
+    THREE.MathUtils.lerp(
+      1,
+      0.72,
+      jawAmount
+    );
+
+
+  pushParticle(
 
     new THREE.Vector3(
 
       point.x *
-      0.40 *
-      jaw,
+      0.42 *
+      jawScale,
 
       point.y *
-      0.53 +
-      2.67,
+      0.50 +
+      2.63,
 
       point.z *
-      0.36
+      0.35
 
     )
 
@@ -2561,10 +2756,6 @@ for (
 
 }
 
-
-// ==========================================================
-// Particle renderer
-// ==========================================================
 
 const particleGeometry =
   new THREE.BufferGeometry();
@@ -2587,7 +2778,7 @@ particleGeometry.setAttribute(
   "color",
 
   new THREE.Float32BufferAttribute(
-    particleColours,
+    particleColors,
     3
   )
 
@@ -2602,7 +2793,7 @@ const bodyParticles =
     new THREE.PointsMaterial({
 
       size:
-        0.035,
+        0.034,
 
       map:
         glowTexture,
@@ -2611,7 +2802,7 @@ const bodyParticles =
         true,
 
       opacity:
-        0.73,
+        0.74,
 
       depthWrite:
         false,
@@ -2636,17 +2827,17 @@ particleRig.add(
 // Internal network
 // ==========================================================
 
-const pointVectors = [];
+const samplePoints = [];
 
 
 for (
   let i = 0;
   i <
   particleBase.length;
-  i += 3
+  i += 15
 ) {
 
-  pointVectors.push(
+  samplePoints.push(
 
     new THREE.Vector3(
 
@@ -2669,42 +2860,41 @@ for (
 }
 
 
-const networkPositions =
-  [];
+const networkPositions = [];
 
 
-let connections =
+let networkConnections =
   0;
 
 
-let attempts =
+let networkAttempts =
   0;
 
 
 while (
-  connections <
-  700 &&
-  attempts <
-  40000
+  networkConnections <
+  520 &&
+  networkAttempts <
+  26000
 ) {
 
-  attempts++;
+  networkAttempts++;
 
 
   const a =
-    pointVectors[
+    samplePoints[
       Math.floor(
         Math.random() *
-        pointVectors.length
+        samplePoints.length
       )
     ];
 
 
   const b =
-    pointVectors[
+    samplePoints[
       Math.floor(
         Math.random() *
-        pointVectors.length
+        samplePoints.length
       )
     ];
 
@@ -2727,9 +2917,9 @@ while (
 
   if (
     distance >
-    0.055 &&
+    0.10 &&
     distance <
-    0.245
+    0.36
   ) {
 
     networkPositions.push(
@@ -2745,7 +2935,7 @@ while (
     );
 
 
-    connections++;
+    networkConnections++;
 
   }
 
@@ -2770,13 +2960,13 @@ const network =
     new THREE.LineBasicMaterial({
 
       color:
-        "#65aaff",
+        "#63aaff",
 
       transparent:
         true,
 
       opacity:
-        0.16,
+        0.12,
 
       blending:
         THREE.AdditiveBlending,
@@ -2795,30 +2985,256 @@ particleRig.add(
 
 
 // ==========================================================
-// Energy tail
+// Hair
 // ==========================================================
 
-const tailCount =
-  1500;
+const hairStrands = [];
+
+
+const hairColors = [
+  "#65e8ff",
+  "#58beff",
+  "#6f8cff",
+  "#9574ff"
+];
+
+
+for (
+  let i = 0;
+  i < 66;
+  i++
+) {
+
+  const angle =
+    THREE.MathUtils.lerp(
+
+      -Math.PI *
+      0.98,
+
+      Math.PI *
+      0.98,
+
+      i /
+      65
+
+    );
+
+
+  const rootX =
+    Math.sin(angle) *
+    (
+      0.25 +
+      Math.random() *
+      0.14
+    );
+
+
+  const rootY =
+    0.31 +
+    Math.cos(angle) *
+    0.20;
+
+
+  const rootZ =
+    -0.05 -
+    Math.abs(
+      Math.sin(angle)
+    )
+    *
+    0.12;
+
+
+  const side =
+    Math.sign(
+      rootX ||
+      1
+    );
+
+
+  const asymmetry =
+    side <
+    0
+      ? 1.10
+      : 0.92;
+
+
+  const length =
+    (
+      0.58 +
+      Math.random() *
+      1.25
+    )
+    *
+    asymmetry;
+
+
+  const curve =
+    new THREE.CatmullRomCurve3(
+
+      [
+
+        new THREE.Vector3(
+          rootX,
+          rootY,
+          rootZ
+        ),
+
+        new THREE.Vector3(
+
+          rootX +
+          side *
+          (
+            0.12 +
+            Math.random() *
+            0.16
+          ),
+
+          rootY -
+          length *
+          0.25,
+
+          rootZ -
+          0.05
+
+        ),
+
+        new THREE.Vector3(
+
+          rootX +
+          side *
+          (
+            0.28 +
+            Math.random() *
+            0.28
+          ),
+
+          rootY -
+          length *
+          0.58,
+
+          rootZ +
+          0.01
+
+        ),
+
+        new THREE.Vector3(
+
+          rootX +
+          side *
+          (
+            0.44 +
+            Math.random() *
+            0.40
+          ),
+
+          rootY -
+          length,
+
+          rootZ +
+          0.07
+
+        )
+
+      ]
+
+    );
+
+
+  const strand =
+    new THREE.Mesh(
+
+      new THREE.TubeGeometry(
+
+        curve,
+
+        36,
+
+        0.0045 +
+        Math.random() *
+        0.0025,
+
+        3,
+
+        false
+
+      ),
+
+      new THREE.MeshBasicMaterial({
+
+        color:
+          hairColors[
+            i %
+            hairColors.length
+          ],
+
+        transparent:
+          true,
+
+        opacity:
+          0.15 +
+          Math.random() *
+          0.20,
+
+        blending:
+          THREE.AdditiveBlending,
+
+        depthWrite:
+          false
+
+      })
+
+    );
+
+
+  strand.userData.phase =
+    Math.random() *
+    Math.PI *
+    2;
+
+
+  strand.userData.motion =
+    0.010 +
+    Math.random() *
+    0.022;
+
+
+  hairRig.add(
+    strand
+  );
+
+
+  hairStrands.push(
+    strand
+  );
+
+}
+
+
+// ==========================================================
+// Lower-body energy stream
+// ==========================================================
+
+const tailParticleCount =
+  1750;
 
 
 const tailPositions =
   new Float32Array(
-    tailCount *
+    tailParticleCount *
     3
   );
 
 
 const tailBase =
   new Float32Array(
-    tailCount *
+    tailParticleCount *
     3
   );
 
 
-const tailColours =
+const tailColors =
   new Float32Array(
-    tailCount *
+    tailParticleCount *
     3
   );
 
@@ -2826,7 +3242,7 @@ const tailColours =
 for (
   let i = 0;
   i <
-  tailCount;
+  tailParticleCount;
   i++
 ) {
 
@@ -2835,42 +3251,46 @@ for (
 
 
   const y =
-    -0.48 -
+    -0.46 -
     t *
-    3.35;
+    3.45;
 
 
   const width =
-    0.72 *
+    0.74 *
     (
       1 -
       t *
-      0.76
+      0.77
     )
     +
-    0.07;
+    0.08;
 
 
-  const wave =
-    t *
-    8.2 +
-    Math.random() *
-    1.9;
+  const ribbon =
+    Math.sin(
+
+      t *
+      7.5 +
+
+      Math.random() *
+      2
+
+    );
 
 
   const x =
-    Math.sin(
-      wave
-    )
-    *
-    width
-    *
+
+    ribbon *
+    width *
     (
-      0.28 +
+      0.48 +
       Math.random() *
-      0.74
+      0.52
     )
+
     +
+
     (
       Math.random() *
       2 -
@@ -2878,24 +3298,33 @@ for (
     )
     *
     width *
-    0.40;
+    0.28;
 
 
   const z =
+
     Math.cos(
-      wave
+
+      t *
+      6.2 +
+
+      Math.random() *
+      1.2
+
     )
     *
     width *
-    0.20
+    0.16
+
     +
+
     (
       Math.random() *
       2 -
       1
     )
     *
-    0.11;
+    0.10;
 
 
   const index =
@@ -2903,9 +3332,8 @@ for (
     3;
 
 
-  tailPositions[
-    index
-  ] =
+  tailPositions[index] =
+    tailBase[index] =
     x;
 
 
@@ -2913,6 +3341,10 @@ for (
     index +
     1
   ] =
+    tailBase[
+      index +
+      1
+    ] =
     y;
 
 
@@ -2920,51 +3352,33 @@ for (
     index +
     2
   ] =
+    tailBase[
+      index +
+      2
+    ] =
     z;
 
 
-  tailBase[
-    index
-  ] =
-    x;
+  const color =
+    randomColor();
 
 
-  tailBase[
+  tailColors[index] =
+    color.r;
+
+
+  tailColors[
     index +
     1
   ] =
-    y;
+    color.g;
 
 
-  tailBase[
+  tailColors[
     index +
     2
   ] =
-    z;
-
-
-  const colour =
-    randomColour();
-
-
-  tailColours[
-    index
-  ] =
-    colour.r;
-
-
-  tailColours[
-    index +
-    1
-  ] =
-    colour.g;
-
-
-  tailColours[
-    index +
-    2
-  ] =
-    colour.b;
+    color.b;
 
 }
 
@@ -2990,7 +3404,7 @@ tailGeometry.setAttribute(
   "color",
 
   new THREE.BufferAttribute(
-    tailColours,
+    tailColors,
     3
   )
 
@@ -3005,7 +3419,7 @@ const tailParticles =
     new THREE.PointsMaterial({
 
       size:
-        0.041,
+        0.040,
 
       map:
         glowTexture,
@@ -3036,66 +3450,84 @@ tailRig.add(
 
 
 // ==========================================================
-// Flowing tail fibres
+// Tail ribbons
 // ==========================================================
 
-const tailStrands =
-  [];
+const tailStrands = [];
 
 
 for (
   let i = 0;
-  i < 22;
+  i < 28;
   i++
 ) {
 
   const phase =
     (
       i /
-      22
+      28
     )
     *
     Math.PI *
     2;
 
 
-  const points =
-    [];
+  const points = [];
 
 
   for (
     let j = 0;
-    j <= 55;
+    j <= 58;
     j++
   ) {
 
     const t =
       j /
-      55;
+      58;
 
 
     const y =
-      -0.42 -
+      -0.40 -
       t *
-      3.42;
+      3.55;
 
 
     const radius =
-      0.66 *
+      0.67 *
       (
         1 -
         t *
-        0.77
+        0.79
       );
 
 
-    const sideDrift =
+    const wave =
+      phase +
+      t *
+      (
+        7.0 +
+        (
+          i %
+          4
+        )
+        *
+        0.28
+      );
+
+
+    const sideSweep =
       Math.sin(
         t *
         Math.PI
       )
       *
-      0.10;
+      (
+        i %
+        2 ===
+        0
+          ? 0.13
+          : -0.10
+      );
 
 
     points.push(
@@ -3103,25 +3535,22 @@ for (
       new THREE.Vector3(
 
         Math.sin(
-          phase +
-          t *
-          7.6
+          wave
         )
         *
         radius
         +
-        sideDrift,
+        sideSweep,
 
         y,
 
         Math.cos(
-          phase +
-          t *
-          5.8
+          wave *
+          0.78
         )
         *
         radius *
-        0.16
+        0.14
 
       )
 
@@ -3130,72 +3559,62 @@ for (
   }
 
 
-  const colour =
+  const color =
+
     i %
     3 ===
     0
       ? "#61e7ff"
-      : (
-          i %
-          3 ===
-          1
-            ? "#4d89ff"
-            : "#916cff"
-        );
+      :
+
+    i %
+    3 ===
+    1
+      ? "#4f8bff"
+      :
+
+      "#936dff";
 
 
-  const strand =
-    new THREE.Mesh(
+  const result =
+    createTube(
 
-      new THREE.TubeGeometry(
+      points,
 
-        new THREE.CatmullRomCurve3(
-          points
-        ),
+      0.0045 +
+      (
+        i %
+        4
+      )
+      *
+      0.0005,
 
-        54,
+      color,
 
-        0.0055,
+      0.15 +
+      (
+        i %
+        3
+      )
+      *
+      0.025,
 
-        3,
-
-        false
-
-      ),
-
-      new THREE.MeshBasicMaterial({
-
-        color:
-          colour,
-
-        transparent:
-          true,
-
-        opacity:
-          0.22,
-
-        blending:
-          THREE.AdditiveBlending,
-
-        depthWrite:
-          false
-
-      })
+      52
 
     );
 
 
-  strand.userData.phase =
+  result.mesh.userData.phase =
     phase;
 
 
   tailRig.add(
-    strand
+    result.mesh
   );
 
 
   tailStrands.push(
-    strand
+    result.mesh
   );
 
 }
@@ -3214,13 +3633,13 @@ const aura =
         glowTexture,
 
       color:
-        "#416fff",
+        "#456dff",
 
       transparent:
         true,
 
       opacity:
-        0.10,
+        0.085,
 
       blending:
         THREE.AdditiveBlending,
@@ -3235,14 +3654,14 @@ const aura =
 
 aura.position.set(
   0,
-  0.65,
-  -0.8
+  0.60,
+  -0.85
 );
 
 
 aura.scale.set(
-  5.4,
-  7.5,
+  5.2,
+  7.2,
   1
 );
 
@@ -3268,10 +3687,10 @@ const behaviour = {
     1,
 
   opacity:
-    0.72,
+    0.70,
 
   targetOpacity:
-    0.72,
+    0.70,
 
   tailSpeed:
     1,
@@ -3298,68 +3717,63 @@ function setState(
 
   const presets = {
 
-    idle:
-      [
-        1,
-        0.72,
-        1,
-        1
-      ],
+    idle: [
+      1,
+      0.70,
+      1,
+      1
+    ],
 
-    thinking:
-      [
-        1.28,
-        0.64,
-        0.72,
-        0.78
-      ],
+    thinking: [
+      1.28,
+      0.61,
+      0.70,
+      0.78
+    ],
 
-    talking:
-      [
-        1.42,
-        0.78,
-        1.1,
-        1.14
-      ],
+    talking: [
+      1.42,
+      0.76,
+      1.12,
+      1.14
+    ],
 
-    moving:
-      [
-        1.16,
-        0.57,
-        1.75,
-        1.55
-      ],
+    moving: [
+      1.16,
+      0.56,
+      1.82,
+      1.60
+    ],
 
-    curious:
-      [
-        1.12,
-        0.75,
-        0.92,
-        0.92
-      ]
+    curious: [
+      1.12,
+      0.73,
+      0.92,
+      0.92
+    ]
 
   };
 
 
-  const values =
+  const preset =
     presets[state] ||
     presets.idle;
 
 
   behaviour.targetEnergy =
-    values[0];
+    preset[0];
 
 
   behaviour.targetOpacity =
-    values[1];
+    preset[1];
 
 
   behaviour.targetTailSpeed =
-    values[2];
+    preset[2];
 
 
   behaviour.targetHairSpeed =
-    values[3];
+    preset[3];
 
 }
 
@@ -3368,18 +3782,12 @@ window.SAGEAvatar = {
 
   setState,
 
-
   getState() {
-
     return behaviour.state;
-
   },
 
-
   getObject3D() {
-
     return sage;
-
   }
 
 };
@@ -3492,10 +3900,6 @@ function animate() {
     clock.getElapsedTime();
 
 
-  // --------------------------------------------------------
-  // State transitions
-  // --------------------------------------------------------
-
   behaviour.energy +=
     (
       behaviour.targetEnergy -
@@ -3532,9 +3936,7 @@ function animate() {
     0.045;
 
 
-  // --------------------------------------------------------
-  // Shader animation
-  // --------------------------------------------------------
+  // Shader time
 
   hologramMaterials.forEach(
     material => {
@@ -3561,7 +3963,7 @@ function animate() {
     .uOpacity
     .value =
     behaviour.opacity *
-    0.93;
+    0.92;
 
 
   headMaterial
@@ -3569,79 +3971,74 @@ function animate() {
     .uOpacity
     .value =
     behaviour.opacity *
-    0.88;
+    0.86;
 
 
-  // --------------------------------------------------------
-  // Float
-  // --------------------------------------------------------
+  // Floating motion
 
   sage.position.y =
     0.08 +
     Math.sin(
       time *
-      0.68
+      0.66
     )
     *
     0.045;
 
 
   sage.rotation.z =
+    -0.008 +
     Math.sin(
       time *
-      0.36
+      0.34
     )
     *
-    0.009;
+    0.010;
 
 
-  // --------------------------------------------------------
-  // Look toward cursor
-  // --------------------------------------------------------
+  // Follow cursor
 
   sage.rotation.y +=
     (
       pointer.x *
-      0.065 -
+      0.055 -
       sage.rotation.y
     )
     *
-    0.018;
+    0.016;
 
 
   headRig.rotation.y +=
     (
       pointer.x *
-      0.115 -
+      0.105 -
       headRig.rotation.y
     )
     *
-    0.026;
+    0.024;
 
 
   headRig.rotation.x +=
     (
       pointer.y *
-      0.035 -
+      0.030 -
       headRig.rotation.x
     )
     *
-    0.022;
+    0.020;
 
 
-  // --------------------------------------------------------
-  // Core heartbeat
-  // --------------------------------------------------------
+  // Core
 
   const pulse =
     1 +
     Math.sin(
       time *
-      2.0 *
+      2 *
       behaviour.energy
     )
     *
-    0.055 *
+    0.050 *
     behaviour.energy;
 
 
@@ -3651,25 +4048,28 @@ function animate() {
 
 
   coreInner.scale.setScalar(
-    0.48 *
+    0.38 *
     pulse *
     behaviour.energy
   );
 
 
-  coreMiddle.scale.setScalar(
+  coreMid.scale.setScalar(
 
-    0.95 *
+    0.82 *
+
     (
       0.96 +
       Math.sin(
         time *
-        1.4
+        1.35
       )
       *
-      0.05
+      0.045
     )
+
     *
+
     behaviour.energy
 
   );
@@ -3677,51 +4077,61 @@ function animate() {
 
   coreOuter.scale.setScalar(
 
-    1.75 *
+    1.55 *
+
     (
       0.95 +
       Math.sin(
-        time *
-        1.05
+        time
       )
       *
-      0.055
+      0.05
     )
+
     *
+
     behaviour.energy
 
   );
 
 
-  // --------------------------------------------------------
+  coreRays.rotation.z =
+    time *
+    0.12;
+
+
+  coreRays.material.opacity =
+    Math.min(
+      0.48,
+      0.24 *
+      behaviour.energy
+    );
+
+
   // Eyes
-  // --------------------------------------------------------
 
   eyeMaterial.opacity =
-    0.71 +
+    0.64 +
     Math.sin(
       time *
-      1.5
+      1.45
     )
     *
-    0.07;
+    0.055;
 
 
-  // --------------------------------------------------------
-  // Internal body particles
-  // --------------------------------------------------------
+  // Body particle drift
 
-  const bodyPosition =
-    particleGeometry
-      .getAttribute(
-        "position"
-      );
+  const particleAttribute =
+    particleGeometry.getAttribute(
+      "position"
+    );
 
 
   for (
     let i = 0;
     i <
-    bodyPosition.count;
+    particleAttribute.count;
     i++
   ) {
 
@@ -3730,80 +4140,111 @@ function animate() {
       3;
 
 
-    const x =
+    const baseX =
       particleBase[
         index
       ];
 
 
-    const y =
+    const baseY =
       particleBase[
         index +
         1
       ];
 
 
-    const z =
+    const baseZ =
       particleBase[
         index +
         2
       ];
 
 
-    bodyPosition.setXYZ(
+    particleAttribute.setXYZ(
 
       i,
 
-      x +
+      baseX +
       Math.sin(
         time *
-        0.78 +
-        y *
-        2.9 +
+        0.76 +
+        baseY *
+        2.8 +
         i *
         0.014
+      )
+      *
+      0.009,
+
+
+      baseY +
+      Math.sin(
+        time *
+        0.52 +
+        baseX *
+        3 +
+        i *
+        0.010
       )
       *
       0.010,
 
 
-      y +
-      Math.sin(
-        time *
-        0.55 +
-        x *
-        3.2 +
-        i *
-        0.010
-      )
-      *
-      0.011,
-
-
-      z +
+      baseZ +
       Math.cos(
         time *
-        0.68 +
-        y *
-        2.2 +
+        0.64 +
+        baseY *
+        2 +
         i *
         0.012
       )
       *
-      0.008
+      0.007
 
     );
 
   }
 
 
-  bodyPosition.needsUpdate =
+  particleAttribute.needsUpdate =
     true;
 
 
-  // --------------------------------------------------------
-  // Hair
-  // --------------------------------------------------------
+  // Energy breathing
+
+  energyFibres.forEach(
+    (
+      fibre,
+      index
+    ) => {
+
+      fibre.material.opacity =
+
+        0.16 +
+
+        (
+          index %
+          4
+        )
+        *
+        0.025
+
+        +
+
+        Math.sin(
+          time +
+          index *
+          0.55
+        )
+        *
+        0.025;
+
+    }
+  );
+
+
+  // Hair movement
 
   hairStrands.forEach(
     (
@@ -3816,7 +4257,7 @@ function animate() {
         Math.sin(
 
           time *
-          0.48 *
+          0.46 *
           behaviour.hairSpeed +
 
           strand
@@ -3841,16 +4282,16 @@ function animate() {
         Math.cos(
 
           time *
-          0.35 +
+          0.33 +
 
           index *
-          0.19
+          0.17
 
         )
 
         *
 
-        0.016
+        0.015
 
         *
 
@@ -3860,21 +4301,18 @@ function animate() {
   );
 
 
-  // --------------------------------------------------------
   // Tail particles
-  // --------------------------------------------------------
 
-  const tailPosition =
-    tailGeometry
-      .getAttribute(
-        "position"
-      );
+  const tailAttribute =
+    tailGeometry.getAttribute(
+      "position"
+    );
 
 
   for (
     let i = 0;
     i <
-    tailCount;
+    tailParticleCount;
     i++
   ) {
 
@@ -3883,20 +4321,18 @@ function animate() {
       3;
 
 
-    const x =
-      tailBase[
-        index
-      ];
+    const baseX =
+      tailBase[index];
 
 
-    const y =
+    const baseY =
       tailBase[
         index +
         1
       ];
 
 
-    const z =
+    const baseZ =
       tailBase[
         index +
         2
@@ -3905,16 +4341,16 @@ function animate() {
 
     const depth =
       Math.abs(
-        y
+        baseY
       );
 
 
-    tailPosition.setXYZ(
+    tailAttribute.setXYZ(
 
       i,
 
 
-      x +
+      baseX +
 
       Math.sin(
 
@@ -3923,10 +4359,10 @@ function animate() {
         behaviour.tailSpeed +
 
         depth *
-        2.2 +
+        2.1 +
 
         i *
-        0.017
+        0.016
 
       )
 
@@ -3935,16 +4371,16 @@ function animate() {
       (
         0.035 +
         depth *
-        0.008
+        0.007
       ),
 
 
-      y +
+      baseY +
 
       Math.sin(
 
         time *
-        0.57 *
+        0.55 *
         behaviour.tailSpeed +
 
         i *
@@ -3956,16 +4392,16 @@ function animate() {
       0.017,
 
 
-      z +
+      baseZ +
 
       Math.cos(
 
         time *
-        0.66 *
+        0.63 *
         behaviour.tailSpeed +
 
         depth *
-        1.7 +
+        1.6 +
 
         i *
         0.014
@@ -3973,14 +4409,14 @@ function animate() {
       )
 
       *
-      0.016
+      0.015
 
     );
 
   }
 
 
-  tailPosition.needsUpdate =
+  tailAttribute.needsUpdate =
     true;
 
 
@@ -3989,13 +4425,13 @@ function animate() {
     Math.sin(
 
       time *
-      0.32 *
+      0.30 *
       behaviour.tailSpeed
 
     )
 
     *
-    0.025;
+    0.023;
 
 
   tailStrands.forEach(
@@ -4009,49 +4445,63 @@ function animate() {
         Math.sin(
 
           time *
-          0.20 *
+          0.18 *
           behaviour.tailSpeed +
 
           index *
-          0.28
+          0.22
 
         )
 
         *
-        0.028;
+        0.026;
 
     }
   );
 
 
-  // --------------------------------------------------------
-  // Thinking / curious head tilt
-  // --------------------------------------------------------
+  // Slight asymmetrical arm motion
 
-  let targetTilt =
-    0;
+  leftArmRig.rotation.z =
+
+    -0.012 +
+
+    Math.sin(
+      time *
+      0.42
+    )
+    *
+    0.006;
 
 
-  if (
+  rightArmRig.rotation.z =
+
+    0.016 +
+
+    Math.sin(
+      time *
+      0.39 +
+      1.2
+    )
+    *
+    0.007;
+
+
+  // Head behaviour
+
+  const targetTilt =
+
     behaviour.state ===
     "thinking"
-  ) {
+      ? -0.040
+      :
 
-    targetTilt =
-      -0.035;
-
-  }
-
-
-  if (
     behaviour.state ===
     "curious"
-  ) {
+      ? 0.050
+      :
 
-    targetTilt =
-      0.045;
-
-  }
+      -0.018;
 
 
   headRig.rotation.z +=
@@ -4062,12 +4512,8 @@ function animate() {
     )
 
     *
-    0.04;
+    0.035;
 
-
-  // --------------------------------------------------------
-  // Render
-  // --------------------------------------------------------
 
   renderer.render(
     scene,

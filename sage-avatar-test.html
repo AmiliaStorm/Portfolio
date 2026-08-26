@@ -1,1 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
 
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>SAGE Avatar Lab</title>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+    }
+  }
+  </script>
+
+  <link
+    rel="stylesheet"
+    href="./sage-avatar.css?v=1"
+  />
+</head>
+
+<body>
+
+  <main class="sage-lab">
+
+    <!-- ======================================
+         Left side
+         ====================================== -->
+
+    <section class="sage-lab__copy">
+
+      <p class="sage-lab__eyebrow">
+        SAGE · AVATAR LAB
+      </p>
+
+      <h1>
+        Building a digital
+        <span>lifeform.</span>
+      </h1>
+
+      <p class="sage-lab__description">
+        This is an isolated development environment for SAGE.
+        Her body, holographic material and behaviour can be
+        developed here without changing the live portfolio.
+      </p>
+
+
+      <!-- State testing -->
+
+      <div class="sage-lab__states">
+
+        <button
+          type="button"
+          data-sage-state="idle"
+        >
+          Idle
+        </button>
+
+        <button
+          type="button"
+          data-sage-state="thinking"
+        >
+          Thinking
+        </button>
+
+        <button
+          type="button"
+          data-sage-state="talking"
+        >
+          Talking
+        </button>
+
+        <button
+          type="button"
+          data-sage-state="moving"
+        >
+          Moving
+        </button>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ======================================
+         SAGE preview
+         ====================================== -->
+
+    <section
+      class="sage-avatar-stage"
+      aria-label="SAGE avatar development preview"
+    >
+
+      <div
+        class="sage-avatar-stage__glow"
+        aria-hidden="true"
+      ></div>
+
+
+      <!-- Three.js gets mounted here -->
+
+      <div
+        class="sage-avatar-mount"
+        id="sageAvatarMount"
+        aria-hidden="true"
+      ></div>
+
+
+      <!-- Debug/status indicator -->
+
+      <div class="sage-avatar-stage__status">
+
+        <span
+          class="sage-avatar-stage__status-dot"
+          aria-hidden="true"
+        ></span>
+
+        <strong>
+          SAGE
+        </strong>
+
+        <small id="sageStateLabel">
+          IDLE
+        </small>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ========================================
+       SAGE WebGL renderer
+       ======================================== -->
+
+  <script
+    type="module"
+    src="./sage-avatar.js?v=1"
+  ></script>
+
+
+  <!-- ========================================
+       Development state controls
+       ======================================== -->
+
+  <script>
+
+    document.addEventListener(
+      "click",
+      (event) => {
+
+        const button =
+          event.target.closest(
+            "[data-sage-state]"
+          );
+
+
+        if (
+          !button ||
+          !window.SAGEAvatar
+        ) {
+          return;
+        }
+
+
+        const state =
+          button.dataset.sageState;
+
+
+        window.SAGEAvatar.setState(
+          state
+        );
+
+
+        const label =
+          document.getElementById(
+            "sageStateLabel"
+          );
+
+
+        if (label) {
+          label.textContent =
+            state.toUpperCase();
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>

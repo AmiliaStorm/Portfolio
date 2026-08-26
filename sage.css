@@ -135,11 +135,14 @@
 
 .sage__panel {
   position: absolute;
+
   top: -12px;
-  left: 96px;
+  left: auto;
+  right: 96px;
 
   width: 340px;
   padding: 18px;
+
   border: 1px solid rgba(104, 177, 255, 0.22);
   border-radius: 22px;
 
@@ -149,7 +152,6 @@
       rgba(10, 21, 40, 0.97),
       rgba(5, 12, 24, 0.97)
     );
-
   backdrop-filter: blur(16px);
 
   opacity: 0;

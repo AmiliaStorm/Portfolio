@@ -31,8 +31,7 @@
   href="./images/favicon.png"
 />
 
-<link rel="stylesheet" href="./sage.css?v=5" />
-<script src="./sage.js?v=5"></script>
+<link rel="stylesheet" href="./sage.css?v=6" />
 
   <!-- Featured projects CTA: kept inline so external CSS cannot override it -->
   <style>
@@ -863,24 +862,59 @@
     </div>
 
     <button
-      class="sage__body"
+      class="sage__body sage__body--humanoid"
       id="sageBody"
       type="button"
       aria-label="Open SAGE portfolio guide"
       aria-expanded="false"
       aria-controls="sagePanel"
     >
-      <span class="sage__halo" aria-hidden="true"></span>
-      <span class="sage__core" aria-hidden="true"></span>
+      <div class="sage-form">
 
-      <span class="sage__particle sage__particle--1" aria-hidden="true"></span>
-      <span class="sage__particle sage__particle--2" aria-hidden="true"></span>
-      <span class="sage__particle sage__particle--3" aria-hidden="true"></span>
-      <span class="sage__particle sage__particle--4" aria-hidden="true"></span>
-      <span class="sage__particle sage__particle--5" aria-hidden="true"></span>
-      <span class="sage__particle sage__particle--6" aria-hidden="true"></span>
-      <span class="sage__particle sage__particle--7" aria-hidden="true"></span>
-      <span class="sage__particle sage__particle--8" aria-hidden="true"></span>
+        <!-- Ambient aura around SAGE -->
+        <span
+          class="sage-form__aura"
+          aria-hidden="true"
+        ></span>
+
+        <!-- Main holographic humanoid body -->
+        <img
+          class="sage-form__figure"
+          id="sageFigure"
+          src="./images/sage-form.webp"
+          alt=""
+          aria-hidden="true"
+          draggable="false"
+        />
+
+        <!-- Bioluminescent chest core -->
+        <span
+          class="sage-form__core-glow"
+          aria-hidden="true"
+        ></span>
+
+        <span
+          class="sage-form__core"
+          aria-hidden="true"
+        ></span>
+
+        <!-- Living particles around her body -->
+        <span class="sage-form__particle sage-form__particle--1" aria-hidden="true"></span>
+        <span class="sage-form__particle sage-form__particle--2" aria-hidden="true"></span>
+        <span class="sage-form__particle sage-form__particle--3" aria-hidden="true"></span>
+        <span class="sage-form__particle sage-form__particle--4" aria-hidden="true"></span>
+        <span class="sage-form__particle sage-form__particle--5" aria-hidden="true"></span>
+        <span class="sage-form__particle sage-form__particle--6" aria-hidden="true"></span>
+        <span class="sage-form__particle sage-form__particle--7" aria-hidden="true"></span>
+        <span class="sage-form__particle sage-form__particle--8" aria-hidden="true"></span>
+
+        <!-- Energy / comet trail used while SAGE moves -->
+        <span
+          class="sage-form__trail"
+          aria-hidden="true"
+        ></span>
+
+      </div>
     </button>
 
     <aside
@@ -972,7 +1006,7 @@
   </div>
 </div>
 
-<script src="./sage.js"></script>
+<script src="./sage.js?v=6"></script>
 <script src="./index.js"></script>
 <script type="module" src="./dna.js"></script>
 </body>

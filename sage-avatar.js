@@ -3087,13 +3087,10 @@ const pointer = {
 
 
 window.addEventListener(
-
   "pointermove",
-
   event => {
 
-    pointer.x =
-
+    const newX =
       (
         event.clientX /
         window.innerWidth
@@ -3101,22 +3098,41 @@ window.addEventListener(
       2 -
       1;
 
-
-    pointer.y =
-
+    const newY =
       -(
-
         (
           event.clientY /
           window.innerHeight
         ) *
         2 -
         1
+      );
 
+    const movement =
+      Math.abs(
+        newX -
+        life.lastPointerX
+      ) +
+      Math.abs(
+        newY -
+        life.lastPointerY
+      );
+
+    pointer.x = newX;
+    pointer.y = newY;
+
+    life.lastPointerX = newX;
+    life.lastPointerY = newY;
+
+    life.pointerActivity =
+      THREE.MathUtils.clamp(
+        life.pointerActivity +
+        movement * 1.8,
+        0,
+        1
       );
 
   }
-
 );
 
 /* =========================================================

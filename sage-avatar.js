@@ -3119,6 +3119,33 @@ window.addEventListener(
 
 );
 
+/* =========================================================
+   SAGE ATTENTION / LIFE SYSTEM
+========================================================= */
+
+const life = {
+
+  gazeX: 0,
+  gazeY: 0,
+
+  targetGazeX: 0,
+  targetGazeY: 0,
+
+  microX: 0,
+  microY: 0,
+
+  nextMicroMove: 0,
+
+  blink: 0,
+  blinkTarget: 0,
+  nextBlink: 2 + Math.random() * 3,
+
+  pointerActivity: 0,
+
+  lastPointerX: 0,
+  lastPointerY: 0
+
+};
 
 /* =========================================================
    RESIZE

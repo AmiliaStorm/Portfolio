@@ -3086,55 +3086,6 @@ const pointer = {
 };
 
 
-window.addEventListener(
-  "pointermove",
-  event => {
-
-    const newX =
-      (
-        event.clientX /
-        window.innerWidth
-      ) *
-      2 -
-      1;
-
-    const newY =
-      -(
-        (
-          event.clientY /
-          window.innerHeight
-        ) *
-        2 -
-        1
-      );
-
-    const movement =
-      Math.abs(
-        newX -
-        life.lastPointerX
-      ) +
-      Math.abs(
-        newY -
-        life.lastPointerY
-      );
-
-    pointer.x = newX;
-    pointer.y = newY;
-
-    life.lastPointerX = newX;
-    life.lastPointerY = newY;
-
-    life.pointerActivity =
-      THREE.MathUtils.clamp(
-        life.pointerActivity +
-        movement * 1.8,
-        0,
-        1
-      );
-
-  }
-);
-
 /* =========================================================
    SAGE ATTENTION / LIFE SYSTEM
 ========================================================= */
@@ -3162,6 +3113,75 @@ const life = {
   lastPointerY: 0
 
 };
+
+
+window.addEventListener(
+
+  "pointermove",
+
+  event => {
+
+    const newX =
+
+      (
+        event.clientX /
+        window.innerWidth
+      ) *
+      2 -
+      1;
+
+
+    const newY =
+
+      -(
+
+        (
+          event.clientY /
+          window.innerHeight
+        ) *
+        2 -
+        1
+
+      );
+
+
+    const movement =
+
+      Math.abs(
+        newX -
+        life.lastPointerX
+      ) +
+      Math.abs(
+        newY -
+        life.lastPointerY
+      );
+
+
+    pointer.x = newX;
+    pointer.y = newY;
+
+
+    life.lastPointerX = newX;
+    life.lastPointerY = newY;
+
+
+    life.pointerActivity =
+
+      THREE.MathUtils.clamp(
+
+        life.pointerActivity +
+        movement *
+        1.8,
+
+        0,
+        1
+
+      );
+
+  }
+
+);
+
 
 /* =========================================================
    RESIZE
@@ -3315,28 +3335,121 @@ function animate() {
 
 
   /*
-    Floating movement
+    Organic idle motion
   */
+
+  const slowFloat =
+
+    Math.sin(
+      t *
+      0.53
+    ) *
+
+    0.034;
+
+
+  const secondaryFloat =
+
+    Math.sin(
+      t *
+      0.91 +
+      1.7
+    ) *
+
+    0.011;
+
+
+  const microFloat =
+
+    Math.sin(
+      t *
+      0.23 +
+      4.2
+    ) *
+
+    0.007;
+
 
   sage.position.y =
 
     0.08 +
+    slowFloat +
+    secondaryFloat +
+    microFloat;
+
+
+  /*
+    Very subtle body drift
+  */
+
+  sage.position.x =
+
+    0.15 +
 
     Math.sin(
       t *
-      0.70
+      0.19
     ) *
 
-    0.048;
+    0.009 +
+
+    Math.sin(
+      t *
+      0.41 +
+      2.3
+    ) *
+
+    0.004;
 
 
   sage.rotation.z =
 
     Math.sin(
       t *
-      0.38
+      0.31
     ) *
 
+    0.008 +
+
+    Math.sin(
+      t *
+      0.13 +
+      1.4
+    ) *
+
+    0.004;
+
+
+  /*
+    Breathing
+  */
+
+  const breath =
+
+    Math.sin(
+      t *
+      1.10
+    );
+
+
+  torsoRig.scale.x =
+
+    1 +
+    breath *
+    0.003;
+
+
+  torsoRig.scale.y =
+
+    1 +
+    breath *
+    0.007;
+
+
+  torsoRig.scale.z =
+
+    1 +
+    breath *
     0.011;
 
 

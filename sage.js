@@ -13,6 +13,20 @@ const actionButtons = document.querySelectorAll(
 
 
 // ==========================================================
+// SAGE brain endpoint (Cloudflare Worker → OpenAI API)
+// Only called when local keyword matching finds nothing —
+// known intents (projects/skills/about/etc.) stay instant
+// and free via getResponseForInput() below.
+// ==========================================================
+
+const SAGE_API_URL = "https://sage-api.amiliast.workers.dev";
+
+// Short rolling history so follow-up questions have context.
+// Not persisted across page loads — resets on refresh.
+const conversationHistory = [];
+
+
+// ==========================================================
 // SAGE state
 // ==========================================================
 
@@ -21,19 +35,61 @@ const state = {
 
   activeSection: "hero",
 
-  // Start SAGE farther inside the viewport
-  currentX: window.innerWidth - 330,
-  currentY: 190,
-
-  targetX: window.innerWidth - 330,
-  targetY: 190,
-
-  lastMoveAt: 0,
-
   currentTargetElement: null,
 
-  bubbleTimeout: null
+  bubbleTimeout: null,
+
+  // Cools down after a state change so setState() calls from the
+  // chat flow (thinking/talking) don't get immediately stomped by
+  // something else — e.g. don't drop back to idle mid-reply.
+  stateLockUntil: 0
 };
+
+
+// ==========================================================
+// Talk to the avatar's state machine, with a short lock so
+// rapid-fire calls (e.g. a local reply immediately followed by
+// handleAction) don't fight each other.
+// ==========================================================
+
+function setAvatarState(name, lockMs = 0) {
+
+  if (!window.SAGEAvatar) return;
+
+  if (performance.now() < state.stateLockUntil && lockMs === 0) {
+    return;
+  }
+
+  window.SAGEAvatar.setState(name);
+
+  if (lockMs > 0) {
+    state.stateLockUntil = performance.now() + lockMs;
+  }
+
+}
+
+
+// ==========================================================
+// Follow her real rendered position every frame instead of
+// computing an independent path — sage-avatar.js is now the
+// single source of truth for where she actually is.
+// ==========================================================
+
+function followAvatarPosition() {
+
+  const pos =
+    window.SAGEAvatar?.getScreenPosition?.();
+
+  if (pos) {
+
+    sage.style.transform =
+      `translate3d(${pos.x - 48}px, ${pos.y - 48}px, 0)`;
+
+  }
+
+  requestAnimationFrame(followAvatarPosition);
+
+}
 
 
 // ==========================================================
@@ -73,6 +129,25 @@ function addMessage(role, text) {
 
   sageMessages.scrollTop =
     sageMessages.scrollHeight;
+
+  return message;
+}
+
+
+// ==========================================================
+// Typing indicator (shown while waiting on the AI fallback)
+// ==========================================================
+
+function showTyping() {
+  const el = addMessage("sage", "…");
+  el.classList.add("sage__message--typing");
+  return el;
+}
+
+function removeTyping(el) {
+  if (el && el.parentNode) {
+    el.parentNode.removeChild(el);
+  }
 }
 
 
@@ -122,6 +197,8 @@ function openPanel() {
     "is-visible"
   );
 
+  setAvatarState("curious");
+
   sageInput.focus();
 }
 
@@ -146,6 +223,8 @@ function closePanel() {
   sage.classList.remove(
     "sage--active"
   );
+
+  setAvatarState("idle");
 }
 
 
@@ -367,6 +446,8 @@ function handleAction(
 
 // ==========================================================
 // Temporary local brain
+// Returns a match object, or null if nothing matched — a null
+// result is what triggers the AI fallback in the submit handler.
 // ==========================================================
 
 function getResponseForInput(input) {
@@ -374,10 +455,6 @@ function getResponseForInput(input) {
   const q =
     input.toLowerCase();
 
-
-  // --------------------------------------------------------
-  // Specific projects first
-  // --------------------------------------------------------
 
   if (
     q.includes("covid") ||
@@ -430,10 +507,6 @@ function getResponseForInput(input) {
   }
 
 
-  // --------------------------------------------------------
-  // General projects
-  // --------------------------------------------------------
-
   if (
     q.includes("project") ||
     q.includes("portfolio") ||
@@ -449,10 +522,6 @@ function getResponseForInput(input) {
 
   }
 
-
-  // --------------------------------------------------------
-  // Skills
-  // --------------------------------------------------------
 
   if (
     q.includes("skill") ||
@@ -472,10 +541,6 @@ function getResponseForInput(input) {
   }
 
 
-  // --------------------------------------------------------
-  // About
-  // --------------------------------------------------------
-
   if (
     q.includes("about") ||
     q.includes("who is") ||
@@ -492,10 +557,6 @@ function getResponseForInput(input) {
   }
 
 
-  // --------------------------------------------------------
-  // Resume
-  // --------------------------------------------------------
-
   if (
     q.includes("cv") ||
     q.includes("resume")
@@ -510,10 +571,6 @@ function getResponseForInput(input) {
 
   }
 
-
-  // --------------------------------------------------------
-  // Machine learning / data
-  // --------------------------------------------------------
 
   if (
     q.includes("data") ||
@@ -530,218 +587,48 @@ function getResponseForInput(input) {
   }
 
 
-  // --------------------------------------------------------
-  // Unknown
-  // --------------------------------------------------------
-
-  return {
-    reply:
-      "I can currently help with projects, skills, Amilia’s background, and portfolio navigation. My full AI knowledge layer is still being built.",
-
-    action: null
-  };
+  return null;
 
 }
 
 
 // ==========================================================
-// Safe movement zones
+// AI fallback
 // ==========================================================
 
-function getSafeZone(sectionName) {
+async function getAIResponse(message) {
 
-  const vw =
-    window.innerWidth;
+  try {
 
-  const vh =
-    window.innerHeight;
+    const response = await fetch(SAGE_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message,
+        history: conversationHistory
+      })
+    });
 
-
-  // Mobile
-  if (vw <= 700) {
-
-    return {
-      x: vw - 110,
-      y: 150,
-
-      radiusX: 15,
-      radiusY: 30
-    };
-
-  }
-
-
-  // Desktop
-  const map = {
-
-    hero: {
-      x: vw - 330,
-      y: 190,
-
-      radiusX: 35,
-      radiusY: 45
-    },
-
-
-    projects: {
-      x: vw - 320,
-      y: 235,
-
-      radiusX: 45,
-      radiusY: 45
-    },
-
-
-    skills: {
-      x: vw - 340,
-      y: 230,
-
-      radiusX: 45,
-      radiusY: 45
-    },
-
-
-    about: {
-      x: vw - 330,
-      y: vh - 230,
-
-      radiusX: 45,
-      radiusY: 40
-    },
-
-
-    footer: {
-      x: vw - 320,
-      y: vh - 190,
-
-      radiusX: 40,
-      radiusY: 35
+    if (!response.ok) {
+      throw new Error("Worker responded with " + response.status);
     }
 
-  };
+    const data = await response.json();
 
-
-  return (
-    map[sectionName] ||
-    map.hero
-  );
-
-}
-
-
-// ==========================================================
-// Choose new movement target
-// ==========================================================
-
-function setNewTarget() {
-
-  const zone =
-    getSafeZone(
-      state.activeSection
+    return (
+      data.reply ||
+      "I couldn't quite process that — try rephrasing, or use one of the quick topics below."
     );
 
+  } catch (err) {
 
-  const offsetX =
-    (Math.random() * 2 - 1) *
-    zone.radiusX;
+    console.error("SAGE AI fallback failed:", err);
 
-
-  const offsetY =
-    (Math.random() * 2 - 1) *
-    zone.radiusY;
-
-
-  // Hard safety boundaries
-  const minX = 120;
-
-  const maxX =
-    window.innerWidth <= 700
-      ? window.innerWidth - 90
-      : window.innerWidth - 280;
-
-
-  const minY = 110;
-
-  const maxY =
-    window.innerHeight - 120;
-
-
-  state.targetX =
-    Math.max(
-      minX,
-      Math.min(
-        zone.x + offsetX,
-        maxX
-      )
-    );
-
-
-  state.targetY =
-    Math.max(
-      minY,
-      Math.min(
-        zone.y + offsetY,
-        maxY
-      )
-    );
-
-}
-
-
-// ==========================================================
-// Floating animation
-// ==========================================================
-
-function animate() {
-
-  const dx =
-    state.targetX -
-    state.currentX;
-
-
-  const dy =
-    state.targetY -
-    state.currentY;
-
-
-  // Smooth movement
-  state.currentX +=
-    dx * 0.025;
-
-
-  state.currentY +=
-    dy * 0.025;
-
-
-  sage.style.transform =
-    `translate3d(
-      ${state.currentX}px,
-      ${state.currentY}px,
-      0
-    )`;
-
-
-  const now =
-    performance.now();
-
-
-  // Pick a new target every few seconds
-  if (
-    !state.panelOpen &&
-    now - state.lastMoveAt > 3800
-  ) {
-
-    setNewTarget();
-
-    state.lastMoveAt =
-      now;
+    return "I'm having trouble reaching my full knowledge right now. I can still help with projects, skills, Amilia's background, and her resume.";
 
   }
-
-
-  requestAnimationFrame(
-    animate
-  );
 
 }
 
@@ -754,10 +641,6 @@ function observeSections() {
 
   const observed = [];
 
-
-  // --------------------------------------------------------
-  // Hero
-  // --------------------------------------------------------
 
   const hero =
     document.querySelector(".hero");
@@ -772,10 +655,6 @@ function observeSections() {
 
   }
 
-
-  // --------------------------------------------------------
-  // Main sections
-  // --------------------------------------------------------
 
   [
     "projects",
@@ -799,10 +678,6 @@ function observeSections() {
   });
 
 
-  // --------------------------------------------------------
-  // Footer
-  // --------------------------------------------------------
-
   const footer =
     document.querySelector(
       ".footer"
@@ -818,10 +693,6 @@ function observeSections() {
 
   }
 
-
-  // --------------------------------------------------------
-  // Observer
-  // --------------------------------------------------------
 
   const observer =
     new IntersectionObserver(
@@ -867,13 +738,6 @@ function observeSections() {
 
         state.activeSection =
           nextSection;
-
-
-        setNewTarget();
-
-
-        state.lastMoveAt =
-          performance.now();
 
 
         // Don't interrupt while chat is open
@@ -957,7 +821,7 @@ sageClose.addEventListener(
 
 
 // ==========================================================
-// Suggested actions
+// Suggestions
 // ==========================================================
 
 actionButtons.forEach(
@@ -1013,30 +877,61 @@ sageForm.addEventListener(
         message
       );
 
+    if (result) {
 
-    // Small delay makes SAGE feel less robotic
-    setTimeout(() => {
+      setAvatarState("talking", 2200);
 
-      addMessage(
-        "sage",
-        result.reply
-      );
+      setTimeout(() => {
 
-
-      // Important:
-      // Don't add the same reply twice.
-      if (result.action) {
-
-        handleAction(
-          result.action,
-          {
-            addReply: false
-          }
+        addMessage(
+          "sage",
+          result.reply
         );
 
-      }
+        conversationHistory.push(
+          { role: "user", content: message },
+          { role: "assistant", content: result.reply }
+        );
 
-    }, 420);
+        
+        // Don't add the same reply twice.
+        if (result.action) {
+
+          handleAction(
+            result.action,
+            {
+              addReply: false
+            }
+          );
+
+        }
+
+      }, 420);
+
+      return;
+
+    }
+
+
+
+    setAvatarState("thinking", 60000);
+
+    const typingEl = showTyping();
+
+    getAIResponse(message).then((reply) => {
+
+      removeTyping(typingEl);
+
+      addMessage("sage", reply);
+
+      conversationHistory.push(
+        { role: "user", content: message },
+        { role: "assistant", content: reply }
+      );
+
+      setAvatarState("talking", 2200);
+
+    });
 
   }
 );
@@ -1077,41 +972,6 @@ document.addEventListener(
 
 
 // ==========================================================
-// Window resize
-// ==========================================================
-
-window.addEventListener(
-  "resize",
-  () => {
-
-    // Keep SAGE safely inside viewport
-    state.currentX =
-      Math.max(
-        120,
-        Math.min(
-          state.currentX,
-          window.innerWidth - 280
-        )
-      );
-
-
-    state.currentY =
-      Math.max(
-        110,
-        Math.min(
-          state.currentY,
-          window.innerHeight - 120
-        )
-      );
-
-
-    setNewTarget();
-
-  }
-);
-
-
-// ==========================================================
 // Start SAGE
 // ==========================================================
 
@@ -1119,44 +979,12 @@ window.addEventListener(
   "load",
   () => {
 
-    // Desktop
-    if (
-      window.innerWidth > 700
-    ) {
-
-      state.currentX =
-        window.innerWidth - 330;
-
-      state.currentY =
-        190;
-
-    }
-
-    // Mobile
-    else {
-
-      state.currentX =
-        window.innerWidth - 110;
-
-      state.currentY =
-        150;
-
-    }
-
-
-    state.targetX =
-      state.currentX;
-
-
-    state.targetY =
-      state.currentY;
-
-
-    state.lastMoveAt =
-      performance.now();
-
-
     observeSections();
+
+
+    requestAnimationFrame(
+      followAvatarPosition
+    );
 
 
     // Initial greeting
@@ -1175,11 +1003,6 @@ window.addEventListener(
       );
 
     }, 4200);
-
-
-    requestAnimationFrame(
-      animate
-    );
 
   }
 );

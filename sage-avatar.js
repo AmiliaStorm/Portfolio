@@ -6,21 +6,63 @@ if (!mount) {
   throw new Error("SAGE: #sageAvatarMount not found");
 }
 
-
+// Keep the WebGL canvas small and transparent. Move this entire
+// contained canvas around the viewport instead of expanding it to
+// full-screen, which previously covered the portfolio.
 Object.assign(mount.style, {
   position: "fixed",
   inset: "auto",
-  right: "8px",
-  bottom: "8px",
+  left: "0",
+  top: "0",
+  right: "auto",
+  bottom: "auto",
   width: window.innerWidth < 680 ? "180px" : "240px",
   height: window.innerWidth < 680 ? "180px" : "240px",
   pointerEvents: "none",
   zIndex: "1900"
 });
 
+let mountX = Math.max(8, window.innerWidth - 256);
+let mountY = Math.max(80, window.innerHeight - 256);
+
+function moveMount(t, reducedMotion) {
+  const size = mount.clientWidth;
+  const mobile = window.innerWidth < 680;
+  const minX = mobile
+    ? Math.max(8, window.innerWidth - size - 32)
+    : Math.min(400, Math.max(24, window.innerWidth * 0.26));
+  const maxX = Math.max(8, window.innerWidth - size - 16);
+  const minY = Math.min(85, Math.max(8, window.innerHeight - size - 16));
+  const maxY = Math.max(minY, window.innerHeight - size - 16);
+
+  const panelOpen = document.getElementById("sagePanel")?.classList.contains("is-open");
+  if (!panelOpen && !reducedMotion) {
+    const horizontal = 0.5 + 0.5 * Math.sin(t * 0.11 + 1.3);
+    const vertical = 0.5 + 0.5 * Math.sin(t * 0.17 + 1.8);
+    mountX += (minX + (maxX - minX) * horizontal - mountX) * 0.025;
+    mountY += (minY + (maxY - minY) * vertical - mountY) * 0.025;
+  } else if (reducedMotion) {
+    mountX = maxX;
+    mountY = maxY;
+  }
+
+  mountX = THREE.MathUtils.clamp(mountX, Math.min(minX, maxX), maxX);
+  mountY = THREE.MathUtils.clamp(mountY, minY, maxY);
+  mount.style.transform = `translate3d(${mountX}px, ${mountY}px, 0)`;
+}
+
 /* =========================================================
    SAGE · BUTTERFLY REALISM V2
- ============================= */
+   Keeps the silhouette you liked.
+   This pass focuses on:
+   - finer wing venation
+   - translucent iridescent membrane
+   - tiny luminous wing scales
+   - subtle compound eyes
+   - more natural wing motion
+   - gentle shimmer through the wings
+   - no oversized glow
+========================================================= */
 
 const renderer = new THREE.WebGLRenderer({
   alpha: true,
@@ -1625,6 +1667,8 @@ function pickNextPhase(t) {
 function animate() {
   const t = clock.getElapsedTime();
 
+  moveMount(t, reduceMotion);
+
   if (t - phaseStartT > phaseDuration) {
     pickNextPhase(t);
   }
@@ -1673,7 +1717,7 @@ function animate() {
   const wanderY =
     Math.sin(t * 0.137 + 1.3) * Math.sin(t * 0.0533) * 0.20;
 
-  // Keep movement gentle within the small corner widget.
+  // Small local wing/body drift adds movement within the travelling canvas.
   const ROAM_SCALE_X = 0.42;
   const ROAM_SCALE_Y = 0.32;
 
@@ -2133,10 +2177,9 @@ function animate() {
   // Project her world position to viewport pixel coordinates for
   // sage.js to consume.
   screenProjectPos.copy(cometWorldPos).project(camera);
-  const mountRect = mount.getBoundingClientRect();
   lastScreenPosition = {
-    x: mountRect.left + (screenProjectPos.x * 0.5 + 0.5) * mountRect.width,
-    y: mountRect.top + (-screenProjectPos.y * 0.5 + 0.5) * mountRect.height
+    x: mountX + (screenProjectPos.x * 0.5 + 0.5) * mount.clientWidth,
+    y: mountY + (-screenProjectPos.y * 0.5 + 0.5) * mount.clientHeight
   };
 
   cometTrailHistory.unshift({

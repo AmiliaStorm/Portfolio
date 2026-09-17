@@ -12,15 +12,6 @@ if (!mount) {
 
 /* =========================================================
    SAGE · BUTTERFLY REALISM V2
-   Keeps the silhouette you liked.
-   This pass focuses on:
-   - finer wing venation
-   - translucent iridescent membrane
-   - tiny luminous wing scales
-   - subtle compound eyes
-   - more natural wing motion
-   - gentle shimmer through the wings
-   - no oversized glow
 ========================================================= */
 
 const renderer = new THREE.WebGLRenderer({
@@ -44,12 +35,7 @@ camera.position.set(0, 0.08, 8.55);
 camera.lookAt(0.18, 0.08, 0);
 
 /* =========================================================
-   BLOOM (NEW)
-   The reference's soft light-bleed can't be faked convincingly
-   with layered sprites alone — this is the real thing via
-   post-processing. Threshold is low so only genuinely bright
-   pixels (the core, emissive lines, wing nodes) bloom, leaving
-   the dark navy background mostly untouched.
+   BLOOM
 ========================================================= */
 
 const composer = new EffectComposer(renderer);
@@ -110,13 +96,7 @@ function makeGlowTexture() {
 const glowTexture = makeGlowTexture();
 
 /* =========================================================
-   WING PATTERN TEXTURE (NEW)
-   Real butterfly wings are not flat glass panes — they carry
-   dark venation, a border band, scale "noise", and often an
-   eyespot on the forewing. This canvas texture bakes those
-   marks in so the material reads as a patterned membrane
-   instead of a uniform tinted sheet, while keeping the
-   existing iridescent / glowing look layered on top.
+   WING PATTERN TEXTURE 
 ========================================================= */
 
 function makeWingPatternTexture(upper, side, outlinePoints) {

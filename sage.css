@@ -1,3 +1,11 @@
+/* ==========================================================
+   SAGE mount — the full-viewport WebGL canvas she renders into.
+   Fixed so it doesn't scroll with page content (same behavior
+   the old CSS orb had), pointer-events: none so the canvas never
+   blocks clicks on the actual page underneath — only the small
+   hit-zone button below (positioned by sage.js to follow her) is
+   actually clickable.
+========================================================== */
 
 #sageAvatarMount {
   position: fixed;
@@ -26,7 +34,7 @@
 
 /* ==========================================================
    Hit-zone (formerly the visible CSS orb button). No background,
-   no visual of its own now, repositions this each frame
+   no visual of its own now — sage.js repositions this each frame
    to sit exactly where the WebGL butterfly is rendered, purely so
    there's something clickable to open the panel.
 ========================================================== */

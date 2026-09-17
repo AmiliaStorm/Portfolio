@@ -1,3 +1,20 @@
+
+#sageAvatarMount {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1900;
+  pointer-events: none;
+}
+
+#sageAvatarMount canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
 .sage {
   position: fixed;
   top: 0;
@@ -7,13 +24,20 @@
   transform: translate3d(0, 0, 0);
 }
 
+/* ==========================================================
+   Hit-zone (formerly the visible CSS orb button). No background,
+   no visual of its own now, repositions this each frame
+   to sit exactly where the WebGL butterfly is rendered, purely so
+   there's something clickable to open the panel.
+========================================================== */
+
 .sage__body {
   position: absolute;
   top: 0;
   left: 0;
 
-  width: 86px;
-  height: 86px;
+  width: 96px;
+  height: 96px;
   border: 0;
   padding: 0;
   border-radius: 50%;
@@ -22,78 +46,6 @@
 
   pointer-events: auto;
 }
-
-.sage__halo {
-  position: absolute;
-  inset: 6px;
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(75, 224, 232, 0.22) 0%,
-      rgba(47, 131, 255, 0.16) 45%,
-      rgba(145, 116, 255, 0.08) 65%,
-      transparent 76%
-    );
-
-  filter: blur(8px);
-  animation: sageHaloPulse 3.8s ease-in-out infinite;
-}
-
-.sage__core {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-
-  transform: translate(-50%, -50%);
-
-  background:
-    radial-gradient(
-      circle at 35% 35%,
-      rgba(255, 255, 255, 0.95),
-      rgba(111, 224, 255, 0.95) 38%,
-      rgba(75, 134, 255, 0.88) 70%,
-      rgba(86, 72, 255, 0.92) 100%
-    );
-
-  box-shadow:
-    0 0 10px rgba(124, 206, 255, 0.95),
-    0 0 22px rgba(75, 224, 232, 0.7),
-    0 0 44px rgba(92, 99, 255, 0.45);
-
-  animation: sageCorePulse 2.6s ease-in-out infinite;
-}
-
-.sage__particle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-
-  transform: translate(-50%, -50%);
-  background: #c8ebff;
-
-  box-shadow:
-    0 0 10px rgba(117, 205, 255, 0.9),
-    0 0 18px rgba(113, 127, 255, 0.45);
-
-  opacity: 0.9;
-}
-
-.sage__particle--1 { animation: sageOrbit1 5.2s linear infinite; }
-.sage__particle--2 { animation: sageOrbit2 6.4s linear infinite; }
-.sage__particle--3 { animation: sageOrbit3 4.7s linear infinite; }
-.sage__particle--4 { animation: sageOrbit4 5.9s linear infinite; }
-.sage__particle--5 { animation: sageOrbit5 7.2s linear infinite; }
-.sage__particle--6 { animation: sageOrbit6 4.9s linear infinite; }
 
 .sage__bubble {
   position: absolute;
@@ -244,6 +196,11 @@
   color: #ffffff;
 }
 
+.sage__message--typing {
+  opacity: 0.6;
+  font-style: italic;
+}
+
 .sage__actions {
   display: flex;
   flex-wrap: wrap;
@@ -306,6 +263,13 @@
   filter: brightness(1.08);
 }
 
+.sage__dev-note {
+  margin: 14px 0 0;
+  color: #7893ac;
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
 .sage-highlight {
   position: relative;
   z-index: 2;
@@ -313,60 +277,6 @@
     0 0 0 1px rgba(111, 196, 255, 0.35),
     0 0 28px rgba(75, 132, 255, 0.18) !important;
   transition: box-shadow 220ms ease;
-}
-
-.sage--active .sage__core {
-  animation-duration: 1.6s;
-}
-
-@keyframes sageHaloPulse {
-  0%, 100% {
-    transform: scale(0.96);
-    opacity: 0.75;
-  }
-  50% {
-    transform: scale(1.08);
-    opacity: 1;
-  }
-}
-
-@keyframes sageCorePulse {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.14);
-  }
-}
-
-@keyframes sageOrbit1 {
-  0%   { transform: translate(-50%, -50%) rotate(0deg) translateX(24px); }
-  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(24px); }
-}
-
-@keyframes sageOrbit2 {
-  0%   { transform: translate(-50%, -50%) rotate(0deg) translateX(30px); }
-  100% { transform: translate(-50%, -50%) rotate(-360deg) translateX(30px); }
-}
-
-@keyframes sageOrbit3 {
-  0%   { transform: translate(-50%, -50%) rotate(40deg) translateX(18px); }
-  100% { transform: translate(-50%, -50%) rotate(400deg) translateX(18px); }
-}
-
-@keyframes sageOrbit4 {
-  0%   { transform: translate(-50%, -50%) rotate(180deg) translateX(26px); }
-  100% { transform: translate(-50%, -50%) rotate(-180deg) translateX(26px); }
-}
-
-@keyframes sageOrbit5 {
-  0%   { transform: translate(-50%, -50%) rotate(90deg) translateX(34px); }
-  100% { transform: translate(-50%, -50%) rotate(450deg) translateX(34px); }
-}
-
-@keyframes sageOrbit6 {
-  0%   { transform: translate(-50%, -50%) rotate(260deg) translateX(20px); }
-  100% { transform: translate(-50%, -50%) rotate(-100deg) translateX(20px); }
 }
 
 @media (max-width: 900px) {
@@ -380,8 +290,8 @@
 
 @media (max-width: 680px) {
   .sage__body {
-    width: 74px;
-    height: 74px;
+    width: 80px;
+    height: 80px;
   }
 
   .sage__panel {

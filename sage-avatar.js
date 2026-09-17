@@ -1,8 +1,4 @@
 import * as THREE from "three";
-import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
-import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
-import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 
 const mount = document.getElementById("sageAvatarMount");
 
@@ -12,15 +8,6 @@ if (!mount) {
 
 /* =========================================================
    SAGE · BUTTERFLY REALISM V2
-   Keeps the silhouette you liked.
-   This pass focuses on:
-   - finer wing venation
-   - translucent iridescent membrane
-   - tiny luminous wing scales
-   - subtle compound eyes
-   - more natural wing motion
-   - gentle shimmer through the wings
-   - no oversized glow
 ========================================================= */
 
 const renderer = new THREE.WebGLRenderer({
@@ -43,27 +30,9 @@ const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
 camera.position.set(0, 0.08, 8.55);
 camera.lookAt(0.18, 0.08, 0);
 
-/* =========================================================
-   BLOOM (NEW)
-   The reference's soft light-bleed can't be faked convincingly
-   with layered sprites alone — this is the real thing via
-   post-processing. Threshold is low so only genuinely bright
-   pixels (the core, emissive lines, wing nodes) bloom, leaving
-   the dark navy background mostly untouched.
-========================================================= */
-
-const composer = new EffectComposer(renderer);
-composer.addPass(new RenderPass(scene, camera));
-
-const bloomPass = new UnrealBloomPass(
-  new THREE.Vector2(1, 1),
-  0.7,   // strength — much less than the last attempt, which blew the whole frame into haze
-  0.4,   // radius — tighter falloff so glow stays local to bright edges instead of flooding outward
-  0.24   // threshold — high enough that only genuinely bright pixels (lines, core) bloom, not the general wing glow
-);
-
-composer.addPass(bloomPass);
-composer.addPass(new OutputPass());
+// Render directly to the transparent canvas. The full-screen bloom
+// composer writes an opaque black alpha channel over the portfolio.
+// The wing materials and sprites still provide their own soft glow.
 
 /* =========================================================
    LIGHTS
@@ -360,7 +329,7 @@ scene.add(sage);
 sage.add(flightRig);
 flightRig.add(butterfly);
 
-sage.position.set(0.18, 0.03, 0);
+sage.position.set(0, 0, 0);
 
 butterfly.rotation.x = -0.035;
 butterfly.rotation.y = -0.10;
@@ -1543,9 +1512,6 @@ function resize() {
     false
   );
 
-  composer.setSize(width, height);
-  composer.setPixelRatio(renderer.getPixelRatio());
-
   camera.aspect =
     width / height;
 
@@ -1555,6 +1521,25 @@ function resize() {
       : 38;
 
   camera.updateProjectionMatrix();
+
+  // Keep SAGE the same small on-screen size across window sizes and
+  // place her in the lower-right corner, clear of the main content.
+  // These calculations project viewport pixels onto the z=0 plane.
+  const visibleHeight =
+    2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  const pixelsPerUnit = height / visibleHeight;
+  const targetHeight = width < 680 ? 98 : 150;
+  sage.scale.setScalar(targetHeight / (4.8 * pixelsPerUnit));
+
+  const rightInset = width < 680 ? 76 : 112;
+  const bottomInset = width < 680 ? 82 : 116;
+  const viewportX = width - rightInset;
+  const viewportY = height - bottomInset;
+  sage.position.set(
+    (viewportX - width / 2) / pixelsPerUnit + 0.18,
+    (height / 2 - viewportY) / pixelsPerUnit + 0.08,
+    0
+  );
 }
 
 new ResizeObserver(
@@ -1682,11 +1667,9 @@ function animate() {
   const wanderY =
     Math.sin(t * 0.137 + 1.3) * Math.sin(t * 0.0533) * 0.20;
 
-  // Site integration: her stage here is the full page, not a small
-  // isolated card like the playground — scaled up several times so
-  // she visibly roams rather than gently drifting in one spot.
-  const ROAM_SCALE_X = 3.4;
-  const ROAM_SCALE_Y = 2.4;
+  // Keep movement gentle within the small corner widget.
+  const ROAM_SCALE_X = 0.42;
+  const ROAM_SCALE_Y = 0.32;
 
   const targetX =
     (
@@ -2196,7 +2179,7 @@ function animate() {
     Math.cos(t * 0.15) *
     0.22;
 
-  composer.render();
+  renderer.render(scene, camera);
 
   requestAnimationFrame(
     animate

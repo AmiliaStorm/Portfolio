@@ -15,7 +15,8 @@
   <script type="importmap">
   {
     "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+      "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
     }
   }
   </script>
@@ -32,7 +33,7 @@
 />
 
 <link rel="stylesheet" href="./index.css?v=8" />
-<link rel="stylesheet" href="./sage.css?v=1" />
+<link rel="stylesheet" href="./sage.css?v=2" />
 
   <!-- Featured projects CTA: kept inline so external CSS cannot override it -->
   <style>
@@ -854,8 +855,10 @@
 
   <!-- ======================================================
        SAGE — Interactive Portfolio Guide
-       Frontend development build
+       Three.js butterfly
        ====================================================== -->
+
+  <div id="sageAvatarMount" aria-hidden="true"></div>
 
   <div class="sage" id="sage">
     <div class="sage__bubble" id="sageBubble" role="status" aria-live="polite">
@@ -869,19 +872,7 @@
       aria-label="Open SAGE portfolio guide"
       aria-expanded="false"
       aria-controls="sagePanel"
-    >
-      <span class="sage__halo" aria-hidden="true"></span>
-      <span class="sage__core" aria-hidden="true"></span>
-
-      <span class="sage__particle sage__particle--1" aria-hidden="true"></span>
-      <span class="sage__particle sage__particle--2" aria-hidden="true"></span>
-      <span class="sage__particle sage__particle--3" aria-hidden="true"></span>
-      <span class="sage__particle sage__particle--4" aria-hidden="true"></span>
-      <span class="sage__particle sage__particle--5" aria-hidden="true"></span>
-      <span class="sage__particle sage__particle--6" aria-hidden="true"></span>
-      <span class="sage__particle sage__particle--7" aria-hidden="true"></span>
-      <span class="sage__particle sage__particle--8" aria-hidden="true"></span>
-    </button>
+    ></button>
 
     <aside
       class="sage__panel"
@@ -941,7 +932,7 @@
       </form>
 
       <p class="sage__dev-note">
-        SAGE is currently running a local portfolio guide layer. Her full AI brain comes next.
+        SAGE is live — ask her anything about the portfolio.
       </p>
     </aside>
   </div>
@@ -970,7 +961,8 @@
   </div>
 </div>
 
-<script src="./sage.js"></script>
+<script type="module" src="./sage-avatar.js"></script>
+<script type="module" src="./sage.js"></script>
 <script src="./index.js"></script>
 <script type="module" src="./dna.js"></script>
 </body>

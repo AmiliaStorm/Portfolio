@@ -6,9 +6,21 @@ if (!mount) {
   throw new Error("SAGE: #sageAvatarMount not found");
 }
 
+
+Object.assign(mount.style, {
+  position: "fixed",
+  inset: "auto",
+  right: "8px",
+  bottom: "8px",
+  width: window.innerWidth < 680 ? "180px" : "240px",
+  height: window.innerWidth < 680 ? "180px" : "240px",
+  pointerEvents: "none",
+  zIndex: "1900"
+});
+
 /* =========================================================
    SAGE · BUTTERFLY REALISM V2
-========================================================= */
+ ============================= */
 
 const renderer = new THREE.WebGLRenderer({
   alpha: true,
@@ -1499,6 +1511,9 @@ window.addEventListener("pointermove", event => {
 ========================================================= */
 
 function resize() {
+  mount.style.width = window.innerWidth < 680 ? "180px" : "240px";
+  mount.style.height = window.innerWidth < 680 ? "180px" : "240px";
+
   const width = mount.clientWidth;
   const height = mount.clientHeight;
 
@@ -1522,24 +1537,13 @@ function resize() {
 
   camera.updateProjectionMatrix();
 
-  // Keep SAGE the same small on-screen size across window sizes and
-  // place her in the lower-right corner, clear of the main content.
-  // These calculations project viewport pixels onto the z=0 plane.
+  // Fit the butterfly inside the small fixed mount at any window size.
   const visibleHeight =
     2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
   const pixelsPerUnit = height / visibleHeight;
-  const targetHeight = width < 680 ? 98 : 150;
+  const targetHeight = width < 200 ? 96 : 132;
   sage.scale.setScalar(targetHeight / (4.8 * pixelsPerUnit));
-
-  const rightInset = width < 680 ? 76 : 112;
-  const bottomInset = width < 680 ? 82 : 116;
-  const viewportX = width - rightInset;
-  const viewportY = height - bottomInset;
-  sage.position.set(
-    (viewportX - width / 2) / pixelsPerUnit + 0.18,
-    (height / 2 - viewportY) / pixelsPerUnit + 0.08,
-    0
-  );
+  sage.position.set(0.18, 0.08, 0);
 }
 
 new ResizeObserver(
@@ -1547,6 +1551,8 @@ new ResizeObserver(
 ).observe(
   mount
 );
+
+window.addEventListener("resize", resize);
 
 resize();
 
@@ -2127,9 +2133,10 @@ function animate() {
   // Project her world position to viewport pixel coordinates for
   // sage.js to consume.
   screenProjectPos.copy(cometWorldPos).project(camera);
+  const mountRect = mount.getBoundingClientRect();
   lastScreenPosition = {
-    x: (screenProjectPos.x * 0.5 + 0.5) * window.innerWidth,
-    y: (-screenProjectPos.y * 0.5 + 0.5) * window.innerHeight
+    x: mountRect.left + (screenProjectPos.x * 0.5 + 0.5) * mountRect.width,
+    y: mountRect.top + (-screenProjectPos.y * 0.5 + 0.5) * mountRect.height
   };
 
   cometTrailHistory.unshift({

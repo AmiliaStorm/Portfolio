@@ -35,12 +35,7 @@ camera.position.set(0, 0.08, 8.55);
 camera.lookAt(0.18, 0.08, 0);
 
 /* =========================================================
-   BLOOM (NEW)
-   The reference's soft light-bleed can't be faked convincingly
-   with layered sprites alone — this is the real thing via
-   post-processing. Threshold is low so only genuinely bright
-   pixels (the core, emissive lines, wing nodes) bloom, leaving
-   the dark navy background mostly untouched.
+   BLOOM 
 ========================================================= */
 
 const composer = new EffectComposer(renderer);
@@ -101,13 +96,7 @@ function makeGlowTexture() {
 const glowTexture = makeGlowTexture();
 
 /* =========================================================
-   WING PATTERN TEXTURE (NEW)
-   Real butterfly wings are not flat glass panes — they carry
-   dark venation, a border band, scale "noise", and often an
-   eyespot on the forewing. This canvas texture bakes those
-   marks in so the material reads as a patterned membrane
-   instead of a uniform tinted sheet, while keeping the
-   existing iridescent / glowing look layered on top.
+   WING PATTERN TEXTURE 
 ========================================================= */
 
 function makeWingPatternTexture(upper, side, outlinePoints) {
@@ -351,7 +340,13 @@ scene.add(sage);
 sage.add(flightRig);
 flightRig.add(butterfly);
 
+/*
+ * SAGE renders inside a full-screen WebGL canvas on the portfolio.
+ * Keep the canvas full viewport so she can fly anywhere on screen,
+ * but scale the actual butterfly down to portfolio size.
+ */
 sage.position.set(0.18, 0.03, 0);
+sage.scale.setScalar(0.18);
 
 butterfly.rotation.x = -0.035;
 butterfly.rotation.y = -0.10;

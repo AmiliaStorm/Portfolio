@@ -2154,7 +2154,7 @@ function animate() {
     Math.cos(t * 0.15) *
     0.22;
 
-  composer.render();
+ renderer.render(scene, camera);
 
   requestAnimationFrame(
     animate

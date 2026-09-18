@@ -12,15 +12,6 @@ if (!mount) {
 
 /* =========================================================
    SAGE · BUTTERFLY REALISM V2
-   Keeps the silhouette you liked.
-   This pass focuses on:
-   - finer wing venation
-   - translucent iridescent membrane
-   - tiny luminous wing scales
-   - subtle compound eyes
-   - more natural wing motion
-   - gentle shimmer through the wings
-   - no oversized glow
 ========================================================= */
 
 const renderer = new THREE.WebGLRenderer({

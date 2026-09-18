@@ -346,7 +346,7 @@ flightRig.add(butterfly);
  * but scale the actual butterfly down to portfolio size.
  */
 sage.position.set(0.18, 0.03, 0);
-sage.scale.setScalar(0.02);
+sage.scale.setScalar(0.10);
 
 butterfly.rotation.x = -0.035;
 butterfly.rotation.y = -0.10;

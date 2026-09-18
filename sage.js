@@ -1605,11 +1605,43 @@ function pickNextPhase(t) {
   phaseStartT = t;
 }
 
-function animate() {
+// =========================================================
+// SAGE - CALM FLIGHT
+// =========================================================
+
+const flightTarget = new THREE.Vector3(0.18, 0.03, 0);
+const flightCurrent = new THREE.Vector3(0.18, 0.03, 0);
+
+let nextFlightTargetTime = 0;
+
+function chooseFlightTarget() {
+  // Keep SAGE comfortably inside the visible screen
+  flightTarget.set(
+    THREE.MathUtils.randFloat(-3.0, 3.0),
+    THREE.MathUtils.randFloat(-1.7, 1.7),
+    0
+  );
+}
+
+  function animate() {
   const t = clock.getElapsedTime();
 
-  if (t - phaseStartT > phaseDuration) {
-    pickNextPhase(t);
+  // ---------------------------------------------------------
+  // Calm roaming flight
+  // ---------------------------------------------------------
+
+  if (t > nextFlightTargetTime) {
+    chooseFlightTarget();
+    nextFlightTargetTime = t + THREE.MathUtils.randFloat(4, 8);
+  }
+
+  flightCurrent.lerp(flightTarget, 0.006);
+
+  const floatX = Math.sin(t * 0.75) * 0.05;
+  const floatY = Math.sin(t * 1.15) * 0.07;
+
+  sage.position.x = flightCurrent.x + floatX;
+  sage.position.y = flightCurrent.y + floatY;
   }
 
   // "thinking"/"talking" states shouldn't let her drift off into a

@@ -1609,20 +1609,6 @@ function pickNextPhase(t) {
 // SAGE - CALM FLIGHT
 // =========================================================
 
-const flightTarget = new THREE.Vector3(0.18, 0.03, 0);
-const flightCurrent = new THREE.Vector3(0.18, 0.03, 0);
-
-let nextFlightTargetTime = 0;
-
-function chooseFlightTarget() {
-  // Keep SAGE comfortably inside the visible screen
-  flightTarget.set(
-    THREE.MathUtils.randFloat(-3.0, 3.0),
-    THREE.MathUtils.randFloat(-1.7, 1.7),
-    0
-  );
-}
-
   function animate() {
   const t = clock.getElapsedTime();
 

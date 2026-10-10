@@ -2226,3 +2226,91 @@ button {
     display: none;
   }
 }
+
+
+/* Featured projects */
+   
+
+/* LYN overlay */
+#storm-lightning {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* S */
+.storm-s {
+  position: relative;
+  display: inline-block;
+  color: #f5f7ff;
+  transition: color 0.2s ease;
+}
+
+/* Lynet treffer S */
+.storm-s.struck {
+  animation: storm-impact 0.75s ease-out;
+}
+
+/* Elektrisk flash */
+@keyframes storm-impact {
+  0%, 12%, 30%, 100% {
+    color: #f5f7ff;
+    text-shadow: none;
+  }
+
+  15%, 25% {
+    color: #ffffff;
+    text-shadow:
+      0 0 8px #ffffff,
+      0 0 18px #60a5fa,
+      0 0 32px #2563eb;
+  }
+
+  45% {
+    color: #93c5fd;
+    text-shadow: 0 0 14px #3b82f6;
+  }
+}
+
+/* Main lightning */
+.storm-bolt {
+  fill: none;
+  stroke: #eaf7ff;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter:
+    drop-shadow(0 0 3px #ffffff)
+    drop-shadow(0 0 9px #3b82f6);
+  animation: storm-bolt-flash 0.75s ease-out forwards;
+}
+
+/* mindre lyn branch */
+.storm-bolt--branch {
+  stroke: #60a5fa;
+  stroke-width: 1.2;
+  opacity: 0.75;
+}
+
+/* Lyn flicker */
+@keyframes storm-bolt-flash {
+  0%   { opacity: 0; }
+  8%   { opacity: 1; }
+  20%  { opacity: 0.2; }
+  28%  { opacity: 1; }
+  48%  { opacity: 0.85; }
+  70%  { opacity: 0.2; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .storm-s.struck,
+  .storm-bolt {
+    animation: none;
+  }
+}
+

@@ -789,7 +789,7 @@ button {
   filter: invert(1);
 }
 
-/* Featured-project CTA */
+/* Featured-project */
 
 .projects-cta {
   position: relative;
@@ -1082,7 +1082,7 @@ button {
   font-size: 0.82rem;
 }
 
-/* Additional projects */
+/* Flere prosjekter */
 
 .all-projects {
   background:
@@ -1306,7 +1306,7 @@ button {
   color: var(--blue-light);
 }
 
-/* Realistic cell cursor */
+/* Celle mus */
 
 .cell-cursor {
   position: fixed;
